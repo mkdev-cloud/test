@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Scramble / Bug Hunt - Auto Progress</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+        }
+
+        .game-controls {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .game-controls button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin: 5px;
+        }
+
+        .game-controls button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .game-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 15px;
+        }
+
+        .game-info span {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .game-info p {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .game-area {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .question-section, .code-section, .answer-section {
+            margin-bottom: 25px;
+        }
+
+        .question-section h2, .code-section h2, .answer-section h2 {
+            color: #555;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        .code-display {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Cascadia Code', 'Fira Code', monospace;
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.4;
+            color: #333;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .bug-details p {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .bug-details strong {
+            color: #e74c3c;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: 'Cascadia Code', 'Fira Code', monospace;
+            font-size: 0.95rem;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .submit-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .feedback.hidden {
+            opacity: 0;
+            height: 0;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .feedback.correct {
+            background-color: #e6ffe6;
+            color: #28a745;
+            border: 1px solid #28a745;
+        }
+
+        .feedback.incorrect {
+            background-color: #ffe6e6;
+            color: #dc3545;
+            border: 1px solid #dc3545;
+        }
+
+        .feedback.promotion {
+            background-color: #e6f7ff;
+            color: #007bff;
+            border: 1px solid #007bff;
+        }
+
+        .timer-pulse {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .game-controls {
+                flex-direction: column;
+            }
+            .game-info {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Code Scramble / Bug Hunt</h1>
+            <p>Fix the bugs, level up, and become a debugging master!</p>
+        </header>
+
+        <section class="game-controls">
+            <button id="new-game-btn">New Game</button>
+            <div class="game-info">
+                <span id="timer">60</span>
+                <p>Time Left</p>
+            </div>
+            <div class="game-info">
+                <span id="current-score">0</span>
+                <p>Score</p>
+            </div>
+            <div class="game-info">
+                <span id="current-streak">0</span>
+                <p>Streak</p>
+            </div>
+            <div class="game-info">
+                <span id="current-level">1</span>
+                <p>Difficulty Level</p>
+            </div>
+        </section>
+
+        <section class="game-area">
+            <div class="question-section">
+                <h2>Bug Details</h2>
+                <div class="bug-details">
+                    <p><strong>Bug Type:</strong> <span id="bug-type"></span></p>
+                    <p><strong>Description:</strong> <span id="bug-description"></span></p>
+                </div>
+            </div>
+
+            <div class="code-section">
+                <h2>Buggy Code</h2>
+                <pre class="code-display" id="buggy-code"></pre>
+            </div>
+
+            <div class="answer-section">
+                <h2>Your Fixed Code</h2>
+                <textarea id="answer-input" placeholder="Type your corrected code here..."></textarea>
+                <button class="submit-button" id="submit-answer-btn">Submit Fix</button>
+                <div id="feedback" class="feedback hidden"></div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        class CodeScrambleGame {
+            constructor() {
+                this.questions = this.getQuestions();
+                this.currentQuestion = null;
+                this.score = 0;
+                this.streak = 0;
+                this.level = 1;
+                this.timeLeft = 0;
+                this.timer = null;
+                this.gameActive = false;
+                this.correctAnswersInLevel = 0; // New: To track progress within a level
+
+                this.bindEventListeners();
+                this.updateDisplay(); // Initial display update
+            }
+
+            // --- Game Logic ---
+
+            getQuestions() {
+                return [
+                    // Level 1: Basic Syntax & Typos
+                    {
+                        type: 'bug', difficulty: 1, bugType: 'Syntax Error',
+                        description: 'The variable "message" is not properly initialized or has a typo.',
+                        buggyCode: `function greet() {\n  let mesage = "Hello, world!";\n  console.log(message);\n}`,
+                        correctCode: `function greet() {\n  let message = "Hello, world!";\n  console.log(message);\n}`
+                    },
+                    {
+                        type: 'bug', difficulty: 1, bugType: 'Typo',
+                        description: 'There\'s a spelling mistake in the console log method.',
+                        buggyCode: `function logNumber(num) {\n  consol.log(num);\n}`,
+                        correctCode: `function logNumber(num) {\n  console.log(num);\n}`
+                    },
+                    {
+                        type: 'bug', difficulty: 1, bugType: 'Missing Semicolon',
+                        description: 'A semicolon is missing at the end of a statement.',
+                        buggyCode: `let x = 10\nlet y = 20;\nconsole.log(x + y);`,
+                        correctCode: `let x = 10;\nlet y = 20;\nconsole.log(x + y);`
+                    },
+
+                    // Level 2: Basic Logic & Operators
+                    {
+                        type: 'bug', difficulty: 2, bugType: 'Logical Error',
+                        description: 'The condition in the if statement is always false.',
+                        buggyCode: `function checkAge(age) {\n  if (age < 18 && age > 65) {\n    return "Not eligible";\n  }\n  return "Eligible";\n}`,
+                        correctCode: `function checkAge(age) {\n  if (age < 18 || age > 65) {\n    return "Not eligible";\n  }\n  return "Eligible";\n}`
+                    },
+                     {
+                        type: 'bug', difficulty: 2, bugType: 'Operator Precedence',
+                        description: 'The calculation for "result" is incorrect due to operator precedence.',
+                        buggyCode: `let a = 5;\nlet b = 10;\nlet c = 2;\nlet result = a + b * c;\nconsole.log(result); // Expected: 30, Actual: 25`,
+                        correctCode: `let a = 5;\nlet b = 10;\nlet c = 2;\nlet result = (a + b) * c;\nconsole.log(result);`
+                    },
+                    {
+                        type: 'bug', difficulty: 2, bugType: 'Incorrect Comparison',
+                        description: 'The strict equality operator is used instead of loose equality for type coercion.',
+                        buggyCode: `function compareValues(val1, val2) {\n  if (val1 === val2) {\n    return "Values are strictly equal";\n  } else {\n    return "Values are not strictly equal";\n  }\n}\nconsole.log(compareValues(5, '5')); // Should be loosely equal`,
+                        correctCode: `function compareValues(val1, val2) {\n  if (val1 == val2) {\n    return "Values are loosely equal";\n  } else {\n    return "Values are not loosely equal";\n  }\n}\nconsole.log(compareValues(5, '5'));`
+                    },
+
+                    // Level 3: Arrays & Loops
+                    {
+                        type: 'bug', difficulty: 3, bugType: 'Off-by-One Error',
+                        description: 'The loop iterates one too many times, causing an error or incorrect output for array access.',
+                        buggyCode: `let arr = [1, 2, 3];\nfor (let i = 0; i <= arr.length; i++) {\n  console.log(arr[i]);\n}`,
+                        correctCode: `let arr = [1, 2, 3];\nfor (let i = 0; i < arr.length; i++) {\n  console.log(arr[i]);\n}`
+                    },
+                    {
+                        type: 'bug', difficulty: 3, bugType: 'Infinite Loop',
+                        description: 'The loop condition never becomes false, leading to an infinite loop.',
+                        buggyCode: `let i = 0;\nwhile (i < 5) {\n  console.log(i);\n}`,
+                        correctCode: `let i = 0;\nwhile (i < 5) {\n  console.log(i);\n  i++;\n}`
+                    },
+                    {
+                        type: 'bug', difficulty: 3, bugType: 'Array Method Misuse',
+                        description: 'Attempting to add an element to an array in a way that overwrites an existing index or causes unexpected behavior.',
+                        buggyCode: `let fruits = ["apple", "banana"];\nfruits[fruits.length] = "cherry";\nconsole.log(fruits); // This works but push is safer`,
+                        correctCode: `let fruits = ["apple", "banana"];\nfruits.push("cherry");\nconsole.log(fruits);`
+                    },
+
+                    // Level 4: Functions & Scope
+                    {
+                        type: 'bug', difficulty: 4, bugType: 'Incorrect Return Value',
+                        description: 'The function does not return the expected value, or returns prematurely.',
+                        buggyCode: `function calculateSum(a, b) {\n  let sum = a + b;\n}\nlet total = calculateSum(5, 3);\nconsole.log(total); // Expected: 8, Actual: undefined`,
+                        correctCode: `function calculateSum(a, b) {\n  let sum = a + b;\n  return sum;\n}\nlet total = calculateSum(5, 3);\nconsole.log(total);`
+                    },
+                     {
+                        type: 'bug', difficulty: 4, bugType: 'Closure/Scope Issue',
+                        description: 'A loop variable is incorrectly captured by a closure, leading to unexpected behavior when asynchronous operations complete.',
+                        buggyCode: `for (var i = 0; i < 3; i++) {\n  setTimeout(function() {\n    console.log(i);\n  }, 100);\n}`,
+                        correctCode: `for (let i = 0; i < 3; i++) {\n  setTimeout(function() {\n    console.log(i);\n  }, 100);\n}`
+                    },
+                    {
+                        type: 'bug', difficulty: 4, bugType: 'Argument Mismatch',
+                        description: 'The function expects more arguments than provided, or arguments are used incorrectly.',
+                        buggyCode: `function multiply(a, b) {\n  return a * b;\n}\nconsole.log(multiply(4)); // Expected: 12 (if b=3), Actual: NaN`,
+                        correctCode: `function multiply(a, b) {\n  if (b === undefined) { b = 3; } // Example default\n  return a * b;\n}\nconsole.log(multiply(4));`
+                    },
+
+                    // Level 5: Objects & Classes
+                    {
+                        type: 'bug', difficulty: 5, bugType: 'Property Access',
+                        description: 'Attempting to access a property that does not exist or is misspelled on an object.',
+                        buggyCode: `let user = { name: "Alice", age: 30 };\nconsole.log(user.adress);`,
+                        correctCode: `let user = { name: "Alice", age: 30 };\nconsole.log(user.address);`
+                    },
+                    {
+                        type: 'bug', difficulty: 5, bugType: '`this` Context',
+                        description: 'The `this` keyword refers to the wrong context inside a method or callback.',
+                        buggyCode: `class Counter {\n  constructor() {\n    this.count = 0;\n  }\n  increment() {\n    setTimeout(function() {\n      this.count++;\n      console.log(this.count);\n    }, 100);\n  }\n}\nlet c = new Counter();\nc.increment(); // Expected: 1, Actual: NaN`,
+                        correctCode: `class Counter {\n  constructor() {\n    this.count = 0;\n  }\n  increment() {\n    setTimeout(() => {\n      this.count++;\n      console.log(this.count);\n    }, 100);\n  }\n}\nlet c = new Counter();\nc.increment();`
+                    },
+                    {
+                        type: 'bug', difficulty: 5, bugType: 'Missing `new` Keyword',
+                        description: 'Forgetting to use the `new` keyword when instantiating a constructor function or class.',
+                        buggyCode: `function Person(name) {\n  this.name = name;\n}\nlet p = Person("Bob");\nconsole.log(p.name); // Expected: Bob, Actual: TypeError or undefined`,
+                        correctCode: `function Person(name) {\n  this.name = name;\n}\nlet p = new Person("Bob");\nconsole.log(p.name);`
+                    },
+                    // Add more questions for higher levels if desired
+                ];
+            }
+
+            getDifficultyPoints() {
+                // Points scale with difficulty level
+                return this.level * 10;
+            }
+
+            getBonusTime() {
+                // Bonus time scales with difficulty level
+                return this.level * 5;
+            }
+
+            getQuestionsForLevel(level) {
+                return this.questions.filter(q => q.difficulty === level);
+            }
+
+            getRandomQuestion() {
+                const questionsForCurrentLevel = this.getQuestionsForLevel(this.level);
+                if (questionsForCurrentLevel.length === 0) {
+                    console.warn(`No questions found for difficulty level ${this.level}. Falling back to general questions.`);
+                    // Fallback: If no questions for the current level, get from all questions
+                    const allAvailableQuestions = this.questions.filter(q => q.difficulty >= this.level);
+                    if (allAvailableQuestions.length > 0) {
+                        return allAvailableQuestions[Math.floor(Math.random() * allAvailableQuestions.length)];
+                    }
+                    return null; // No questions at all
+                }
+                return questionsForCurrentLevel[Math.floor(Math.random() * questionsForCurrentLevel.length)];
+            }
+
+            startGame() {
+                this.score = 0;
+                this.streak = 0;
+                this.level = 1;
+                this.timeLeft = 120; // Initial time for the game
+                this.correctAnswersInLevel = 0;
+                this.gameActive = true;
+                this.startTimer();
+                this.loadQuestion();
+                document.getElementById('new-game-btn').textContent = 'Restart Game';
+                this.updateDisplay();
+                document.getElementById('feedback').classList.add('hidden'); // Hide feedback on new game
+            }
+
+            loadQuestion() {
+                this.currentQuestion = this.getRandomQuestion();
+                if (!this.currentQuestion) {
+                    // No more questions, end game gracefully
+                    this.endGame('Congratulations! You completed all available levels!');
+                    return;
+                }
+
+                document.getElementById('bug-type').textContent = this.currentQuestion.bugType;
+                document.getElementById('bug-description').textContent = this.currentQuestion.description;
+                document.getElementById('buggy-code').textContent = this.currentQuestion.buggyCode;
+                document.getElementById('answer-input').value = '';
+                document.getElementById('feedback').classList.add('hidden');
+            }
+
+            checkAnswer() {
+                if (!this.gameActive || !this.currentQuestion) return;
+
+                const userAnswer = document.getElementById('answer-input').value.trim();
+                const correctAnswer = this.currentQuestion.correctCode.trim();
+
+                const isCorrect = this.compareCode(userAnswer, correctAnswer);
+
+                const feedback = document.getElementById('feedback');
+                feedback.classList.remove('hidden', 'correct', 'incorrect', 'promotion');
+
+                if (isCorrect) {
+                    feedback.classList.add('correct');
+                    feedback.textContent = '🎉 Correct! Great debugging skills!';
+                    this.score += this.getDifficultyPoints();
+                    this.streak++;
+                    this.correctAnswersInLevel++;
+                    this.timeLeft += this.getBonusTime(); // Add bonus time for correct answer
+
+                    // Check for difficulty progression
+                    if (this.correctAnswersInLevel >= 3) { // Requires 3 correct answers to level up
+                        this.levelUp();
+                    } else {
+                        // Only load new question if not leveling up immediately
+                        setTimeout(() => this.loadQuestion(), 1000); // Small delay for feedback
+                    }
+                } else {
+                    feedback.classList.add('incorrect');
+                    feedback.textContent = '❌ Incorrect. Keep trying!';
+                    this.streak = 0; // Break streak on incorrect answer
+                    this.correctAnswersInLevel = 0; // Reset progress in level
+                    this.score = Math.max(0, this.score - Math.floor(this.getDifficultyPoints() / 2)); // Penalty
+                    this.timeLeft = Math.max(0, this.timeLeft - 10); // Time penalty
+                }
+                this.updateDisplay();
+            }
+
+            levelUp() {
+                this.level++;
+                this.correctAnswersInLevel = 0; // Reset for the new level
+                document.getElementById('current-level').textContent = this.level;
+                const feedback = document.getElementById('feedback');
+                feedback.classList.remove('hidden', 'correct', 'incorrect');
+                feedback.classList.add('promotion');
+                feedback.textContent = `🚀 Level Up! You're now on Difficulty Level ${this.level}!`;
+                this.timeLeft += 20; // Bonus time for leveling up
+                this.updateDisplay();
+                setTimeout(() => this.loadQuestion(), 1500); // Longer delay for level up message
+            }
+
+            compareCode(userCode, correctCode) {
+                // Normalize code for comparison (remove extra spaces, newlines, comments)
+                const normalize = (code) => {
+                    return code
+                        .replace(/\s+/g, ' ') // Replace multiple spaces/newlines with single space
+                        .replace(/;(?=\s*})|;$/g, '') // Remove trailing semicolons before '}' or at end
+                        .replace(/\/\/.*|\/\*[\s\S]*?\*\/|/g, '') // Remove comments (JS & HTML)
+                        .trim();
+                };
+                return normalize(userCode) === normalize(correctCode);
+            }
+
+            startTimer() {
+                clearInterval(this.timer); // Clear any existing timer
+                this.timer = setInterval(() => {
+                    if (!this.gameActive) {
+                        clearInterval(this.timer);
+                        return;
+                    }
+                    this.timeLeft--;
+                    document.getElementById('timer').textContent = this.timeLeft;
+
+                    if (this.timeLeft <= 10) {
+                        document.getElementById('timer').classList.add('timer-pulse');
+                    } else {
+                        document.getElementById('timer').classList.remove('timer-pulse');
+                    }
+
+                    if (this.timeLeft <= 0) {
+                        this.endGame();
+                    }
+                }, 1000);
+            }
+
+            endGame(message = null) {
+                this.gameActive = false;
+                clearInterval(this.timer);
+
+                const feedback = document.getElementById('feedback');
+                feedback.classList.remove('hidden', 'correct', 'incorrect', 'promotion');
+                feedback.classList.add('incorrect'); // Default to incorrect style for game over
+                feedback.innerHTML = `🏁 Game Over! Final Score: ${this.score}<br>${message || 'Time ran out!'} Click "New Game" to play again.`;
+
+                document.getElementById('timer').classList.remove('timer-pulse');
+            }
+
+            updateDisplay() {
+                document.getElementById('current-score').textContent = this.score;
+                document.getElementById('current-streak').textContent = this.streak;
+                document.getElementById('timer').textContent = this.timeLeft;
+                document.getElementById('current-level').textContent = this.level; // Ensure level is updated
+            }
+
+            // --- Event Listeners ---
+            bindEventListeners() {
+                document.getElementById('new-game-btn').addEventListener('click', () => this.startGame());
+                document.getElementById('submit-answer-btn').addEventListener('click', () => this.checkAnswer());
+                document.getElementById('answer-input').addEventListener('keypress', (event) => {
+                    if (event.key === 'Enter' && !event.shiftKey) { // Submit on Enter, allow Shift+Enter for new line
+                        event.preventDefault(); // Prevent default Enter behavior (e.g., new line)
+                        this.checkAnswer();
+                    }
+                });
+            }
+        }
+
+        // Initialize the game when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new CodeScrambleGame();
+        });
+    </script>
+</body>
+</html>
