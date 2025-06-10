@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Scramble / Bug Hunt</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+        }
+
+        .game-controls {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .controls-row {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .difficulty-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .difficulty-btn {
+            padding: 8px 16px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .difficulty-btn.active,
+        .difficulty-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .score-board {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .score-item {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+        }
+
+        .score-item strong {
+            display: block;
+            font-size: 1.5rem;
+            color: #667eea;
+        }
+
+        .start-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .game-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .code-panel {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .panel-header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .code-content {
+            padding: 20px;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .language-tag {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .bug-info {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .bug-info h4 {
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .bug-info p {
+            color: #856404;
+            margin: 0;
+        }
+
+        .answer-section {
+            margin-top: 20px;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .check-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .check-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .skip-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .skip-btn:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .timer {
+            background: #fff;
+            border: 3px solid #667eea;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .syntax-highlight .keyword {
+            color: #ff6b6b;
+        }
+
+        .syntax-highlight .string {
+            color: #4ecdc4;
+        }
+
+        .syntax-highlight .number {
+            color: #ffe66d;
+        }
+
+        .syntax-highlight .comment {
+            color: #95a5a6;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .game-area {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐛 Code Scramble / Bug Hunt 🔍</h1>
+            <p>Find and fix the bugs in the code snippets!</p>
+        </div>
+
+        <div class="game-controls">
+            <div class="controls-row">
+                <div class="difficulty-selector">
+                    <span>Difficulty:</span>
+                    <button class="difficulty-btn active" data-difficulty="easy">Easy</button>
+                    <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+                    <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+                </div>
+                
+                <div class="score-board">
+                    <div class="score-item">
+                        <strong id="current-score">0</strong>
+                        <span>Score</span>
+                    </div>
+                    <div class="score-item">
+                        <strong id="current-streak">0</strong>
+                        <span>Streak</span>
+                    </div>
+                    <div class="timer" id="timer">30</div>
+                </div>
+                
+                <button class="start-btn" id="start-game">Start Game</button>
+            </div>
+        </div>
+
+        <div class="game-area hidden" id="game-area">
+            <div class="code-panel">
+                <div class="panel-header">
+                    🐛 Buggy Code
+                </div>
+                <div class="code-content">
+                    <div class="language-tag" id="language-tag">Python</div>
+                    <div class="bug-info">
+                        <h4>Bug Type: <span id="bug-type">Logic Error</span></h4>
+                        <p id="bug-description">Find the logical mistake in this code.</p>
+                    </div>
+                    <div class="code-block syntax-highlight" id="buggy-code">
+                        # Loading code...
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-panel">
+                <div class="panel-header">
+                    ✅ Your Solution
+                </div>
+                <div class="code-content">
+                    <div class="answer-section">
+                        <textarea class="answer-input" id="answer-input" placeholder="Enter your fixed code here..." rows="8"></textarea>
+                        <div>
+                            <button class="check-btn" id="check-answer">Check Answer</button>
+                            <button class="skip-btn" id="skip-question">Skip Question</button>
+                        </div>
+                        <div class="feedback hidden" id="feedback"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class CodeScrambleGame {
+            constructor() {
+                this.currentDifficulty = 'easy';
+                this.score = 0;
+                this.streak = 0;
+                this.timeLeft = 30;
+                this.gameActive = false;
+                this.currentQuestion = null;
+                this.timer = null;
+                
+                // Bug database with different difficulty levels
+                this.bugDatabase = {
+                    easy: [
+                        {
+                            language: 'Python',
+                            bugType: 'Syntax Error',
+                            description: 'Missing colon after if statement',
+                            buggyCode: `# Check if number is positive
+def check_positive(num):
+    if num > 0
+        return "Positive"
+    else:
+        return "Not positive"`,
+                            correctCode: `# Check if number is positive
+def check_positive(num):
+    if num > 0:
+        return "Positive"
+    else:
+        return "Not positive"`,
+                            hint: 'Python if statements need a colon (:) at the end'
+                        },
+                        {
+                            language: 'JavaScript',
+                            bugType: 'Logic Error',
+                            description: 'Wrong comparison operator',
+                            buggyCode: `// Check if user is old enough to vote
+function canVote(age) {
+    if (age > 18) {
+        return true;
+    }
+    return false;
+}`,
+                            correctCode: `// Check if user is old enough to vote
+function canVote(age) {
+    if (age >= 18) {
+        return true;
+    }
+    return false;
+}`,
+                            hint: 'Should people exactly 18 years old be able to vote?'
+                        },
+                        {
+                            language: 'Python',
+                            bugType: 'Indentation Error',
+                            description: 'Incorrect indentation in function',
+                            buggyCode: `def greet_user(name):
+print(f"Hello, {name}!")
+print("Welcome to our program!")`,
+                            correctCode: `def greet_user(name):
+    print(f"Hello, {name}!")
+    print("Welcome to our program!")`,
+                            hint: 'Python requires proper indentation for function bodies'
+                        }
+                    ],
+                    medium: [
+                        {
+                            language: 'Python',
+                            bugType: 'Logic Error',
+                            description: 'Off-by-one error in loop',
+                            buggyCode: `# Print numbers 1 to 10
+def print_numbers():
+    for i in range(10):
+        print(i + 1)`,
+                            correctCode: `# Print numbers 1 to 10
+def print_numbers():
+    for i in range(1, 11):
+        print(i)`,
+                            hint: 'Check the range parameters for printing 1 to 10'
+                        },
+                        {
+                            language: 'JavaScript',
+                            bugType: 'Type Error',
+                            description: 'String concatenation instead of addition',
+                            buggyCode: `// Calculate total price with tax
+function calculateTotal(price, taxRate) {
+    let tax = price * taxRate;
+    let total = price + tax;
+    return "Total: $" + total;
+}
+
+// This will cause issues with math
+let result = calculateTotal("100", 0.08);`,
+                            correctCode: `// Calculate total price with tax
+function calculateTotal(price, taxRate) {
+    price = parseFloat(price);
+    let tax = price * taxRate;
+    let total = price + tax;
+    return "Total: $" + total.toFixed(2);
+}
+
+// This will cause issues with math
+let result = calculateTotal("100", 0.08);`,
+                            hint: 'String inputs need to be converted to numbers for math operations'
+                        },
+                        {
+                            language: 'Python',
+                            bugType: 'List Index Error',
+                            description: 'Accessing list index that may not exist',
+                            buggyCode: `def get_first_last(items):
+    first = items[0]
+    last = items[-1]
+    return first, last
+
+# This will crash with empty list
+result = get_first_last([])`,
+                            correctCode: `def get_first_last(items):
+    if len(items) == 0:
+        return None, None
+    first = items[0]
+    last = items[-1]
+    return first, last
+
+# This will crash with empty list
+result = get_first_last([])`,
+                            hint: 'What happens when you try to access the first item of an empty list?'
+                        }
+                    ],
+                    hard: [
+                        {
+                            language: 'JavaScript',
+                            bugType: 'Closure Issue',
+                            description: 'Variable scope problem in loop',
+                            buggyCode: `// Create array of functions
+function createFunctions() {
+    let functions = [];
+    for (var i = 0; i < 3; i++) {
+        functions.push(function() {
+            return i;
+        });
+    }
+    return functions;
+}
+
+// All functions return 3 instead of 0, 1, 2`,
+                            correctCode: `// Create array of functions
+function createFunctions() {
+    let functions = [];
+    for (let i = 0; i < 3; i++) {
+        functions.push(function() {
+            return i;
+        });
+    }
+    return functions;
+}
+
+// All functions return 3 instead of 0, 1, 2`,
+                            hint: 'The issue is with variable scoping - use let instead of var'
+                        },
+                        {
+                            language: 'Python',
+                            bugType: 'Mutable Default Argument',
+                            description: 'Dangerous mutable default parameter',
+                            buggyCode: `def add_item(item, shopping_list=[]):
+    shopping_list.append(item)
+    return shopping_list
+
+# This causes unexpected behavior
+list1 = add_item("apples")
+list2 = add_item("bananas")
+# list2 now contains both apples and bananas!`,
+                            correctCode: `def add_item(item, shopping_list=None):
+    if shopping_list is None:
+        shopping_list = []
+    shopping_list.append(item)
+    return shopping_list
+
+# This causes unexpected behavior
+list1 = add_item("apples")
+list2 = add_item("bananas")
+# list2 now contains both apples and bananas!`,
+                            hint: 'Mutable default arguments are shared between function calls'
+                        },
+                        {
+                            language: 'JavaScript',
+                            bugType: 'Async/Promise Error',
+                            description: 'Missing await in async function',
+                            buggyCode: `async function fetchUserData(userId) {
+    try {
+        let response = fetch(\`/api/users/\${userId}\`);
+        let userData = response.json();
+        return userData.name;
+    } catch (error) {
+        return "Error loading user";
+    }
+}`,
+                            correctCode: `async function fetchUserData(userId) {
+    try {
+        let response = await fetch(\`/api/users/\${userId}\`);
+        let userData = await response.json();
+        return userData.name;
+    } catch (error) {
+        return "Error loading user";
+    }
+}`,
+                            hint: 'fetch() and .json() return promises that need to be awaited'
+                        }
+                    ]
+                };
+                
+                this.initializeEventListeners();
+            }
+            
+            initializeEventListeners() {
+                // Difficulty selection
+                document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+                        e.target.classList.add('active');
+                        this.currentDifficulty = e.target.dataset.difficulty;
+                    });
+                });
+                
+                // Game controls
+                document.getElementById('start-game').addEventListener('click', () => this.startGame());
+                document.getElementById('check-answer').addEventListener('click', () => this.checkAnswer());
+                document.getElementById('skip-question').addEventListener('click', () => this.skipQuestion());
+                
+                // Enter key to submit answer
+                document.getElementById('answer-input').addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && e.ctrlKey) {
+                        this.checkAnswer();
+                    }
+                });
+            }
+            
+            startGame() {
+                this.gameActive = true;
+                this.score = 0;
+                this.streak = 0;
+                this.timeLeft = 30;
+                
+                document.getElementById('game-area').classList.remove('hidden');
+                document.getElementById('start-game').textContent = 'New Game';
+                
+                this.loadNewQuestion();
+                this.startTimer();
+                this.updateDisplay();
+            }
+            
+            loadNewQuestion() {
+                const questions = this.bugDatabase[this.currentDifficulty];
+                this.currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+                
+                document.getElementById('language-tag').textContent = this.currentQuestion.language;
+                document.getElementById('bug-type').textContent = this.currentQuestion.bugType;
+                document.getElementById('bug-description').textContent = this.currentQuestion.description;
+                document.getElementById('buggy-code').textContent = this.currentQuestion.buggyCode;
+                document.getElementById('answer-input').value = '';
+                document.getElementById('feedback').classList.add('hidden');
+            }
+            
+            checkAnswer() {
+                if (!this.gameActive || !this.currentQuestion) return;
+                
+                const userAnswer = document.getElementById('answer-input').value.trim();
+                const correctAnswer = this.currentQuestion.correctCode.trim();
+                
+                // Simple comparison - in a real game, you'd want more sophisticated checking
+                const isCorrect = this.compareCode(userAnswer, correctAnswer);
+                
+                const feedback = document.getElementById('feedback');
+                feedback.classList.remove('hidden', 'correct', 'incorrect');
+                
+                if (isCorrect) {
+                    feedback.classList.add('correct');
+                    feedback.textContent = '🎉 Correct! Great debugging skills!';
+                    this.score += this.getDifficultyPoints();
+                    this.streak++;
+                    this.timeLeft += 5; // Bonus time for correct answer
+                } else {
+                    feedback.classList.add('incorrect');
+                    feedback.innerHTML = `❌ Not quite right. Hint: ${this.currentQuestion.hint}<br><br>Expected solution:<br><code>${this.currentQuestion.correctCode}</code>`;
+                    this.streak = 0;
+                }
+                
+                this.updateDisplay();
+                setTimeout(() => this.loadNewQuestion(), 3000);
+            }
+            
+            skipQuestion() {
+                if (!this.gameActive) return;
+                
+                const feedback = document.getElementById('feedback');
+                feedback.classList.remove('hidden', 'correct', 'incorrect');
+                feedback.classList.add('incorrect');
+                feedback.innerHTML = `⏭️ Skipped! Here's the solution:<br><code>${this.currentQuestion.correctCode}</code><br>Hint: ${this.currentQuestion.hint}`;
+                
+                this.streak = 0;
+                this.updateDisplay();
+                setTimeout(() => this.loadNewQuestion(), 3000);
+            }
+            
+            compareCode(user, correct) {
+                // Remove whitespace and compare
+                const normalize = (code) => code.replace(/\s+/g, ' ').toLowerCase().trim();
+                return normalize(user) === normalize(correct);
+            }
+            
+            getDifficultyPoints() {
+                const points = { easy: 10, medium: 20, hard: 30 };
+                return points[this.currentDifficulty] + (this.streak * 5);
+            }
+            
+            startTimer() {
+                this.timer = setInterval(() => {
+                    this.timeLeft--;
+                    document.getElementById('timer').textContent = this.timeLeft;
+                    
+                    if (this.timeLeft <= 10) {
+                        document.getElementById('timer').classList.add('pulse');
+                    }
+                    
+                    if (this.timeLeft <= 0) {
+                        this.endGame();
+                    }
+                }, 1000);
+            }
+            
+            endGame() {
+                this.gameActive = false;
+                clearInterval(this.timer);
+                
+                const feedback = document.getElementById('feedback');
+                feedback.classList.remove('hidden', 'correct', 'incorrect');
+                feedback.innerHTML = `🏁 Game Over! Final Score: ${this.score}<br>Great job debugging! Click "New Game" to play again.`;
+                
+                document.getElementById('timer').classList.remove('pulse');
+            }
+            
+            updateDisplay() {
+                document.getElementById('current-score').textContent = this.score;
+                document.getElementById('current-streak').textContent = this.streak;
+            }
+        }
+        
+        // Initialize the game when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new CodeScrambleGame();
+        });
+    </script>
+</body>
+</html>
