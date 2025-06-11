@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LC Puzzle Race</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="menu-screen" class="screen">
+    <div class="card">
+      <h1>🏁 LC Puzzle Race</h1>
+      <p>Arrange the steps of an LC lifecycle in correct order. Identify any document discrepancies!</p>
+      <ul>
+        <li>✔️ Drag steps to arrange LC lifecycle in order</li>
+        <li>⏱️ 3 minutes to complete</li>
+        <li>💡 Identify document discrepancy</li>
+      </ul>
+      <button id="start-game">Start Game</button>
+    </div>
+  </div>
+
+  <div id="game-screen" class="screen hidden">
+    <div class="header">
+      <span id="timer">03:00</span>
+      <span id="score">Score: 0</span>
+      <button id="restart-game">↩️ Restart</button>
+    </div>
+    <div class="game-area">
+      <div class="column">
+        <h2>Available Steps</h2>
+        <div id="shuffled-steps" class="dropzone"></div>
+      </div>
+      <div class="column">
+        <h2>LC Workflow Order</h2>
+        <div id="arranged-steps" class="dropzone"></div>
+      </div>
+    </div>
+    <div id="discrepancy-modal" class="modal hidden">
+      <div class="modal-content">
+        <h3>🚨 Document Discrepancy</h3>
+        <p id="discrepancy-question"></p>
+        <input type="text" id="discrepancy-answer" placeholder="Describe the discrepancy..." />
+        <button id="submit-discrepancy">Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="completed-screen" class="screen hidden">
+    <div class="card">
+      <h2>🎉 Game Complete!</h2>
+      <p id="final-score"></p>
+      <button id="play-again">Play Again</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
