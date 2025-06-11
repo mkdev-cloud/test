@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade Flow Tycoon: Global Finance Expedition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .game-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #4a5568;
+            border-bottom: 3px solid #4facfe;
+            padding-bottom: 10px;
+        }
+
+        .trade-opportunity {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid #ff6b6b;
+        }
+
+        .opportunity-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .opportunity-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .risk-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .risk-low { background: #48bb78; color: white; }
+        .risk-medium { background: #ed8936; color: white; }
+        .risk-high { background: #f56565; color: white; }
+
+        .opportunity-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .detail-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #4a5568;
+            font-size: 0.9em;
+        }
+
+        .detail-value {
+            margin-top: 3px;
+            color: #2d3748;
+        }
+
+        .finance-instruments {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .instrument-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .instrument-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .instrument-card.selected {
+            border-color: #4facfe;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .instrument-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .instrument-details {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .document-section {
+            margin-top: 20px;
+        }
+
+        .document-item {
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #68d391;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .document-item.has-bug {
+            border-left-color: #f56565;
+            background: #fed7d7;
+        }
+
+        .bug-hunt-btn {
+            background: #f56565;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .bug-hunt-btn:hover {
+            background: #e53e3e;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .events-log {
+            max-height: 200px;
+            overflow-y: auto;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .event-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.9em;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-positive { color: #38a169; }
+        .event-negative { color: #e53e3e; }
+        .event-neutral { color: #4a5568; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            transition: width 0.3s ease;
+        }
+
+        .leaderboard {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .finance-instruments {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1 style="text-align: center; color: #4a5568; font-size: 2.5em; margin-bottom: 10px;">
+                🌍 Trade Flow Tycoon: Global Finance Expedition
+            </h1>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Cash Balance</div>
+                    <div class="stat-value" id="cashBalance">$100,000</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Reputation</div>
+                    <div class="stat-value" id="reputation">75</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Completed Deals</div>
+                    <div class="stat-value" id="completedDeals">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Active Deals</div>
+                    <div class="stat-value" id="activeDeals">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Level</div>
+                    <div class="stat-value" id="playerLevel">1</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Opportunities Section -->
+        <div class="game-section" id="opportunitiesSection">
+            <h2 class="section-title">📋 Available Trade Opportunities</h2>
+            <div id="tradeOpportunities">
+                <!-- Opportunities will be dynamically generated -->
+            </div>
+            <button class="btn btn-secondary" onclick="generateNewOpportunities()">🔄 Generate New Opportunities</button>
+        </div>
+
+        <!-- Trade Finance Instruments Section -->
+        <div class="game-section" id="instrumentsSection" style="display: none;">
+            <h2 class="section-title">💼 Choose Trade Finance Instrument</h2>
+            <div class="finance-instruments" id="financeInstruments">
+                <!-- Instruments will be populated dynamically -->
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="proceedToDocuments()">📄 Proceed to Documentation</button>
+                <button class="btn btn-secondary" onclick="backToOpportunities()">← Back to Opportunities</button>
+            </div>
+        </div>
+
+        <!-- Documentation Section -->
+        <div class="game-section" id="documentsSection" style="display: none;">
+            <h2 class="section-title">📋 Document Preparation & Bug Hunt</h2>
+            <p style="margin-bottom: 20px; color: #4a5568;">Review and verify all required documents. Some may contain errors that need fixing!</p>
+            <div id="documentsList">
+                <!-- Documents will be populated dynamically -->
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="executeTrade()">🚀 Execute Trade</button>
+                <button class="btn btn-secondary" onclick="backToInstruments()">← Back to Instruments</button>
+            </div>
+        </div>
+
+        <!-- Active Deals Progress -->
+        <div class="game-section" id="activeDealsSection">
+            <h2 class="section-title">⚡ Active Deals Progress</h2>
+            <div id="activeDealsContainer">
+                <p style="text-align: center; color: #718096; font-style: italic;">No active deals currently</p>
+            </div>
+        </div>
+
+        <!-- Events Log -->
+        <div class="game-section">
+            <h2 class="section-title">📰 Market Events & News</h2>
+            <div class="events-log" id="eventsLog">
+                <div class="event-item event-neutral">Welcome to Trade Flow Tycoon! Start by selecting a trade opportunity.</div>
+            </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="game-section">
+            <h2 class="section-title">🏆 Leaderboard</h2>
+            <div class="leaderboard" id="leaderboard">
+                <div class="leaderboard-item">
+                    <span><strong>You</strong></span>
+                    <span>$100,000</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span>Trade Master Alex</span>
+                    <span>$2,500,000</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span>Global Trader Sam</span>
+                    <span>$1,800,000</span>
+                </div>
+                <div class="leaderboard-item">
+                    <span>Finance Pro Jordan</span>
+                    <span>$1,200,000</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Bug Hunt -->
+    <div class="modal" id="bugHuntModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 15px;">🔍 Document Bug Hunt</h3>
+            <div id="bugHuntContent">
+                <!-- Bug hunt content will be populated here -->
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="closeBugHunt()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Random Events -->
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 15px;" id="eventTitle">Market Event</h3>
+            <p id="eventDescription"></p>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="closeEventModal()">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game State
+        let gameState = {
+            cash: 100000,
+            reputation: 75,
+            completedDeals: 0,
+            activeDeals: [],
+            level: 1,
+            currentOpportunity: null,
+            selectedInstrument: null,
+            documents: []
+        };
+
+        // Trade Opportunities Data
+        const tradeOpportunities = [
+            {
+                id: 1,
+                title: "Export Textiles to Bangladesh",
+                goods: "Cotton Textiles",
+                quantity: "500 tons",
+                destination: "Dhaka, Bangladesh",
+                buyerRep: "Medium",
+                profit: 25000,
+                cost: 80000,
+                deadline: 30,
+                risk: "medium",
+                preferredPayment: ["Letter of Credit", "Documentary Collection"]
+            },
+            {
+                id: 2,
+                title: "Import Electronics from China",
+                goods: "Consumer Electronics",
+                quantity: "1000 units",
+                origin: "Shenzhen, China",
+                sellerRep: "High",
+                profit: 45000,
+                cost: 120000,
+                deadline: 45,
+                risk: "low",
+                preferredPayment: ["Open Account", "Letter of Credit"]
+            },
+            {
+                id: 3,
+                title: "Export Machinery to Brazil",
+                goods: "Industrial Equipment",
+                quantity: "50 units",
+                destination: "São Paulo, Brazil",
+                buyerRep: "Low",
+                profit: 60000,
+                cost: 200000,
+                deadline: 60,
+                risk: "high",
+                preferredPayment: ["Advance Payment", "Confirmed LC"]
+            },
+            {
+                id: 4,
+                title: "Import Coffee from Colombia",
+                goods: "Premium Coffee Beans",
+                quantity: "200 tons",
+                origin: "Bogotá, Colombia",
+                sellerRep: "High",
+                profit: 15000,
+                cost: 50000,
+                deadline: 21,
+                risk: "low",
+                preferredPayment: ["Open Account", "Documentary Collection"]
+            }
+        ];
+
+        // Trade Finance Instruments
+        const financeInstruments = {
+            "Open Account": {
+                cost: 0,
+                risk: "High",
+                speed: "Fast",
+                description: "Payment after goods delivery. Fastest but highest risk for seller.",
+                riskMultiplier: 1.5
+            },
+            "Documentary Collection": {
+                cost: 500,
+                risk: "Medium",
+                speed: "Medium",
+                description: "Bank handles documents, moderate risk with no payment guarantee.",
+                riskMultiplier: 1.0
+            },
+            "Letter of Credit": {
+                cost: 1500,
+                risk: "Low",
+                speed: "Slow",
+                description: "Bank guarantee with lower risk but higher cost.",
+                riskMultiplier: 0.3
+            },
+            "Advance Payment": {
+                cost: 0,
+                risk: "Very Low",
+                speed: "Fast",
+                description: "Payment before shipment. Safest for seller, riskiest for buyer.",
+                riskMultiplier: 0.1
+            },
+            "Supply Chain Finance": {
+                cost: 1000,
+                risk: "Low",
+                speed: "Medium",
+                description: "Immediate cash through receivables financing.",
+                riskMultiplier: 0.5
+            }
+        };
+
+        // Document Templates with Potential Bugs
+        const documentTemplates = [
+            {
+                name: "Commercial Invoice",
+                content: "Invoice #INV-2025-001\nBuyer: [BUYER_NAME]\nGoods: [GOODS_TYPE]\nQuantity: [QUANTITY]\nUnit Price: $[UNIT_PRICE]\nTotal Amount: $[TOTAL_AMOUNT]",
+                bugs: [
+                    "Invoice date is missing",
+                    "Buyer address incomplete",
+                    "Mathematical error in total calculation",
+                    "Currency not specified"
+                ]
+            },
+            {
+                name: "Bill of Lading",
+                content: "B/L No: BL-2025-001\nVessel: MV TRADE MASTER\nPort of Loading: [ORIGIN_PORT]\nPort of Discharge: [DEST_PORT]\nShipper: [SHIPPER_NAME]\nConsignee: [CONSIGNEE_NAME]",
+                bugs: [
+                    "Vessel name misspelled",
+                    "Port of discharge incorrect",
+                    "Consignee name doesn't match invoice",
+                    "Shipping marks missing"
+                ]
+            },
+            {
+                name: "Certificate of Origin",
+                content: "Certificate No: CO-2025-001\nCountry of Origin: [ORIGIN_COUNTRY]\nGoods Description: [GOODS_DESC]\nExporter: [EXPORTER_NAME]\nImporter: [IMPORTER_NAME]",
+                bugs: [
+                    "Country of origin incorrect",
+                    "Goods description too vague",
+                    "Certification authority signature missing",
+                    "Expiry date has passed"
+                ]
+            },
+            {
+                name: "Packing List",
+                content: "Packing List No: PL-2025-001\nTotal Packages: [TOTAL_PACKAGES]\nGross Weight: [GROSS_WEIGHT] kg\nNet Weight: [NET_WEIGHT] kg\nDimensions: [DIMENSIONS]",
+                bugs: [
+                    "Package count doesn't match invoice",
+                    "Weight measurements inconsistent",
+                    "Dimensions missing for some packages",
+                    "Packing material not specified"
+                ]
+            }
+        ];
+
+        // Random Events
+        const randomEvents = [
+            {
+                title: "Port Strike",
+                description: "A labor strike at the destination port has caused delays. Your shipment will be delayed by 5 days.",
+                effect: { type: "delay", value: 5 },
+                probability: 0.1
+            },
+            {
+                title: "Currency Fluctuation",
+                description: "Favorable exchange rate movement has increased your profit margin by 8%.",
+                effect: { type: "profit", value: 1.08 },
+                probability: 0.15
+            },
+            {
+                title: "Customs Inspection",
+                description: "Random customs inspection has delayed your shipment by 3 days but no issues found.",
+                effect: { type: "delay", value: 3 },
+                probability: 0.12
+            },
+            {
+                title: "Market Demand Surge",
+                description: "High demand for your goods has increased profit by 15%!",
+                effect: { type: "profit", value: 1.15 },
+                probability: 0.08
+            }
+        ];
+
+        // Initialize Game
+        function init() {
+            updateStats();
+            generateNewOpportunities();
+        }
+
+        // Update UI Stats
+        function updateStats() {
+            document.getElementById('cashBalance').textContent = `$${gameState.cash.toLocaleString()}`;
+            document.getElementById('reputation').textContent = gameState.reputation;
+            document.getElementById('completedDeals').textContent = gameState.completedDeals;
+            document.getElementById('activeDeals').textContent = gameState.activeDeals.length;
+            document.getElementById('playerLevel').textContent = gameState.level;
+        }
+
+        // Generate Trade Opportunities
+        function generateNewOpportunities() {
+            const container = document.getElementById('tradeOpportunities');
+            container.innerHTML = '';
+
+            // Show 2-3 random opportunities based on player level
+            const numOpportunities = Math.min(2 + Math.floor(gameState.level / 3), 4);
+            const shuffled = [...tradeOpportunities].sort(() => 0.5 - Math.random());
+            const opportunities = shuffled.slice(0, numOpportunities);
+
+            opportunities.forEach(opp => {
+                const oppDiv = document.createElement('div');
+                oppDiv.className = 'trade-opportunity';
+                oppDiv.innerHTML = `
+                    <div class="opportunity-header">
+                        <div class="opportunity-title">${opp.title}</div>
+                        <div class="risk-badge risk-${opp.risk}">${opp.risk} Risk</div>
+                    </div>
+                    <div class="opportunity-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Goods</div>
+                            <div class="detail-value">${opp.goods}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Quantity</div>
+                            <div class="detail-value">${opp.quantity}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">${opp.destination ? 'Destination' : 'Origin'}</div>
+                            <div class="detail-value">${opp.destination || opp.origin}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Reputation</div>
+                            <div class="detail-value">${opp.buyerRep || opp.sellerRep}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Investment</div>
+                            <div class="detail-value">$${opp.cost.toLocaleString()}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Potential Profit</div>
+                            <div class="detail-value">$${opp.profit.toLocaleString()}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Deadline</div>
+                            <div class="detail-value">${opp.deadline} days</div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="selectOpportunity(${opp.id})" 
+                                ${gameState.cash < opp.cost ? 'disabled' : ''}>
+                            ${gameState.cash < opp.cost ? '💰 Insufficient Funds' : '✅ Select This Deal'}
+                        </button>
+                    </div>
+                `;
+                container.appendChild(oppDiv);
+            });
+        }
+
+        // Select Trade Opportunity
+        function selectOpportunity(oppId) {
+            gameState.currentOpportunity = tradeOpportunities.find(opp => opp.id === oppId);
+            if (!gameState.currentOpportunity) return;
+
+            // Check if player has enough cash
+            if (gameState.cash < gameState.currentOpportunity.cost) {
+                addEvent("Insufficient funds for this trade opportunity.", "negative");
+                return;
+            }
+
+            showInstrumentsSection();
+            addEvent(`Selected trade opportunity: ${gameState.currentOpportunity.title}`, "neutral");
+        }
+
+        // Show Finance Instruments Section
+        function showInstrumentsSection() {
+            document.getElementById('opportunitiesSection').style.display = 'none';
+            document.getElementById('instrumentsSection').style.display = 'block';
+            document.getElementById('documentsSection').style.display = 'none';
+
+            const container = document.getElementById('financeInstruments');
+            container.innerHTML = '';
+
+            Object.entries(financeInstruments).forEach(([name, details]) => {
+                const card = document.createElement('div');
+                card.className = 'instrument-card';
+                card.onclick = () => selectInstrument(name);
+                card.innerHTML = `
+                    <div class="instrument-name">${name}</div>
+                    <div class="instrument-details">
+                        <div><strong>Cost:</strong> $${details.cost.toLocaleString()}</div>
+                        <div><strong>Risk Level:</strong> ${details.risk}</div>
+                        <div><strong>Processing Speed:</strong> ${details.speed}</div>
+                        <div style="margin-top: 8px;">${details.description}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Select Finance Instrument
+        function selectInstrument(instrumentName) {
+            gameState.selectedInstrument = instrumentName;
+            
+            // Update UI to show selection
+            const cards = document.querySelectorAll('.instrument-card');
+            cards.forEach(card => {
+                card.classList.remove('selected');
+                if (card.querySelector('.instrument-name').textContent === instrumentName) {
+                    card.classList.add('selected');
+                }
+            });
+
+            addEvent(`Selected finance instrument: ${instrumentName}`, "neutral");
+        }
+
+        // Proceed to Documents
+        function proceedToDocuments() {
+            if (!gameState.selectedInstrument) {
+                alert('Please select a trade finance instrument first.');
+                return;
+            }
+
+            document.getElementById('instrumentsSection').style.display = 'none';
+            document.getElementById('documentsSection').style.display = 'block';
+
+            generateDocuments();
+        }
+
+        // Generate Documents with Random Bugs
+        function generateDocuments() {
+            const container = document.getElementById('documentsList');
+            container.innerHTML = '';
+            gameState.documents = [];
+
+            documentTemplates.forEach((template, index) => {
+                const hasBug = Math.random() < 0.4; // 40% chance of bug
+                const doc = {
+                    name: template.name,
+                    hasBug: hasBug,
+                    bug: hasBug ? template.bugs[Math.floor(Math.random() * template.bugs.length)] : null,
+                    fixed: false
+                };
+
+                gameState.documents.push(doc);
+
+                const docDiv = document.createElement('div');
+                docDiv.className = `document-item ${hasBug ? 'has-bug' : ''}`;
+                docDiv.innerHTML = `
+                    <div>
+                        <strong>${doc.name}</strong>
+                        ${hasBug ? '<span style="color: #f56565; font-size: 0.9em;"> ⚠️ Issue Detected</span>' : '<span style="color: #48bb78; font-size: 0.9em;"> ✅ Verified</span>'}
+                    </div>
+                    ${hasBug ? `<button class="bug-hunt-btn" onclick="startBugHunt(${index})">Fix Issue</button>` : ''}
+                `;
+                container.appendChild(docDiv);
+            });
+        }
+
+        // Start Bug Hunt Mini-Game
+        function startBugHunt(docIndex) {
+            const doc = gameState.documents[docIndex];
+            const modal = document.getElementById('bugHuntModal');
+            const content = document.getElementById('bugHuntContent');
+
+            content.innerHTML = `
+                <p><strong>Document:</strong> ${doc.name}</p>
+                <p><strong>Issue Found:</strong> ${doc.bug}</p>
+                <div style="margin: 15px 0
