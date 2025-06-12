@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade Flow Tycoon: Global Finance Expedition</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Using Inter font as per instructions */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header Section */
+        .header {
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            text-align: center;
+            color: #4a5568;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: flex;
+            flex-wrap: nowrap;
+            /* Keeps in a single line */
+            overflow-x: auto;
+            /* Adds horizontal scroll if needed */
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+
+        .stat-card {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            min-width: 140px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        /* Game Sections */
+        .game-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #4a5568;
+            border-bottom: 3px solid #4facfe;
+            padding-bottom: 10px;
+        }
+
+        /* Trade Opportunity */
+        .trade-opportunity {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid #ff6b6b;
+        }
+
+        .opportunity-header {
+            display: flex;
+            justify-content: space-between;
+            /* Changed from 'between' to 'space-between' */
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .opportunity-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .risk-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .risk-low {
+            background: #48bb78;
+            color: white;
+        }
+
+        .risk-medium {
+            background: #ed8936;
+            color: white;
+        }
+
+        .risk-high {
+            background: #f56565;
+            color: white;
+        }
+
+        .opportunity-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .detail-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #4a5568;
+            font-size: 0.9em;
+        }
+
+        .detail-value {
+            margin-top: 3px;
+            color: #2d3748;
+        }
+
+        .investment-input {
+            width: calc(100% - 70px);
+            /* Adjust width for button */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            margin-right: 10px;
+        }
+
+        /* Finance Instruments */
+        .finance-instruments {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .instrument-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .instrument-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .instrument-card.selected {
+            border-color: #4facfe;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .instrument-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .instrument-details {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        /* Documents Section */
+        .document-section {
+            margin-top: 20px;
+        }
+
+        .document-item {
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #68d391;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .document-item.has-bug {
+            border-left-color: #f56565;
+            background: #fed7d7;
+        }
+
+        .bug-hunt-btn {
+            background: #f56565;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .bug-hunt-btn:hover {
+            background: #e53e3e;
+        }
+
+        /* Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(189, 203, 219, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 101, 101, 0.4);
+        }
+
+        /* Events Log */
+        .events-log {
+            max-height: 200px;
+            overflow-y: auto;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .event-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.9em;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-positive {
+            color: #38a169;
+        }
+
+        .event-negative {
+            color: #e53e3e;
+        }
+
+        .event-neutral {
+            color: #4a5568;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            /* Center modal content */
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            transition: width 0.3s ease;
+        }
+
+        /* Leaderboard */
+        .leaderboard {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .finance-instruments {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loginScreen" class="modal" style="display: flex;">
+        <div class="modal-content" style="text-align: center;">
+            <h3>🎮 Welcome to Trade Flow Tycoon</h3>
+            <p>Please enter your name to begin:</p>
+            <input type="text" id="playerNameInput" placeholder="Your Name"
+                style="padding: 10px; width: 80%; margin-top: 10px;">
+            <br><br>
+            <button class="btn btn-primary" onclick="submitPlayerName()">Start Game</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>🌍 Trade Flow Tycoon: Global Finance Expedition</h1>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Cash Balance</div>
+                    <div class="stat-value" id="cashBalance">$100,000</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Profit</div>
+                    <div class="stat-value" id="totalProfit">$0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Reputation</div>
+                    <div class="stat-value" id="reputation">75</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Completed Deals</div>
+                    <div class="stat-value" id="completedDeals">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Failed Deals</div>
+                    <div class="stat-value" id="failedDeals">0</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">Active Deals</div>
+                    <div class="stat-value" id="activeDeals">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Level</div>
+                    <div class="stat-value" id="playerLevel">1</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Opportunities Section -->
+        <div class="game-section" id="opportunitiesSection">
+            <h2 class="section-title">📋 Available Trade Opportunities</h2>
+            <div id="tradeOpportunities">
+                <!-- Opportunities will be dynamically generated -->
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="generateNewOpportunities()">🔄 Generate New
+                    Opportunities</button>
+                <button class="btn btn-danger" onclick="confirmRestartGame()">🚀 Restart Game</button>
+                <button onclick="refreshLeaderboard()" class="btn btn-secondary">🔄 Refresh Leaderboard</button>
+            </div>
+
+
+        </div>
+
+        <!-- Trade Finance Instruments Section -->
+        <div class="game-section" id="instrumentsSection" style="display: none;">
+            <h2 class="section-title">💼 Choose Trade Finance Instrument</h2>
+            <div class="finance-instruments" id="financeInstruments">
+                <!-- Instruments will be populated dynamically -->
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="proceedToDocuments()">📄 Proceed to Documentation</button>
+                <button class="btn btn-secondary" onclick="backToOpportunities()">← Back to Opportunities</button>
+            </div>
+        </div>
+
+        <!-- Documentation Section -->
+        <div class="game-section" id="documentsSection" style="display: none;">
+            <h2 class="section-title">📋 Document Preparation & Bug Hunt</h2>
+            <p style="margin-bottom: 20px; color: #4a5568;">Review and verify all required documents. Some may contain
+                errors that need fixing!</p>
+            <div id="documentsList">
+                <!-- Documents will be populated dynamically -->
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="executeTrade()">🚀 Execute Trade</button>
+                <button class="btn btn-secondary" onclick="backToInstruments()">← Back to Instruments</button>
+            </div>
+        </div>
+
+        <!-- Active Deals Progress -->
+        <div class="game-section" id="activeDealsSection">
+            <h2 class="section-title">⚡ Active Deals Progress</h2>
+            <div id="activeDealsContainer">
+                <p style="text-align: center; color: #718096; font-style: italic;">No active deals currently</p>
+            </div>
+        </div>
+
+        <!-- Events Log -->
+        <div class="game-section">
+            <h2 class="section-title">📰 Market Events & News</h2>
+            <div class="events-log" id="eventsLog">
+                <div class="event-item event-neutral">Welcome to Trade Flow Tycoon! Start by selecting a trade
+                    opportunity.</div>
+            </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="game-section">
+            <h2 class="section-title">🏆 Leaderboard</h2>
+            <div class="leaderboard" id="leaderboard">
+                <!-- Leaderboard items will be dynamically generated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Bug Hunt -->
+    <div class="modal" id="bugHuntModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 15px;">🔍 Document Bug Hunt</h3>
+            <div id="bugHuntContent">
+                <!-- Bug hunt content will be populated here -->
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="closeBugHunt()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Random Events -->
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 15px;" id="eventTitle">Market Event</h3>
+            <p id="eventDescription"></p>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="closeEventModal()">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Confirmation (Custom Alert) -->
+    <div class="modal" id="confirmationModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 15px;" id="confirmationTitle"></h3>
+            <p id="confirmationMessage"></p>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-primary" id="confirmYesBtn">Yes</button>
+                <button class="btn btn-secondary" id="confirmNoBtn">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Game Over/Win -->
+    <div class="modal" id="gameOverModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 15px;" id="gameOverTitle"></h3>
+            <p id="gameOverMessage"></p>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="restartGame()">Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game State
+        let playerName = localStorage.getItem('tycoonPlayerName') || '';
+        function refreshLeaderboard() {
+            playerName = localStorage.getItem('tycoonPlayerName') || '';
+
+            // 👇 Add the current player stats to the leaderboard
+            const savedLeaders = JSON.parse(localStorage.getItem('tycoonLeaderboard')) || [];
+
+            // Remove existing player entry if exists
+            const filteredLeaders = savedLeaders.filter(p => p.name !== playerName);
+
+            // Add current session stats
+            const currentPlayer = {
+                name: playerName,
+                profit: gameState.totalProfit,
+                deals: gameState.completedDeals,
+                timestamp: new Date().toISOString()
+            };
+
+            filteredLeaders.push(currentPlayer);
+
+            // Sort and save back
+            const sorted = filteredLeaders.sort((a, b) => {
+                if (b.profit !== a.profit) return b.profit - a.profit;
+                return a.deals - b.deals;
+            });
+
+            localStorage.setItem('tycoonLeaderboard', JSON.stringify(sorted.slice(0, 10)));
+
+            // Then update the DOM
+            updateLeaderboard();
+        }
+
+
+        function submitPlayerName() {
+            const input = document.getElementById('playerNameInput').value.trim();
+
+            if (!input) {
+                alert("Please enter your name.");
+                return;
+            }
+
+            playerName = input;
+            localStorage.setItem('tycoonPlayerName', playerName);
+
+            document.getElementById('loginScreen').style.display = 'none';
+            init(); // 🔄 Starts the game
+        }
+
+
+        let gameState = {
+            cash: 100000,
+            initialCash: 100000, // Store initial cash to calculate profit
+            totalProfit: 0, // ✅ Fix here
+            reputation: 75,
+            completedDeals: 0,
+            failedDeals: 0,
+            activeDeals: [],
+            level: 1,
+            currentOpportunity: null,
+            selectedInstrument: null,
+            documents: [],
+            targetProfit: 100000, // Target profit to win the game
+            minDealsForWin: 5 // Minimum deals to be considered for winning
+        };
+
+        // Trade Opportunities Data
+        const tradeOpportunities = [
+            {
+                id: 1,
+                title: "Export Textiles to Bangladesh",
+                goods: "Cotton Textiles",
+                quantity: "500 tons",
+                destination: "Dhaka, Bangladesh",
+                buyerRep: "Medium",
+                profit: 25000,
+                cost: 80000,
+                deadline: 30,
+                risk: "medium",
+                preferredPayment: ["Letter of Credit", "Documentary Collection"]
+            },
+            {
+                id: 2,
+                title: "Import Electronics from China",
+                goods: "Consumer Electronics",
+                quantity: "1000 units",
+                origin: "Shenzhen, China",
+                sellerRep: "High",
+                profit: 45000,
+                cost: 120000,
+                deadline: 45,
+                risk: "low",
+                preferredPayment: ["Open Account", "Letter of Credit"]
+            },
+            {
+                id: 3,
+                title: "Export Machinery to Brazil",
+                goods: "Industrial Equipment",
+                quantity: "50 units",
+                destination: "São Paulo, Brazil",
+                buyerRep: "Low",
+                profit: 60000,
+                cost: 200000,
+                deadline: 60,
+                risk: "high",
+                preferredPayment: ["Advance Payment", "Confirmed LC"]
+            },
+            {
+                id: 4,
+                title: "Import Coffee from Colombia",
+                goods: "Premium Coffee Beans",
+                quantity: "200 tons",
+                origin: "Bogotá, Colombia",
+                sellerRep: "High",
+                profit: 15000,
+                cost: 50000,
+                deadline: 21,
+                risk: "low",
+                preferredPayment: ["Open Account", "Documentary Collection"]
+            },
+            {
+                id: 5,
+                title: "Export Software to Germany",
+                goods: "Custom Software Solutions",
+                quantity: "1 project",
+                destination: "Berlin, Germany",
+                buyerRep: "High",
+                profit: 80000,
+                cost: 30000,
+                deadline: 90,
+                risk: "low",
+                preferredPayment: ["Open Account", "Advance Payment"]
+            },
+            {
+                id: 6,
+                title: "Import Rare Minerals from Congo",
+                goods: "Coltan Ore",
+                quantity: "50 tons",
+                origin: "Kinshasa, Congo",
+                sellerRep: "Medium",
+                profit: 120000,
+                cost: 500000,
+                deadline: 75,
+                risk: "very high",
+                preferredPayment: ["Confirmed LC", "Advance Payment"]
+            }
+        ];
+
+        // Trade Finance Instruments
+        const financeInstruments = {
+            "Open Account": {
+                cost: 0,
+                risk: "High",
+                speed: "Fast",
+                description: "Payment after goods delivery. Fastest but highest risk for seller.",
+                riskMultiplier: 1.5
+            },
+            "Documentary Collection": {
+                cost: 500,
+                risk: "Medium",
+                speed: "Medium",
+                description: "Bank handles documents, moderate risk with no payment guarantee.",
+                riskMultiplier: 1.0
+            },
+            "Letter of Credit": {
+                cost: 1500,
+                risk: "Low",
+                speed: "Slow",
+                description: "Bank guarantee with lower risk but higher cost.",
+                riskMultiplier: 0.3
+            },
+            "Advance Payment": {
+                cost: 0,
+                risk: "Very Low",
+                speed: "Fast",
+                description: "Payment before shipment. Safest for seller, riskiest for buyer.",
+                riskMultiplier: 0.1
+            },
+            "Supply Chain Finance": {
+                cost: 1000,
+                risk: "Low",
+                speed: "Medium",
+                description: "Immediate cash through receivables financing.",
+                riskMultiplier: 0.5
+            }
+        };
+
+        // Document Templates with Potential Bugs
+        const documentTemplates = [
+            {
+                name: "Commercial Invoice",
+                content: "Invoice #INV-2025-001\nBuyer: [BUYER_NAME]\nGoods: [GOODS_TYPE]\nQuantity: [QUANTITY]\nUnit Price: $[UNIT_PRICE]\nTotal Amount: $[TOTAL_AMOUNT]",
+                bugs: [
+                    "Invoice date is missing",
+                    "Buyer address incomplete",
+                    "Mathematical error in total calculation",
+                    "Currency not specified"
+                ]
+            },
+            {
+                name: "Bill of Lading",
+                content: "B/L No: BL-2025-001\nVessel: MV TRADE MASTER\nPort of Loading: [ORIGIN_PORT]\nPort of Discharge: [DEST_PORT]\nShipper: [SHIPPER_NAME]\nConsignee: [CONSIGNEE_NAME]",
+                bugs: [
+                    "Vessel name misspelled",
+                    "Port of discharge incorrect",
+                    "Consignee name doesn't match invoice",
+                    "Shipping marks missing"
+                ]
+            },
+            {
+                name: "Certificate of Origin",
+                content: "Certificate No: CO-2025-001\nCountry of Origin: [ORIGIN_COUNTRY]\nGoods Description: [GOODS_DESC]\nExporter: [EXPORTER_NAME]\nImporter: [IMPORTER_NAME]",
+                bugs: [
+                    "Country of origin incorrect",
+                    "Goods description too vague",
+                    "Certification authority signature missing",
+                    "Expiry date has passed"
+                ]
+            },
+            {
+                name: "Packing List",
+                content: "Packing List No: PL-2025-001\nTotal Packages: [TOTAL_PACKAGES]\nGross Weight: [GROSS_WEIGHT] kg\nNet Weight: [NET_WEIGHT] kg\nDimensions: [DIMENSIONS]",
+                bugs: [
+                    "Package count doesn't match invoice",
+                    "Weight measurements inconsistent",
+                    "Dimensions missing for some packages",
+                    "Packing material not specified"
+                ]
+            }
+        ];
+
+        // Random Events
+        const randomEvents = [
+            {
+                title: "Port Strike",
+                description: "A labor strike at the destination port has caused delays. Your shipment will be delayed by 5 days.",
+                effect: { type: "delay", value: 5 },
+                probability: 0.1
+            },
+            {
+                title: "Currency Fluctuation",
+                description: "Favorable exchange rate movement has increased your profit margin by 8%.",
+                effect: { type: "profit", value: 1.08 },
+                probability: 0.15
+            },
+            {
+                title: "Customs Inspection",
+                description: "Random customs inspection has delayed your shipment by 3 days but no issues found.",
+                effect: { type: "delay", value: 3 },
+                probability: 0.12
+            },
+            {
+                title: "Market Demand Surge",
+                description: "High demand for your goods has increased profit by 15%!",
+                effect: { type: "profit", value: 1.15 },
+                probability: 0.08
+            },
+            {
+                title: "Geopolitical Tensions",
+                description: "Increased geopolitical tensions have raised shipping costs by 5% of the original investment.",
+                effect: { type: "costIncrease", value: 0.05 },
+                probability: 0.05
+            },
+            {
+                title: "Supplier Bankruptcy",
+                description: "Your supplier has declared bankruptcy, causing a 20% loss on your invested capital for an active deal.",
+                effect: { type: "loss", value: 0.20 },
+                probability: 0.03
+            }
+        ];
+
+        // Custom confirmation dialog variables
+        let confirmResolve;
+        let confirmReject;
+
+        /**
+         * Shows a custom confirmation modal.
+         * @param {string} title - The title of the confirmation.
+         * @param {string} message - The message to display.
+         * @returns {Promise<boolean>} - A promise that resolves with true if 'Yes' is clicked, false if 'No'.
+         */
+        function showConfirmation(title, message) {
+            document.getElementById('confirmationTitle').textContent = title;
+            document.getElementById('confirmationMessage').textContent = message;
+            document.getElementById('confirmationModal').style.display = 'block';
+
+            return new Promise((resolve, reject) => {
+                confirmResolve = resolve;
+                confirmReject = reject;
+            });
+        }
+
+        // Event listeners for confirmation buttons
+        document.getElementById('confirmYesBtn').onclick = () => {
+            document.getElementById('confirmationModal').style.display = 'none';
+            if (confirmResolve) confirmResolve(true);
+        };
+
+        document.getElementById('confirmNoBtn').onclick = () => {
+            document.getElementById('confirmationModal').style.display = 'none';
+            if (confirmResolve) confirmResolve(false);
+        };
+
+        // Initialize Game
+        function init() {
+            updateStats();
+            generateNewOpportunities();
+            updateLeaderboard();
+        }
+
+        // Update UI Stats
+        function updateStats() {
+            const totalCashWithProfit = gameState.cash + gameState.totalProfit;
+            document.getElementById('cashBalance').textContent = `$${totalCashWithProfit.toLocaleString()}`;
+            // Profit is now cash balance minus initial cash
+            document.getElementById('totalProfit').textContent = `$${gameState.totalProfit.toLocaleString()}`;
+            document.getElementById('reputation').textContent = gameState.reputation;
+            document.getElementById('completedDeals').textContent = gameState.completedDeals;
+            document.getElementById('activeDeals').textContent = gameState.activeDeals.length;
+            document.getElementById('playerLevel').textContent = gameState.level;
+            document.getElementById('failedDeals').textContent = gameState.failedDeals;
+
+            // Check for win condition
+            if (gameState.targetProfit >= 100000 && gameState.completedDeals >= gameState.minDealsForWin) {
+                showGameOverModal("🏆 You Win!", `Congratulations! You've reached a profit of $${gameState.cash.toLocaleString()} with ${gameState.completedDeals} deals and mastered global finance!`);
+            } else if (gameState.cash < 0) { // Simple lose condition: go bankrupt
+                showGameOverModal("Game Over", "Oh no! You've run out of cash and gone bankrupt. Better luck next time!");
+            } else if (gameState.failedDeals >= 3) {
+                showGameOverModal("❌ Game Over", "You have failed 3 or more trade deals. Your business has collapsed.");
+            }
+        }
+
+        // Generate Trade Opportunities
+        function generateNewOpportunities() {
+            const container = document.getElementById('tradeOpportunities');
+            container.innerHTML = '';
+
+            // Show 2-3 random opportunities based on player level
+            const numOpportunities = Math.min(2 + Math.floor(gameState.level / 3), 4);
+            const shuffled = [...tradeOpportunities].sort(() => 0.5 - Math.random());
+            const opportunities = shuffled.slice(0, numOpportunities);
+
+            opportunities.forEach(opp => {
+                const oppDiv = document.createElement('div');
+                oppDiv.className = 'trade-opportunity';
+                oppDiv.innerHTML = `
+                    <div class="opportunity-header">
+                        <div class="opportunity-title">${opp.title}</div>
+                        <div class="risk-badge risk-${opp.risk}">${opp.risk} Risk</div>
+                    </div>
+                    <div class="opportunity-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Goods</div>
+                            <div class="detail-value">${opp.goods}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Quantity</div>
+                            <div class="detail-value">${opp.quantity}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">${opp.destination ? 'Destination' : 'Origin'}</div>
+                            <div class="detail-value">${opp.destination || opp.origin}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Reputation</div>
+                            <div class="detail-value">${opp.buyerRep || opp.sellerRep}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Investment</div>
+                            <div class="detail-value">
+                                <input type="number" id="investment-${opp.id}" class="investment-input" value="${opp.cost}" min="1000" step="1000">
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Potential Profit</div>
+                            <div class="detail-value" id="profit-${opp.id}">$${opp.profit.toLocaleString()}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Deadline</div>
+                            <div class="detail-value">${opp.deadline} days</div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="selectOpportunity(${opp.id})" 
+                                id="select-btn-${opp.id}">
+                            ✅ Select This Deal
+                        </button>
+                    </div>
+                `;
+                container.appendChild(oppDiv);
+
+                // Add event listener for investment input change
+                const investmentInput = document.getElementById(`investment-${opp.id}`);
+                investmentInput.addEventListener('input', (event) => {
+                    updateOpportunityInvestment(opp.id, event.target.value);
+                });
+                updateOpportunityInvestment(opp.id, opp.cost); // Initial update for button state
+            });
+        }
+
+        /**
+         * Updates the investment value for an opportunity and adjusts the UI.
+         * @param {number} oppId - The ID of the opportunity.
+         * @param {number} newCost - The new investment cost.
+         */
+        function updateOpportunityInvestment(oppId, newCost) {
+            const opportunity = tradeOpportunities.find(opp => opp.id === oppId);
+            if (!opportunity) return;
+
+            const parsedCost = parseInt(newCost);
+            if (isNaN(parsedCost) || parsedCost <= 0) {
+                // Optionally show an error or reset to a default valid value
+                return;
+            }
+
+            // Temporarily update the cost in the opportunity data for display/selection logic
+            opportunity.cost = parsedCost;
+
+            // Adjust potential profit based on the new cost (e.g., simple ratio)
+            // This is a basic example; you might have a more complex profit calculation
+            // For now, let's assume a proportional profit increase/decrease based on original ratio
+            const originalOpportunity = tradeOpportunities.find(o => o.id === oppId); // Get original to calculate ratio
+            const originalCost = originalOpportunity.cost; // Use original cost to calculate original profit
+            const originalProfit = originalOpportunity.profit;
+
+            const newProfit = Math.round((parsedCost / originalCost) * originalProfit);
+            document.getElementById(`profit-${oppId}`).textContent = `$${newProfit.toLocaleString()}`;
+            opportunity.profit = newProfit; // Update the profit in the opportunity object
+
+            const selectButton = document.getElementById(`select-btn-${oppId}`);
+            if (selectButton) {
+                if (gameState.cash < parsedCost) {
+                    selectButton.disabled = true;
+                    selectButton.textContent = '💰 Insufficient Funds';
+                } else {
+                    selectButton.disabled = false;
+                    selectButton.textContent = '✅ Select This Deal';
+                }
+            }
+        }
+
+
+        // Select Trade Opportunity
+        function selectOpportunity(oppId) {
+            const selectedOpp = tradeOpportunities.find(opp => opp.id === oppId);
+            if (!selectedOpp) return;
+
+            // Get the current investment value from the input field
+            const investmentInput = document.getElementById(`investment-${oppId}`);
+            const currentInvestment = parseInt(investmentInput.value);
+
+            if (isNaN(currentInvestment) || currentInvestment <= 0) {
+                addEvent("Invalid investment amount entered.", "negative");
+                return;
+            }
+
+            // Update the cost and profit in the selected opportunity object with the current input values
+            selectedOpp.cost = currentInvestment;
+            selectedOpp.profit = parseInt(document.getElementById(`profit-${oppId}`).textContent.replace(/[^0-9\.]/g, '')); // Parse profit from UI
+
+            gameState.currentOpportunity = selectedOpp;
+
+            // Check if player has enough cash
+            if (gameState.cash < gameState.currentOpportunity.cost) {
+                addEvent("Insufficient funds for this trade opportunity.", "negative");
+                return;
+            }
+
+            showInstrumentsSection();
+            addEvent(`Selected trade opportunity: ${gameState.currentOpportunity.title}`, "neutral");
+        }
+
+        // Show Finance Instruments Section
+        function showInstrumentsSection() {
+            document.getElementById('opportunitiesSection').style.display = 'none';
+            document.getElementById('instrumentsSection').style.display = 'block';
+            document.getElementById('documentsSection').style.display = 'none';
+
+            const container = document.getElementById('financeInstruments');
+            container.innerHTML = '';
+
+            Object.entries(financeInstruments).forEach(([name, details]) => {
+                const card = document.createElement('div');
+                card.className = 'instrument-card';
+                card.onclick = () => selectInstrument(name);
+                card.innerHTML = `
+                    <div class="instrument-name">${name}</div>
+                    <div class="instrument-details">
+                        <div><strong>Cost:</strong> $${details.cost.toLocaleString()}</div>
+                        <div><strong>Risk Level:</strong> ${details.risk}</div>
+                        <div><strong>Processing Speed:</strong> ${details.speed}</div>
+                        <div style="margin-top: 8px;">${details.description}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Select Finance Instrument
+        function selectInstrument(instrumentName) {
+            gameState.selectedInstrument = instrumentName;
+
+            // Update UI to show selection
+            const cards = document.querySelectorAll('.instrument-card');
+            cards.forEach(card => {
+                card.classList.remove('selected');
+                if (card.querySelector('.instrument-name').textContent === instrumentName) {
+                    card.classList.add('selected');
+                }
+            });
+
+            addEvent(`Selected finance instrument: ${instrumentName}`, "neutral");
+        }
+
+        // Proceed to Documents
+        function proceedToDocuments() {
+            if (!gameState.selectedInstrument) {
+                showConfirmation("Selection Required", "Please select a trade finance instrument first.")
+                    .then(result => { /* do nothing, just an alert replacement */ });
+                return;
+            }
+
+            document.getElementById('instrumentsSection').style.display = 'none';
+            document.getElementById('documentsSection').style.display = 'block';
+
+            generateDocuments();
+        }
+
+        // Generate Documents with Random Bugs
+        function generateDocuments() {
+            const container = document.getElementById('documentsList');
+            container.innerHTML = '';
+            gameState.documents = [];
+
+            documentTemplates.forEach((template, index) => {
+                const hasBug = Math.random() < 0.4; // 40% chance of bug
+                const doc = {
+                    name: template.name,
+                    hasBug: hasBug,
+                    bug: hasBug ? template.bugs[Math.floor(Math.random() * template.bugs.length)] : null,
+                    fixed: false
+                };
+
+                gameState.documents.push(doc);
+
+                const docDiv = document.createElement('div');
+                docDiv.className = `document-item ${hasBug ? 'has-bug' : ''}`;
+                docDiv.innerHTML = `
+                    <div>
+                        <strong>${doc.name}</strong>
+                        ${hasBug ? '<span style="color: #f56565; font-size: 0.9em;"> ⚠️ Issue Detected</span>' : '<span style="color: #48bb78; font-size: 0.9em;"> ✅ Verified</span>'}
+                    </div>
+                    ${hasBug ? `<button class="bug-hunt-btn" onclick="startBugHunt(${index})">Fix Issue</button>` : ''}
+                `;
+                container.appendChild(docDiv);
+            });
+        }
+
+        // Start Bug Hunt Mini-Game
+        function startBugHunt(docIndex) {
+            const doc = gameState.documents[docIndex];
+            const modal = document.getElementById('bugHuntModal');
+            const content = document.getElementById('bugHuntContent');
+
+            content.innerHTML = `
+                <p><strong>Document:</strong> ${doc.name}</p>
+                <p><strong>Issue Found:</strong> ${doc.bug}</p>
+                <div style="margin: 15px 0;">
+                    <button class="btn btn-primary" onclick="fixBug(${docIndex})" style="width: 100%;">
+                        🔧 Fix This Issue
+                    </button>
+                </div>
+            `;
+
+            modal.style.display = 'block';
+        }
+
+        // Fix Document Bug
+        function fixBug(docIndex) {
+            const doc = gameState.documents[docIndex];
+            doc.fixed = true;
+            doc.hasBug = false;
+
+            // Update UI
+            generateDocuments();
+            closeBugHunt();
+
+            // Add reputation bonus for fixing bugs
+            gameState.reputation += 2;
+            updateStats();
+            addEvent(`Fixed issue in ${doc.name}. Reputation +2!`, "positive");
+        }
+
+        // Close Bug Hunt Modal
+        function closeBugHunt() {
+            document.getElementById('bugHuntModal').style.display = 'none';
+        }
+
+        // Execute Trade
+        async function executeTrade() {
+            const unfixedBugs = gameState.documents.filter(doc => doc.hasBug && !doc.fixed).length;
+
+            if (unfixedBugs > 0) {
+                const confirmed = await showConfirmation(
+                    "Unresolved Issues",
+                    `There are ${unfixedBugs} unresolved document issues. This may cause delays and penalties. Continue anyway?`
+                );
+                if (!confirmed) {
+                    return;
+                }
+            }
+
+            const opportunity = gameState.currentOpportunity;
+            const instrument = financeInstruments[gameState.selectedInstrument];
+
+            // Calculate costs and risks
+            const instrumentCost = instrument.cost;
+            const totalCost = opportunity.cost + instrumentCost;
+
+            // Check if player has enough funds
+            if (gameState.cash < totalCost) {
+                showConfirmation("Insufficient Funds", 'You do not have enough funds to execute this trade!')
+                    .then(result => { /* do nothing, just an alert replacement */ });
+                return;
+            }
+
+            // Deduct initial costs
+            gameState.cash -= totalCost;
+
+            // Calculate success probability based on various factors
+            let successProbability = 0.85; // Base success rate
+
+            // Adjust for risk level
+            if (opportunity.risk === 'high') successProbability -= 0.2;
+            else if (opportunity.risk === 'medium') successProbability -= 0.1;
+            else if (opportunity.risk === 'very high') successProbability -= 0.3; // Added very high risk
+
+            // Adjust for instrument risk
+            successProbability += (1 - instrument.riskMultiplier) * 0.1;
+
+            // Penalty for unfixed bugs
+            successProbability -= unfixedBugs * 0.15;
+
+            // Reputation bonus
+            successProbability += (gameState.reputation - 50) / 500;
+
+            // Create active deal
+            const activeDeal = {
+                id: Date.now(),
+                title: opportunity.title,
+                profit: opportunity.profit,
+                timeRemaining: opportunity.deadline,
+                successProbability: Math.max(0.1, Math.min(0.95, successProbability)),
+                events: [],
+                completed: false,
+                initialInvestment: opportunity.cost // Store initial investment for potential loss calculation
+            };
+
+            gameState.activeDeals.push(activeDeal);
+            updateStats();
+            updateActiveDeals();
+
+            // Reset current selection
+            gameState.currentOpportunity = null;
+            gameState.selectedInstrument = null;
+            gameState.documents = [];
+
+            // Return to opportunities
+            backToOpportunities();
+
+            addEvent(`Trade executed: ${activeDeal.title}. Monitoring progress...`, "positive");
+
+            // Start deal progression
+            setTimeout(() => progressDeal(activeDeal.id), 2000); // Reduced interval for faster progression
+        }
+
+        // Progress Active Deal
+        function progressDeal(dealId) {
+            const deal = gameState.activeDeals.find(d => d.id === dealId);
+            if (!deal || deal.completed) return;
+
+            deal.timeRemaining--;
+
+            // Random events
+            if (Math.random() < 0.2) { // Increased probability of events
+                const event = randomEvents[Math.floor(Math.random() * randomEvents.length)];
+                // Check if random event should trigger based on its probability
+                if (Math.random() < event.probability) {
+                    triggerRandomEvent(event, deal);
+                }
+            }
+
+            // Check if deal is completed
+            if (deal.timeRemaining <= 0) {
+                completeDeal(deal);
+            } else {
+                updateActiveDeals();
+                // Continue progression only if the deal is not yet completed
+                if (!deal.completed) {
+                    setTimeout(() => progressDeal(dealId), 2000);
+                }
+            }
+        }
+
+        // Trigger Random Event
+        function triggerRandomEvent(event, deal) {
+            deal.events.push(event);
+
+            if (event.effect.type === 'delay') {
+                deal.timeRemaining += event.effect.value;
+                addEvent(`${event.title}: ${event.description}`, "negative");
+            } else if (event.effect.type === 'profit') {
+                deal.profit = Math.round(deal.profit * event.effect.value);
+                addEvent(`${event.title}: ${event.description}`, "positive");
+            } else if (event.effect.type === 'costIncrease') {
+                const costIncreaseAmount = deal.initialInvestment * event.effect.value;
+                gameState.cash -= costIncreaseAmount; // Deduct from cash
+                addEvent(`${event.title}: ${event.description} You lost $${costIncreaseAmount.toLocaleString()}.`, "negative");
+            } else if (event.effect.type === 'loss') {
+                const lossAmount = deal.initialInvestment * event.effect.value;
+                gameState.cash -= lossAmount; // Deduct from cash
+                addEvent(`${event.title}: ${event.description} You lost $${lossAmount.toLocaleString()}.`, "negative");
+            }
+
+            // Show event modal
+            showEventModal(event);
+            updateActiveDeals();
+            updateStats(); // Update stats after an event potentially changes cash
+        }
+
+        // Show Event Modal
+        function showEventModal(event) {
+            document.getElementById('eventTitle').textContent = event.title;
+            document.getElementById('eventDescription').textContent = event.description;
+            document.getElementById('eventModal').style.display = 'block';
+        }
+
+        // Close Event Modal
+        function closeEventModal() {
+            document.getElementById('eventModal').style.display = 'none';
+        }
+
+        // Complete Deal
+        function completeDeal(deal) {
+            deal.completed = true;
+
+            // Determine success based on probability
+            const success = Math.random() < deal.successProbability;
+
+            if (success) {
+                gameState.cash += deal.profit;
+                gameState.totalProfit += deal.profit; // Accumulate only actual earned profit
+                gameState.reputation += 5;
+                gameState.completedDeals++;
+                addEvent(`✅ Deal completed successfully: ${deal.title}. Profit: $${deal.profit.toLocaleString()}`, "positive");
+            } else {
+                gameState.failedDeals++;
+                gameState.reputation = Math.max(0, gameState.reputation - 10); // Ensure reputation doesn't go below 0
+                // For failed deals, a portion of the investment might be lost
+                const lossDueToFailure = deal.initialInvestment * 0.5; // Example: lose 50% of investment on failure
+                gameState.cash -= lossDueToFailure;
+                addEvent(`❌ Deal failed: ${deal.title}. You lost $${lossDueToFailure.toLocaleString()}. Reputation -10.`, "negative");
+            }
+
+            // Level up check
+            if (gameState.completedDeals > 0 && gameState.completedDeals % 5 === 0) {
+                gameState.level++;
+                addEvent(`🎉 Level Up! You are now level ${gameState.level}`, "positive");
+            }
+
+            // Remove from active deals
+            gameState.activeDeals = gameState.activeDeals.filter(d => d.id !== deal.id);
+
+            updateStats();
+            updateActiveDeals();
+            updateLeaderboard();
+        }
+
+        // Update Active Deals Display
+        function updateActiveDeals() {
+            const container = document.getElementById('activeDealsContainer');
+
+            if (gameState.activeDeals.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #718096; font-style: italic;">No active deals currently</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+
+            gameState.activeDeals.forEach(deal => {
+                // Assuming a fixed original deadline for progress bar visual
+                const originalDeadline = tradeOpportunities.find(opp => opp.title === deal.title)?.deadline || 30;
+                const progress = Math.max(0, (originalDeadline - deal.timeRemaining) / originalDeadline * 100);
+                const dealDiv = document.createElement('div');
+                dealDiv.style.cssText = 'background: #f7fafc; border-radius: 10px; padding: 15px; margin-bottom: 10px; border-left: 4px solid #4facfe;';
+                dealDiv.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <strong>${deal.title}</strong>
+                        <span style="color: #4a5568;">Days remaining: ${deal.timeRemaining}</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.9em;">
+                        <span>Expected Profit: $${deal.profit.toLocaleString()}</span>
+                        <span>Success Rate: ${Math.round(deal.successProbability * 100)}%</span>
+                    </div>
+                `;
+                container.appendChild(dealDiv);
+            });
+        }
+
+        /**
+         * Updates the leaderboard display.
+         * Leaderboard is sorted by total profit (including cash balance) in descending order,
+         * then by completed deals in ascending order (fewer deals for same profit).
+         */
+        // function updateLeaderboard() {
+        //     const leaderboard = document.getElementById('leaderboard');
+
+        //     if (!playerName || playerName.trim() === '') {
+        //         console.warn("Player name is missing. Leaderboard not updated.");
+        //         return;
+        //     }
+
+        //     const savedLeaders = JSON.parse(localStorage.getItem('tycoonLeaderboard')) || [];
+
+        //     // Remove existing entry for this player
+        //     const filteredLeaders = savedLeaders.filter(p => p.name !== playerName);
+
+        //     const currentPlayer = {
+        //         name: playerName,
+        //         profit: gameState.totalProfit,
+        //         deals: gameState.completedDeals,
+        //         timestamp: new Date().toISOString()
+        //     };
+
+        //     filteredLeaders.push(currentPlayer);
+
+        //     const sorted = filteredLeaders.sort((a, b) => {
+        //         if (b.profit !== a.profit) return b.profit - a.profit;
+        //         return a.deals - b.deals;
+        //     });
+
+        //     localStorage.setItem('tycoonLeaderboard', JSON.stringify(sorted.slice(0, 10)));
+
+        //     leaderboard.innerHTML = '';
+        //     sorted.slice(0, 10).forEach((player, index) => {
+        //         const item = document.createElement('div');
+        //         item.className = 'leaderboard-item';
+        //         item.innerHTML = `
+        //     <span><strong>${index + 1}. ${player.name}</strong></span>
+        //     <span>Profit: $${player.profit.toLocaleString()} (${player.deals} deals)</span>
+        // `;
+        //         leaderboard.appendChild(item);
+        //     });
+        // }
+
+        function updateLeaderboard() {
+    const leaderboard = document.getElementById('leaderboard');
+    const savedLeaders = JSON.parse(localStorage.getItem('tycoonLeaderboard')) || [];
+
+    leaderboard.innerHTML = '';
+    savedLeaders.forEach((player, index) => {
+        const item = document.createElement('div');
+        item.className = 'leaderboard-item';
+        item.innerHTML = `
+            <span><strong>${index + 1}. ${player.name}</strong></span>
+            <span>Profit: $${player.profit.toLocaleString()} (${player.deals} deals)</span>
+        `;
+        leaderboard.appendChild(item);
+    });
+}
+
+
+
+        // Navigation Functions
+        function backToOpportunities() {
+            document.getElementById('opportunitiesSection').style.display = 'block';
+            document.getElementById('instrumentsSection').style.display = 'none';
+            document.getElementById('documentsSection').style.display = 'none';
+        }
+
+        function backToInstruments() {
+            document.getElementById('instrumentsSection').style.display = 'block';
+            document.getElementById('documentsSection').style.display = 'none';
+        }
+
+        // Add Event to Log
+        function addEvent(message, type) {
+            const log = document.getElementById('eventsLog');
+            const eventDiv = document.createElement('div');
+            eventDiv.className = `event-item event-${type}`;
+            eventDiv.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+
+            log.insertBefore(eventDiv, log.firstChild);
+
+            // Keep only last 10 events
+            while (log.children.length > 10) {
+                log.removeChild(log.lastChild);
+            }
+        }
+
+        // Auto-save game state
+        setInterval(() => {
+            localStorage.setItem('tradeFinanceGame', JSON.stringify(gameState));
+            addEvent("Game saved automatically.", "neutral");
+        }, 30000); // Save every 30 seconds
+
+        // Load game state
+        function loadGame() {
+            try {
+                const saved = localStorage.getItem('tradeFinanceGame');
+                if (saved) {
+                    gameState = { ...gameState, ...JSON.parse(saved) };
+                    // Ensure all new properties exist if loading an old save
+                    gameState.initialCash = gameState.initialCash || 100000;
+                    gameState.targetProfit = gameState.targetProfit || 1000000;
+                    gameState.minDealsForWin = gameState.minDealsForWin || 10;
+                    addEvent("Game loaded successfully.", "positive");
+                } else {
+                    addEvent("No saved game found. Starting new game.", "neutral");
+                }
+            } catch (e) {
+                console.error("Error loading game state:", e);
+                addEvent("Error loading saved game. Starting new game.", "negative");
+                // Reset to initial state if loading fails
+                resetGame();
+            }
+            updateStats();
+            updateActiveDeals();
+            updateLeaderboard();
+        }
+
+        // Reset game state to initial values
+        function resetGame() {
+
+
+            gameState = {
+                cash: 100000,
+                initialCash: 100000,
+                totalProfit: 0,
+                reputation: 75,
+                completedDeals: 0,
+                activeDeals: [],
+                level: 1,
+                currentOpportunity: null,
+                selectedInstrument: null,
+                documents: [],
+                targetProfit: 100000,
+                failedDeals: 0,
+                minDealsForWin: 5
+            };
+            localStorage.removeItem('tradeFinanceGame'); // Clear local storage on reset
+            init(); // Re-initialize game
+            addEvent("Game restarted. Local storage cleared.", "neutral");
+        }
+
+        /**
+         * Confirms with the user before restarting the game.
+         */
+        async function confirmRestartGame() {
+            const confirmed = await showConfirmation(
+                "Restart Game",
+                "Are you sure you want to restart the game? Your current progress will be lost."
+            );
+            if (confirmed) {
+                resetGame();
+            }
+        }
+
+        // Show Game Over/Win Modal
+        function showGameOverModal(title, message) {
+            document.getElementById('gameOverTitle').textContent = title;
+            document.getElementById('gameOverMessage').textContent = message;
+            document.getElementById('gameOverModal').style.display = 'block';
+        }
+
+        // Restart game from game over/win modal
+        function restartGame() {
+            document.getElementById('gameOverModal').style.display = 'none';
+            resetGame();
+        }
+
+
+        // Initialize game when page loads
+        window.onload = function () {
+            loadGame();
+            // Start the deal progression checking interval
+            // This will ensure active deals continue to progress even if the game was loaded from save
+            gameState.activeDeals.forEach(deal => {
+                if (!deal.completed) {
+                    setTimeout(() => progressDeal(deal.id), 2000);
+                }
+            });
+        };
+
+        // Handle page unload - useful for unexpected closes, though setInterval handles most
+        window.onbeforeunload = function () {
+            localStorage.setItem('tradeFinanceGame', JSON.stringify(gameState));
+        };
+
+    </script>
+</body>
+
+</html>

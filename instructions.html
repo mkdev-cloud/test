@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade Flow Tycoon: Instructions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles - Consistent with original game */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #4a5568;
+            font-size: 2.8em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #4a5568;
+            font-size: 1.8em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #4facfe;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #555;
+            text-align: left; /* Align paragraphs to the left for better readability */
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 25px;
+            margin-bottom: 20px;
+            text-align: left; /* Align list items to the left */
+            color: #555;
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-decoration: none; /* For anchor tags acting as buttons */
+            display: inline-block; /* For anchor tags acting as buttons */
+            margin-top: 20px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            p, ul {
+                font-size: 1em;
+            }
+
+            .btn {
+                padding: 12px 25px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome to Trade Flow Tycoon: Global Finance Expedition! 🌍</h1>
+        <p>Embark on an exciting journey as a global finance magnate! Your goal is to navigate the complexities of international trade, secure profitable deals, and manage financial risks to build your empire.</p>
+
+        <h2>Game Objective</h2>
+        <p>Your main objective is to reach a target profit and successfully complete a minimum number of trade deals. Be careful though, failed deals and poor decisions can lead to bankruptcy or a bad reputation!</p>
+
+        <h2>How to Play</h2>
+        <ul>
+            <li><strong>Select Opportunities:</strong> Choose from various trade opportunities presented to you. Each deal has different goods, quantities, destinations, and associated risks. You can adjust your investment in a deal, which will impact potential profit.</li>
+            <li><strong>Choose Instruments:</strong> Select the most suitable trade finance instrument (e.g., Letter of Credit, Open Account) for each deal. Instruments vary in cost, risk, and speed.</li>
+            <li><strong>Fix Documents:</strong> Before executing a trade, review critical documents. Some might contain "bugs" that need to be fixed. Failing to fix them can lead to penalties or failed deals.</li>
+            <li><strong>Execute Trade:</strong> Once documents are in order, execute the trade. Active deals will progress over time, and random events might occur, affecting your profit or reputation.</li>
+            <li><strong>Monitor Progress:</strong> Keep an eye on your cash balance, total profit, reputation, and active deals. Level up by completing deals to unlock new challenges.</li>
+            <li><strong>Manage Risk:</strong> High-risk deals offer higher rewards but also come with greater chances of failure. Balance your portfolio!</li>
+            <li><strong>Events Log:</strong> Stay informed with the market events and news log, which provides updates on your trades and any global occurrences.</li>
+            <li><strong>Leaderboard:</strong> Compete with other players (or yourself!) on the leaderboard based on total profit and completed deals.</li>
+        </ul>
+
+        <h2>Winning & Losing</h2>
+        <p>Win by achieving a high total profit and completing a set number of deals. Lose by going bankrupt or failing too many deals.</p>
+
+        <a href="start_game.html" class="btn btn-primary">🚀 Play Game!</a>
+    </div>
+</body>
+
+</html>

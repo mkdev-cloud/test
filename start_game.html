@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade Flow Tycoon: Start Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles - Consistent with original game */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h3 {
+            color: #4a5568;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            width: 80%;
+            max-width: 300px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1em;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 25px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        /* Custom Modal for Alerts (to replace alert()) */
+        .custom-alert-modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1001; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .custom-alert-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #888;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .custom-alert-content h4 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.5em;
+        }
+
+        .custom-alert-content p {
+            margin-bottom: 25px;
+            color: #666;
+            font-size: 1em;
+        }
+
+        .custom-alert-content .close-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .custom-alert-content .close-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(79, 172, 254, 0.4);
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h3 {
+                font-size: 1.5em;
+            }
+
+            p {
+                font-size: 1em;
+            }
+
+            input[type="text"] {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+
+            .btn {
+                padding: 12px 25px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h3>🎮 Welcome to Trade Flow Tycoon</h3>
+        <p>Please enter your name to begin your global finance expedition:</p>
+        <input type="text" id="playerNameInput" placeholder="Your Name" maxlength="20">
+        <br>
+        <button class="btn btn-primary" onclick="submitPlayerName()">Start Game</button>
+    </div>
+
+    <!-- Custom Alert Modal -->
+    <div id="customAlertModal" class="custom-alert-modal">
+        <div class="custom-alert-content">
+            <h4 id="customAlertTitle"></h4>
+            <p id="customAlertMessage"></p>
+            <button class="close-btn" onclick="closeCustomAlert()">OK</button>
+        </div>
+    </div>
+
+
+    <script>
+        /**
+         * Shows a custom alert modal.
+         * @param {string} title - The title of the alert.
+         * @param {string} message - The message to display.
+         */
+        function showCustomAlert(title, message) {
+            document.getElementById('customAlertTitle').textContent = title;
+            document.getElementById('customAlertMessage').textContent = message;
+            document.getElementById('customAlertModal').style.display = 'flex'; // Use flex to center
+        }
+
+        /**
+         * Closes the custom alert modal.
+         */
+        function closeCustomAlert() {
+            document.getElementById('customAlertModal').style.display = 'none';
+        }
+
+        /**
+         * Handles the submission of the player's name.
+         * Stores the name in localStorage and redirects to the main game page.
+         */
+        function submitPlayerName() {
+            const input = document.getElementById('playerNameInput').value.trim();
+
+            if (!input) {
+                showCustomAlert("Input Required", "Please enter your name to start the game.");
+                return;
+            }
+            if (input.length > 20) {
+                showCustomAlert("Name Too Long", "Please enter a name no longer than 20 characters.");
+                return;
+            }
+
+            localStorage.setItem('tycoonPlayerName', input);
+            window.location.href = 'main_game.html'; // Redirect to the main game page
+        }
+
+        // Add event listener for Enter key on the input field
+        document.getElementById('playerNameInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                submitPlayerName();
+            }
+        });
+    </script>
+</body>
+
+</html>
