@@ -1,0 +1,65 @@
+To install and run the LC Puzzle Race game on your local machine, you'll need a Node.js environment set up, as it's a React application.
+
+Here are the steps:
+
+Save the file: Save the provided code into a file named LCPuzzleRace.jsx (or .tsx if you have TypeScript set up, but .jsx is fine for this example).
+
+Create a React Project:
+If you don't already have a React project, you can create one using Create React App or Vite:
+
+Using Create React App (CRA):
+Bash
+
+npx create-react-app lc-puzzle-game
+cd lc-puzzle-game
+Using Vite (Recommended for speed):
+Bash
+
+npm create vite@latest lc-puzzle-game -- --template react
+cd lc-puzzle-game
+npm install
+Install Dependencies:
+The component uses lucide-react for icons. You need to install it:
+
+Bash
+
+npm install lucide-react
+Integrate the Component:
+
+Place the LCPuzzleRace.jsx file (the code you provided) inside your project's src folder (e.g., src/LCPuzzleRace.jsx).
+
+Open src/App.js (or src/App.jsx/src/App.tsx) and replace its content with the following:
+
+JavaScript
+
+import React from 'react';
+import LCPuzzleRace from './LCPuzzleRace'; // Adjust path if needed
+
+function App() {
+  return (
+    <div className="App">
+      <LCPuzzleRace />
+    </div>
+  );
+}
+
+export default App;
+Start the Development Server:
+Run the following command in your project's root directory:
+
+For Create React App:
+Bash
+
+npm start
+For Vite:
+Bash
+
+npm run dev
+This will typically open your application in your web browser at http://localhost:3000 (for CRA) or http://localhost:5173 (for Vite), where you can interact with the LC Puzzle Race game.
+
+
+
+
+
+
+
