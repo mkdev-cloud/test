@@ -1,0 +1,3379 @@
+
+
+Python Q1 (Indentation Error)**
+
+    def greet_user(name):
+        print(f"Hello, {name}!")
+        print("Welcome to our program!")
+    
+Python Q2 (Logic Error)**   
+
+    def can_vote(age):
+        if age >= 18:
+            return True
+        return False
+    
+Python Q3 (Syntax Error)**
+
+    def check_positive(num):
+        if num > 0:
+            return "Positive"
+        else:
+            return "Not positive"
+    
+Python Q4 (Type Error)**
+
+    age = 30
+    message = "I am " + str(age) + " years old."
+    
+Python Q5 (Mutable Default Argument)**
+
+    def add_item(item, shopping_list=None):
+        if shopping_list is None:
+            shopping_list = []
+        shopping_list.append(item)
+        return shopping_list
+    
+Python Q6 (Indentation Error)**
+
+    def greet_user(name):
+        print(f"Hello, {name}!")
+    
+Python Q7 (Logic Error)**
+
+    def can_vote(age):
+        if age >= 18:
+            return True
+        return False
+    
+Python Q8 (Syntax Error)**
+
+    def check_positive(num):
+        if num > 0:
+            return "Positive"
+    
+Python Q9 (Type Error)**
+
+    value = 10
+    text = "Number: " + str(value)
+    
+Python Q10 (Mutable Default Argument)**
+
+    def log_message(msg, logs=None):
+        if logs is None:
+            logs = []
+        logs.append(msg)
+        return logs
+    
+Python Q11 (Syntax Error)**
+
+    print("Hello Python")
+    
+Python Q12 (Logic Error)**
+
+    for i in range(1, 6):
+        print(i)
+    
+Python Q13 (Indentation Error)**
+
+    class MyClass:
+        def my_method():
+            pass
+    
+Python Q14 (Type Error)**
+
+    data = {'name': 'Alice'}
+    print(data['name'])
+    
+Python Q15 (Mutable Default Argument)**
+
+    def process_data(data, config=None):
+        if config is None:
+            config = {}
+        config['processed'] = True
+        return config
+    
+Python Q16 (Syntax Error)**
+
+    print('This is a string')
+    
+Python Q17 (Logic Error)**
+
+    is_admin = False
+    is_editor = True
+    if is_admin or (is_editor and not is_admin):
+        print('Access granted')
+    
+Python Q18 (Indentation Error)**
+
+    if True:
+        print('Inside if')
+    print('Outside if')
+    
+Python Q19 (Type Error)**
+
+    my_list = [1, 2, 3]
+    my_list[0] = 4
+    
+Python Q20 (Mutable Default Argument)**
+
+    def process_data(data, config=None):
+        if config is None:
+            config = {}
+        config['processed'] = True
+        return config
+    
+
+### Medium
+
+Python Q1 (Mutable Default Argument)**
+
+    def add_item(item, shopping_list=None):
+        if shopping_list is None:
+            shopping_list = []
+        shopping_list.append(item)
+        return shopping_list
+    
+Python Q2 (Closures/Late Binding)**
+
+    funcs = []
+    for i in range(3):
+        def f(j=i):
+            print(j)
+        funcs.append(f)
+    for f in funcs:
+        f()
+    
+Python Q3 (Shallow Copy)**
+
+    import copy
+    original = [[1, 2], [3, 4]]
+    copy_deep = copy.deepcopy(original)
+    copy_deep[0][0] = 99
+    
+Python Q4 (Mutable Default Argument)**
+
+    def cache_result(arg, cache=None):
+        if cache is None:
+            cache = {}
+        if arg in cache:
+            return cache[arg]
+        result = arg * 2
+        cache[arg] = result
+        return result
+    
+Python Q5 (Closures/Late Binding)**
+
+    actions = []
+    for x in [1, 2, 3]:
+        actions.append(lambda val=x: val * 2)
+    print([action() for action in actions])
+    
+Python Q6 (Shallow Copy)**
+
+    import copy
+    list_of_lists = [[1], [2], [3]]
+    deep_copy_list = copy.deepcopy(list_of_lists)
+    deep_copy_list[0].append(9)
+    
+Python Q7 (Mutable Default Argument)**
+
+    def process_names(name, processed_names=None):
+        if processed_names is None:
+            processed_names = []
+        processed_names.append(name.upper())
+        return processed_names
+    
+Python Q8 (Closures/Late Binding)**
+
+    def make_multipliers():
+        return [lambda x, i=i: i * x for i in range(4)]
+    multipliers = make_multipliers()
+    print([m(2) for m in multipliers])
+    
+Python Q9 (Shallow Copy)**
+
+    import copy
+    dict1 = {'a': [1,2]}
+    dict2 = copy.deepcopy(dict1)
+    dict2['a'].append(3)
+    
+Python Q10 (Mutable Default Argument)**
+
+    def create_object(name, attributes=None):
+        if attributes is None:
+            attributes = {}
+        attributes['timestamp'] = 'now'
+        return attributes
+    
+Python Q11 (Closures/Late Binding)**
+
+    def factory():
+        functions = []
+        for j in range(3):
+            functions.append(lambda val=j: val)
+        return functions
+    funcs = factory()
+    print([f() for f in funcs])
+    
+Python Q12 (Shallow Copy)**
+
+    import copy
+    matrix = [[1, 2], [3, 4]]
+    new_matrix = copy.deepcopy(matrix)
+    new_matrix[0][0] = 0
+    
+Python Q13 (Mutable Default Argument)**
+
+    def add_log_entry(entry, log_entries=None):
+        if log_entries is None:
+            log_entries = []
+        log_entries.append(entry)
+        return log_entries
+    
+Python Q14 (Closures/Late Binding)**
+
+    callbacks = []
+    for k in range(5):
+        callbacks.append(lambda val=k: val*val)
+    print([cb() for cb in callbacks])
+    
+Python Q15 (Shallow Copy)**
+
+    import copy
+    nested_dict = {'data': {'value': 10}}
+    copy_dict = copy.deepcopy(nested_dict)
+    copy_dict['data']['value'] = 20
+    
+Python Q16 (Mutable Default Argument)**
+
+    def configure_app(settings=None):
+        if settings is None:
+            settings = {}
+        settings['configured'] = True
+        return settings
+    
+Python Q17 (Closures/Late Binding)**
+
+    def get_multipliers():
+        multipliers = []
+        for factor in range(1, 4):
+            multipliers.append(lambda x, f=factor: x * f)
+        return multipliers
+    funcs = get_multipliers()
+    print([f(5) for f in funcs])
+    
+Python Q18 (Shallow Copy)**
+
+    import copy
+    set_of_lists = [{1}, {2}, {3}]
+    copy_set = copy.deepcopy(set_of_lists)
+    list(copy_set)[0].add(4)
+    
+Python Q19 (Mutable Default Argument)**
+
+    def add_to_set(element, current_set=None):
+        if current_set is None:
+            current_set = set()
+        current_set.add(element)
+        return current_set
+    
+Python Q20 (Closures/Late Binding)**
+
+    def generate_greeters():
+        greeters = []
+        for name in ['Alice', 'Bob']:
+            greeters.append(lambda n=name: f'Hello, {n}')
+        return greeters
+    funcs = generate_greeters()
+    print([f() for f in funcs])
+    
+
+### Hard
+
+Python Q1 (Concurrency Issue)**
+
+    import threading
+
+    counter = 0
+    lock = threading.Lock()
+    def increment():
+        global counter
+        for _ in range(100000):
+            with lock:
+                counter += 1
+
+    threads = [threading.Thread(target=increment) for _ in range(5)]
+    for t in threads: t.start()
+    for t in threads: t.join()
+    print(f"Final counter: {counter}")
+    
+Python Q2 (Memory Leak)**
+
+    import weakref
+
+    class Node:
+        def __init__(self, value):
+            self.value = value
+            self.next = None
+            self.prev = None
+
+        def __del__(self):
+            print(f"Deleting Node {self.value}")
+
+    n1 = Node(1)
+    n2 = Node(2)
+    n1.next = n2
+    n2.prev = weakref.ref(n1) # Use weak reference for back-pointer
+
+    del n1
+    del n2
+    import gc
+    gc.collect()
+    print(len(gc.get_objects()))
+    
+Python Q3 (Concurrency Issue)**
+
+    import threading
+
+    count = {'value': 0}
+    lock = threading.Lock()
+    def add_to_count():
+        for _ in range(100000):
+            with lock:
+                count['value'] += 1
+
+    threads = [threading.Thread(target=add_to_count) for _ in range(5)]
+    for t in threads: t.start()
+    for t in threads: t.join()
+    print(f"Final count: {count['value']}")
+    
+Python Q4 (Memory Leak)**
+
+    import weakref
+
+    class LinkedListNode:
+        def __init__(self, data):
+            self.data = data
+            self.next = None
+
+        def set_next(self, node):
+            self.next = node
+
+    node1 = LinkedListNode(1)
+    node2 = LinkedListNode(2)
+    node1.set_next(node2)
+    # node2.set_next(weakref.ref(node1)) # No direct circular ref for simple lists
+
+    del node1
+    del node2
+    import gc
+    gc.collect()
+    
+Python Q5 (Concurrency Issue)**
+
+    import threading
+
+    shared_data = [0]
+    lock = threading.Lock()
+    def modify_data():
+        for _ in range(100000):
+            with lock:
+                shared_data[0] += 1
+
+    threads = [threading.Thread(target=modify_data) for _ in range(5)]
+    for t in threads: t.start()
+    for t in threads: t.join()
+    print(f"Final data: {shared_data[0]}")
+    
+Python Q6 (Memory Leak)**
+
+    import weakref
+
+    class A:
+        def __init__(self):
+            self.b = None
+    class B:
+        def __init__(self):
+            self.a = None
+
+    a = A()
+    b = B()
+    a.b = b
+    b.a = weakref.ref(a) # Use weakref to break cycle
+
+    del a
+    del b
+    import gc
+    gc.collect()
+    
+Python Q7 (Concurrency Issue)**
+
+    import threading
+
+    value = 0
+    lock = threading.Lock()
+
+    def increment_value():
+        global value
+        for _ in range(100000):
+            with lock:
+                temp = value
+                value = temp + 1
+
+    threads = [threading.Thread(target=increment_value) for _ in range(5)]
+    for t in threads: t.start()
+    for t in threads: t.join()
+    print(f"Final value: {value}")
+    
+Python Q8 (Memory Leak)**
+
+    import weakref
+
+    class Parent:
+        def __init__(self, child):
+            self.child = child
+    class Child:
+        def __init__(self, parent_ref):
+            self.parent = parent_ref
+
+    p = Parent(None)
+    c = Child(weakref.ref(p))
+    p.child = c
+
+    del p
+    del c
+    import gc
+    gc.collect()
+    
+Python Q9 (Concurrency Issue)**
+
+    import threading
+
+    data_list = []
+    lock = threading.Lock()
+    def append_data():
+        for i in range(10000):
+            with lock:
+                data_list.append(i)
+
+    threads = [threading.Thread(target=append_data) for _ in range(10)]
+    for t in threads: t.start()
+    for t in threads: t.join()
+    print(f"List length: {len(data_list)}")
+    
+Python Q10 (Memory Leak)**
+
+    import weakref
+
+    class ClassA:
+        def __init__(self):
+            self.connected_obj = None
+    class ClassB:
+        def __init__(self):
+            self.connected_obj = None
+
+    o1 = ClassA()
+    o2 = ClassB()
+    o1.connected_obj = o2
+    o2.connected_obj = weakref.ref(o1)
+
+    del o1
+    del o2
+    import gc
+    gc.collect()
+    
+Python Q11 (Concurrency Issue)**
+
+    import threading
+
+    counter = 0
+    lock = threading.Lock()
+    def increment():
+        global counter
+        for _ in range(100000):
+            with lock:
+                counter += 1
+
+    threads = [threading.Thread(target=increment) for _ in range(5)]
+    for t in threads: t.start()
+    for t in threads: t.join()
+    print(f"Final counter: {counter}")
+    
+Python Q12 (Memory Leak)**
+
+    import weakref
+
+    class Node:
+        def __init__(self, value):
+            self.value = value
+            self.next = None
+            self.prev = None
+
+        def __del__(self):
+            print(f"Deleting Node {self.value}")
+
+    n1 = Node(1)
+    n2 = Node(2)
+    n1.next = n2
+    n2.prev = weakref.ref(n1)
+
+    del n1
+    del n2
+    import gc
+    gc.collect()
+    print(len(gc.get_objects()))
+    
+Python Q13 (Concurrency Issue)**
+
+    import threading
+
+    count = {'value': 0}
+    lock = threading.Lock()
+    def add_to_count():
+        for _ in range(100000):
+            with lock:
+                count['value'] += 1
+
+    threads = [threading.Thread(target=add_to_count) for _ in range(5)]
+    for t in threads: t.start()
+    for t in threads: t.join()
+    print(f"Final count: {count['value']}")
+    
+Python Q14 (Memory Leak)**
+
+    import weakref
+
+    class LinkedListNode:
+        def __init__(self, data):
+            self.data = data
+            self.next = None
+
+        def set_next(self, node):
+            self.next = node
+
+    node1 = LinkedListNode(1)
+    node2 = LinkedListNode(2)
+    node1.set_next(node2)
+    # node2.set_next(weakref.ref(node1))
+
+    del node1
+    del node2
+    import gc
+    gc.collect()
+    
+Python Q15 (Concurrency Issue)**
+
+    import threading
+
+    shared_dict = {'key': 0}
+    lock = threading.Lock()
+    def update_dict():
+        for _ in range(100000):
+            with lock:
+                shared_dict['key'] += 1
+
+    threads = [threading.Thread(target=update_dict) for _ in range(5)]
+    for t in threads: t.start()
+    for t in threads: t.join()
+    print(f"Final dict value: {shared_dict['key']}")
+    
+Python Q16 (Memory Leak)**
+
+    import weakref
+
+    class Parent:
+        def __init__(self, child):
+            self.child = child
+    class Child:
+        def __init__(self, parent_ref):
+            self.parent = parent_ref
+
+    p = Parent(None)
+    c = Child(weakref.ref(p))
+    p.child = c
+
+    del p
+    del c
+    import gc
+    gc.collect()
+    
+Python Q17 (Concurrency Issue)**
+
+    import threading
+    import time
+
+    class Worker:
+        def __init__(self, name):
+            self.name = name
+            self.is_running = True
+            self.thread = threading.Thread(target=self.run)
+
+        def run(self):
+            while self.is_running:
+                # Simulate work
+                time.sleep(0.001)
+            print(f"Worker {self.name} stopped.")
+
+        def stop(self):
+            self.is_running = False
+
+    worker1 = Worker("A")
+    worker2 = Worker("B")
+
+    worker1.thread.start()
+    worker2.thread.start()
+
+    time.sleep(0.1)
+
+    worker1.stop()
+    worker2.stop()
+
+    worker1.thread.join()
+    worker2.thread.join()
+    
+Python Q18 (Memory Leak)**
+
+    import weakref
+
+    class Observer:
+        def __init__(self, target):
+            self.target = weakref.ref(target)
+
+    class Subject:
+        def __init__(self):
+            self.observers = []
+
+        def add_observer(self, observer):
+            self.observers.append(observer)
+
+    s = Subject()
+    o = Observer(s)
+    s.add_observer(o)
+
+    del s
+    del o
+    import gc
+    gc.collect()
+    
+Python Q19 (Concurrency Issue)**
+
+    import threading
+    import queue
+
+    q = queue.Queue()
+
+    def worker():
+        while True:
+            item = q.get()
+            if item is None:
+                break
+            print(f"Processing item: {item}")
+            q.task_done()
+
+    threads = []
+    for _ in range(3):
+        t = threading.Thread(target=worker)
+        t.start()
+        threads.append(t)
+
+    for i in range(10):
+        q.put(i)
+
+    q.join() # Wait for all tasks to be processed
+
+    for _ in range(3):
+        q.put(None) # Signal workers to exit
+
+    for t in threads:
+        t.join()
+    
+Python Q20 (Memory Leak)**
+
+    import weakref
+
+    class Cache:
+        def __init__(self):
+            self.data = {}
+
+        def add(self, key, value):
+            self.data[key] = value
+
+        def get(self, key):
+            return self.data.get(key)
+
+    class Item:
+        def __init__(self, id, cache):
+            self.id = id
+            self.cache = weakref.ref(cache) # Use weakref
+
+    c = Cache()
+    item1 = Item(1, c)
+    c.add("item1", item1)
+
+    del item1
+    del c
+    import gc
+    gc.collect()
+    
+
+## JavaScript
+
+### Easy
+
+JavaScript Q1 (Type Coercion)**
+
+    console.log(10 + "5"); // Outputs "105" as 10 is coerced to a string
+    
+JavaScript Q2 (Scope/Hoisting)**
+
+    function example() {
+        var x = 10;
+        if (true) {
+            let y = 20; // Use let for block scope
+            console.log(x); // 10
+            console.log(y); // 20
+        }
+        console.log(x); // 10
+        // console.log(y); // ReferenceError: y is not defined
+    }
+    example();
+    
+JavaScript Q3 (Comparison Operator)**
+
+    if ("" == 0) { // true, due to type coercion
+        console.log("Empty string is loosely equal to 0");
+    }
+    if ("" === 0) { // false, strict equality checks type
+        console.log("Empty string is strictly equal to 0");
+    }
+    
+JavaScript Q4 (Asynchronous Behavior)**
+
+    console.log("Start");
+    setTimeout(() => {
+        console.log("Timeout");
+    }, 0);
+    console.log("End");
+    
+JavaScript Q5 (Array Method Immutability)**
+
+    const arr = [1, 2, 3];
+    const newArr = arr.slice(); // Use slice() or spread (...) for a new array
+    newArr.push(4);
+    console.log(arr); // [1, 2, 3]
+    console.log(newArr); // [1, 2, 3, 4]
+    
+JavaScript Q6 (Type Coercion)**
+
+    console.log(5 + "3"); // "53"
+    
+JavaScript Q7 (Scope/Hoisting)**
+
+    function testScope() {
+        if (true) {
+            let z = 30; // Corrected to let
+            console.log(z);
+        }
+        // console.log(z); // This would be a ReferenceError
+    }
+    testScope();
+    
+JavaScript Q8 (Comparison Operator)**
+
+    console.log(null == undefined); // true
+    console.log(null === undefined); // false
+    
+JavaScript Q9 (Asynchronous Behavior)**
+
+    function fetchData() {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve("Data fetched");
+            }, 100);
+        });
+    }
+
+    async function processData() {
+        console.log("Fetching...");
+        const data = await fetchData();
+        console.log(data);
+    }
+    processData();
+    console.log("Process initiated");
+    
+JavaScript Q10 (Array Method Immutability)**
+
+    const originalArray = [1, 2, 3];
+    const mappedArray = originalArray.map(num => num * 2);
+    console.log(originalArray); // [1, 2, 3]
+    console.log(mappedArray); // [2, 4, 6]
+    
+JavaScript Q11 (Type Coercion)**
+
+    console.log("5" * "2"); // 10 (string to number coercion)
+    
+JavaScript Q12 (Scope/Hoisting)**
+
+    for (let i = 0; i < 3; i++) { // Changed var to let
+        setTimeout(() => console.log(i), 100);
+    }
+    
+JavaScript Q13 (Comparison Operator)**
+
+    console.log(NaN == NaN); // false
+    console.log(NaN === NaN); // false
+    // Use Number.isNaN() for reliable NaN check
+    console.log(Number.isNaN(NaN)); // true
+    
+JavaScript Q14 (Asynchronous Behavior)**
+
+    function logOrder() {
+        Promise.resolve().then(() => console.log('Promise resolved'));
+        console.log('Synchronous');
+    }
+    logOrder();
+    
+JavaScript Q15 (Array Method Immutability)**
+
+    const list = [{id: 1, name: 'A'}, {id: 2, name: 'B'}];
+    const updatedList = list.map(item =>
+        item.id === 1 ? { ...item, name: 'C' } : item
+    );
+    console.log(list); // Original array unchanged
+    console.log(updatedList); // New array with modified item
+    
+JavaScript Q16 (Type Coercion)**
+
+    console.log(true + true); // 2
+    
+JavaScript Q17 (Scope/Hoisting)**
+
+    function greet() {
+        const message = "Hello";
+        if (true) {
+            const message = "Hi"; // This is a new, block-scoped constant
+            console.log(message); // Hi
+        }
+        console.log(message); // Hello
+    }
+    greet();
+    
+JavaScript Q18 (Comparison Operator)**
+
+    const obj1 = {a: 1};
+    const obj2 = {a: 1};
+    console.log(obj1 == obj2); // false (different objects)
+    console.log(obj1 === obj2); // false (different objects)
+    // To compare content, you'd need a deep comparison function
+    
+JavaScript Q19 (Asynchronous Behavior)**
+
+    async function doSomething() {
+        console.log('A');
+        await new Promise(resolve => setTimeout(resolve, 0));
+        console.log('B');
+    }
+    doSomething();
+    console.log('C');
+    
+JavaScript Q20 (Array Method Immutability)**
+
+    const items = [1, 2, 3];
+    const filteredItems = items.filter(item => item > 1);
+    console.log(items); // [1, 2, 3]
+    console.log(filteredItems); // [2, 3]
+    
+
+### Medium
+
+JavaScript Q1 (Closures in Loops)**
+
+    for (let i = 0; i < 5; i++) { // Changed 'var' to 'let'
+        setTimeout(function() {
+            console.log(i);
+        }, 100);
+    }
+    
+JavaScript Q2 (Async/Await and Event Loop)**
+
+    async function getUserData() {
+        console.log('Fetching user...');
+        await new Promise(resolve => setTimeout(resolve, 100)); // Simulate async fetch
+        console.log('User fetched.');
+        return { name: 'Alice' };
+    }
+
+    async function processUserData() {
+        const user = await getUserData();
+        console.log('Processing user:', user.name);
+    }
+
+    processUserData();
+    console.log('Application started.');
+    
+JavaScript Q3 (Mutable Object Reference)**
+
+    const obj = { value: 10 };
+    function changeValue(o) {
+        const newObj = { ...o }; // Create a shallow copy
+        newObj.value = 20;
+        return newObj;
+    }
+    const newObject = changeValue(obj);
+    console.log(obj.value); // 10
+    console.log(newObject.value); // 20
+    
+JavaScript Q4 (Hoisting and TDZ)**
+
+    function exampleScope() {
+        console.log(foo); // ReferenceError if 'foo' was let/const
+        var foo = "hello"; // 'var' is hoisted and initialized to undefined
+        console.log(foo); // hello
+    }
+    exampleScope();
+    
+JavaScript Q5 (Event Loop - Microtasks vs Macrotasks)**
+
+    console.log('Start');
+    Promise.resolve().then(() => console.log('Promise 1'));
+    setTimeout(() => console.log('Timeout 1'), 0);
+    Promise.resolve().then(() => console.log('Promise 2'));
+    console.log('End');
+    
+JavaScript Q6 (Closures and Variable Capture)**
+
+    function createCounter() {
+        let count = 0;
+        return {
+            increment: function() {
+                count++;
+                return count;
+            },
+            getCount: function() {
+                return count;
+            }
+        };
+    }
+    const counter = createCounter();
+    console.log(counter.increment()); // 1
+    console.log(counter.increment()); // 2
+    
+JavaScript Q7 (Async/Await in Array Methods)**
+
+    async function processAll() {
+        const ids = [1, 2, 3];
+        const results = await Promise.all(ids.map(async (id) => {
+            await new Promise(resolve => setTimeout(resolve, 50)); // Simulate async
+            return `Processed ${id}`;
+        }));
+        console.log(results);
+    }
+    processAll();
+    
+JavaScript Q8 (Mutable Object Reference)**
+
+    const settings = { theme: 'dark' };
+    function updateSettings(currentSettings) {
+        return { ...currentSettings, theme: 'light' }; // Create a new object
+    }
+    const newSettings = updateSettings(settings);
+    console.log(settings.theme); // dark
+    console.log(newSettings.theme); // light
+    
+JavaScript Q9 (Hoisting with Function Declarations vs. Expressions)**
+
+    // Function declaration - hoisted
+    myFunction(); // "Hello from function declaration"
+    function myFunction() {
+        console.log("Hello from function declaration");
+    }
+
+    // Function expression - not hoisted in the same way
+    // myOtherFunction(); // TypeError: myOtherFunction is not a function
+    const myOtherFunction = function() {
+        console.log("Hello from function expression");
+    };
+    myOtherFunction();
+    
+JavaScript Q10 (Event Loop - Macrotask Queue)**
+
+    console.log('A');
+    setTimeout(() => console.log('B'), 0);
+    console.log('C');
+    
+JavaScript Q11 (Closures and Event Listeners)**
+
+    // HTML: <button id="myButton">Click Me</button>
+    // JS:
+    const myButton = document.getElementById('myButton');
+    let clickCount = 0;
+    function handleClick() {
+        clickCount++;
+        console.log(`Button clicked ${clickCount} times`);
+    }
+    myButton.addEventListener('click', handleClick);
+    // To remove: myButton.removeEventListener('click', handleClick);
+    
+JavaScript Q12 (Mutable Default Parameters - Not a direct JS concept but common pattern)**
+
+    function processArray(arr = []) { // Default parameter creates a new array if none provided
+        arr.push('new_item');
+        return arr;
+    }
+    console.log(processArray()); // ['new_item']
+    console.log(processArray()); // ['new_item']
+    const myArr = [1,2];
+    console.log(processArray(myArr)); // [1, 2, 'new_item']
+    console.log(myArr); // [1, 2, 'new_item']
+    
+JavaScript Q13 (Async/Await Error Handling)**
+
+    async function fetchDataWithError() {
+        try {
+            const response = await fetch('non-existent-url');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.error('Fetch failed:', error.message);
+        }
+    }
+    fetchDataWithError();
+    
+JavaScript Q14 (Closures and `this` context)**
+
+    const myObject = {
+        name: 'Context',
+        logName: function() {
+            // Use an arrow function to preserve 'this' from the outer scope
+            setTimeout(() => {
+                console.log(this.name);
+            }, 100);
+        }
+    };
+    myObject.logName(); // Outputs "Context"
+    
+JavaScript Q15 (Event Loop - Microtasks and `queueMicrotask`)**
+
+    console.log('Synchronous 1');
+    Promise.resolve().then(() => console.log('Promise Microtask'));
+    queueMicrotask(() => console.log('QueueMicrotask'));
+    console.log('Synchronous 2');
+    
+JavaScript Q16 (Mutable Object Reference in Function Arguments)**
+
+    function addItem(cart, item) {
+        return [...cart, item]; // Return a new array with the item added
+    }
+    const myCart = ['apple'];
+    const newCart = addItem(myCart, 'banana');
+    console.log(myCart); // ['apple']
+    console.log(newCart); // ['apple', 'banana']
+    
+JavaScript Q17 (Async/Await with `forEach`)**
+
+    async function processItems() {
+        const items = [1, 2, 3];
+        for (const item of items) { // Use for...of for sequential async operations
+            await new Promise(resolve => setTimeout(resolve, 50));
+            console.log(`Processed ${item}`);
+        }
+        console.log('All items processed');
+    }
+    processItems();
+    
+JavaScript Q18 (Closures and Lexical Scope)**
+
+    function outer() {
+        let x = 10;
+        function inner() {
+            // inner has access to x from its lexical environment
+            console.log(x);
+        }
+        return inner;
+    }
+    const innerFn = outer();
+    innerFn(); // 10
+    
+JavaScript Q19 (Event Loop - Rendering and Script Execution)**
+
+    // This is more about browser rendering behavior. JavaScript execution is single-threaded.
+    // To update UI synchronously after a long task, break it up or use Web Workers.
+    // Example: Update UI, then schedule next part of computation with setTimeout(..., 0)
+    function longRunningTask() {
+        let i = 0;
+        const intervalId = setInterval(() => {
+            console.log(i++);
+            if (i > 5) {
+                clearInterval(intervalId);
+            }
+        }, 10);
+    }
+    // longRunningTask(); // This would block for a short while
+    // In a browser, for UI updates, you'd want to yield control periodically.
+    
+JavaScript Q20 (Mutable Objects in `useState` - React concept)**
+
+    // This example is React-specific and assumes a React component.
+    // In React, to update an object in state, you create a new object.
+    /*
+    import React, { useState } from 'react';
+
+    function MyComponent() {
+        const [user, setUser] = useState({ name: 'Alice', age: 30 });
+
+        const handleClick = () => {
+            // Correct way: create a new object with updated properties
+            setUser(prevUser => ({ ...prevUser, age: prevUser.age + 1 }));
+        };
+
+        return (
+            <div>
+                <p>Name: {user.name}, Age: {user.age}</p>
+                <button onClick={handleClick}>Grow Older</button>
+            </div>
+        );
+    }
+    */
+    
+
+### Hard
+
+JavaScript Q1 (Event Loop/Concurrency)**
+
+    console.log('Script Start');
+
+    setTimeout(() => {
+      console.log('setTimeout 1');
+      Promise.resolve().then(() => console.log('Promise 3 (from setTimeout)'));
+    }, 0);
+
+    Promise.resolve().then(() => {
+      console.log('Promise 1');
+      setTimeout(() => console.log('setTimeout 2 (from Promise 1)'), 0);
+    }).then(() => {
+      console.log('Promise 2');
+    });
+
+    console.log('Script End');
+    
+JavaScript Q2 (Memory Leak)**
+
+    let globalData = null;
+
+    function createClosure() {
+      let largeArray = new Array(1000000).fill('some data');
+      function inner() {
+        // This closure captures largeArray
+        console.log(largeArray.length);
+      }
+      globalData = inner; // A global reference keeps the closure alive
+    }
+
+    createClosure();
+    // To release memory:
+    // globalData = null; // Remove the global reference to the closure
+    
+JavaScript Q3 (Event Loop/Concurrency)**
+
+    async function executeOrder() {
+        console.log('A');
+        await Promise.resolve();
+        console.log('B');
+    }
+
+    console.log('C');
+    executeOrder();
+    console.log('D');
+    
+JavaScript Q4 (Memory Leak)**
+
+    const elements = [];
+    for (let i = 0; i < 100; i++) {
+        const div = document.createElement('div');
+        div.innerText = `Div ${i}`;
+        document.body.appendChild(div);
+        elements.push(div); // Keep a reference
+    }
+
+    // Later, if elements are removed from DOM but references persist:
+    // elements.forEach(el => el.remove()); // Remove from DOM
+    // elements.length = 0; // Clear the array to release references
+    
+JavaScript Q5 (Event Loop/Concurrency)**
+
+    console.log('Sync 1');
+    Promise.resolve().then(() => {
+      console.log('Promise Microtask 1');
+      Promise.resolve().then(() => console.log('Promise Microtask 2'));
+    });
+    setTimeout(() => console.log('Timeout Macrotask'), 0);
+    console.log('Sync 2');
+    
+JavaScript Q6 (Memory Leak)**
+
+    let dataCache = {};
+
+    function addData(key, value) {
+        dataCache[key] = value;
+    }
+
+    function removeData(key) {
+        delete dataCache[key]; // Explicitly delete properties
+    }
+
+    // Usage:
+    addData('user1', { /* large user object */ });
+    // ...
+    removeData('user1'); // Call when data is no longer needed
+    
+JavaScript Q7 (Event Loop/Concurrency)**
+
+    async function process() {
+        console.log('Before await');
+        await new Promise(resolve => setTimeout(resolve, 10));
+        console.log('After await');
+    }
+    console.log('Start');
+    process();
+    console.log('End');
+    
+JavaScript Q8 (Memory Leak)**
+
+    // In Node.js or browser, global variables persist.
+    // If you assign large objects to globals and never nullify them, they'll stay.
+    let hugeObject = { /* very large data structure */ };
+    // To avoid leak:
+    // hugeObject = null; // When no longer needed
+    
+JavaScript Q9 (Event Loop/Concurrency)**
+
+    console.log('Script Start');
+    const promise = new Promise(resolve => {
+        console.log('Promise constructor');
+        resolve('Promise resolved!');
+    });
+
+    promise.then(value => {
+        console.log(value);
+    });
+
+    console.log('Script End');
+    
+JavaScript Q10 (Memory Leak)**
+
+    function setupEventHandlers() {
+        const myElement = document.getElementById('someElement');
+        let data = { /* potentially large object */ };
+
+        const handler = () => {
+            console.log('Event fired with data:', data);
+        };
+        myElement.addEventListener('click', handler);
+
+        // If 'myElement' is ever removed from DOM, and you want to prevent
+        // 'data' from being garbage collected, you must remove the listener:
+        // myElement.removeEventListener('click', handler);
+        // data = null; // If data itself is no longer needed
+    }
+    
+JavaScript Q11 (Event Loop/Concurrency)**
+
+    console.log('First');
+    console.log('Fourth');
+    Promise.resolve().then(() => console.log('Third'));
+    setTimeout(() => console.log('Second'), 0);
+    
+JavaScript Q12 (Memory Leak)**
+
+    function setupExpensiveTask() {
+        // If heavyData is not directly used in the handler or only needed temporarily
+        // Consider passing only necessary parts or creating it on demand.
+        const execBtn = document.getElementById('execBtn');
+        const handler = () => {
+            console.log('Executing task');
+            // heavyData = null; if it was local to handler and temporary
+        };
+        execBtn.addEventListener('click', handler);
+        // To prevent leak if element is removed from DOM:
+        // execBtn.removeEventListener('click', handler);
+    }
+    
+JavaScript Q13 (Event Loop/Concurrency)**
+
+    async function main() {
+        console.log(1);
+        await Promise.resolve();
+        console.log(2);
+    }
+    console.log(3);
+    Promise.resolve().then(() => console.log(4));
+    main();
+    
+JavaScript Q14 (Memory Leak)**
+
+    let container = document.getElementById('container');
+    for(let i=0; i<1000; i++) {
+        let div = document.createElement('div');
+        div.id = 'div-' + i;
+        container.appendChild(div);
+    }
+    // Clear references explicitly if needed, or manage component lifecycle
+    container.innerHTML = '';
+    // If individual 'div' references were stored in an array, clear that too.
+    
+JavaScript Q15 (Event Loop/Concurrency)**
+
+    async function processNumbers() {
+        const numbers = [1, 2, 3];
+        const results = await Promise.all(numbers.map(async (num) => {
+            await new Promise(res => setTimeout(res, 50));
+            return num * 2;
+        }));
+        console.log(results);
+    }
+    processNumbers();
+    
+JavaScript Q16 (Memory Leak)**
+
+    // This simulates a common pattern where references are kept in a global/long-lived array.
+    const itemRegister = [];
+
+    function registerItem(item) {
+        itemRegister.push(item);
+    }
+
+    function unregisterItem(item) {
+        const index = itemRegister.indexOf(item);
+        if (index > -1) {
+            itemRegister.splice(index, 1);
+        }
+    }
+
+    const myItem = { id: 1, data: 'some data' };
+    registerItem(myItem);
+    // When myItem is no longer needed:
+    unregisterItem(myItem); // Remove reference from the array
+    
+JavaScript Q17 (Event Loop/Concurrency)**
+
+    console.log('Start');
+    new Promise(resolve => {
+        console.log('Promise executor');
+        resolve();
+    }).then(() => {
+        console.log('Promise then');
+    });
+    console.log('End');
+    
+JavaScript Q18 (Memory Leak)**
+
+    function createExpensiveObject() {
+        let bigData = new Array(100000).fill('complex object data');
+        return {
+            process: function() {
+                // This function uses bigData
+                console.log('Processing big data');
+            },
+            // If bigData can be explicitly released:
+            release: function() {
+                bigData = null; // Nullify reference
+            }
+        };
+    }
+
+    const processor = createExpensiveObject();
+    processor.process();
+    // When done:
+    processor.release();
+    
+JavaScript Q19 (Event Loop/Concurrency)**
+
+    console.log('A');
+    setTimeout(() => {
+        console.log('B');
+    }, 0);
+    Promise.resolve().then(() => {
+        console.log('C');
+    });
+    console.log('D');
+    
+JavaScript Q20 (Memory Leak)**
+
+    // Using a Map for cache, ensure keys are not preventing garbage collection
+    // if the values themselves become unreachable outside the cache.
+    const cache = new Map();
+
+    function addCacheEntry(key, value) {
+        cache.set(key, value);
+    }
+
+    function removeCacheEntry(key) {
+        cache.delete(key); // Important to remove entries when no longer needed
+    }
+
+    let userObj = { name: 'TestUser' };
+    addCacheEntry('userKey', userObj);
+    // If userObj is no longer referenced anywhere else:
+    // userObj = null;
+    // removeCacheEntry('userKey'); // Clean up the cache entry
+    
+
+## Java
+
+### Easy
+
+Java Q1 (Null Pointer Exception)**
+
+    public class NullCheck {
+        public String greet(String name) {
+            if (name == null || name.isEmpty()) {
+                return "Hello, Guest!";
+            }
+            return "Hello, " + name + "!";
+        }
+    }
+    
+Java Q2 (Loop Off-by-one)**
+
+    public class LoopExample {
+        public void printNumbers() {
+            for (int i = 1; i <= 5; i++) { // Changed < to <=
+                System.out.println(i);
+            }
+        }
+    }
+    
+Java Q3 (Division by Zero)**
+
+    public class Calculator {
+        public double divide(int a, int b) {
+            if (b == 0) {
+                throw new IllegalArgumentException("Cannot divide by zero.");
+            }
+            return (double) a / b;
+        }
+    }
+    
+Java Q4 (String Comparison)**
+
+    public class StringCompare {
+        public boolean checkName(String name) {
+            return "admin".equals(name); // Use .equals() for string comparison
+        }
+    }
+    
+Java Q5 (ArrayList Index Out of Bounds)**
+
+    import java.util.ArrayList;
+    import java.util.List;
+
+    public class ListAccess {
+        public String getItem(List<String> list, int index) {
+            if (list != null && index >= 0 && index < list.size()) {
+                return list.get(index);
+            }
+            return "Invalid index or list is null.";
+        }
+    }
+    
+Java Q6 (Null Pointer Exception)**
+
+    public class SafeStringLength {
+        public int getLength(String str) {
+            if (str == null) {
+                return 0; // Or throw an exception, depending on desired behavior
+            }
+            return str.length();
+        }
+    }
+    
+Java Q7 (Loop Off-by-one)**
+
+    public class ArrayIterator {
+        public void iterateArray(int[] arr) {
+            for (int i = 0; i < arr.length; i++) { // Correct loop condition
+                System.out.println(arr[i]);
+            }
+        }
+    }
+    
+Java Q8 (Division by Zero)**
+
+    public class SafeCalculation {
+        public double calculate(int numerator, int denominator) {
+            if (denominator == 0) {
+                return 0; // Or handle as an error
+            }
+            return (double) numerator / denominator;
+        }
+    }
+    
+Java Q9 (String Comparison)**
+
+    public class UserAuthentication {
+        public boolean authenticate(String username, String password) {
+            return "user123".equals(username) && "pass".equals(password);
+        }
+    }
+    
+Java Q10 (ArrayList Index Out of Bounds)**
+
+    import java.util.ArrayList;
+    import java.util.List;
+
+    public class SafeListOperation {
+        public void modifyList(List<String> list, int index, String newValue) {
+            if (list != null && index >= 0 && index < list.size()) {
+                list.set(index, newValue);
+            } else {
+                System.out.println("Cannot modify list at invalid index or null list.");
+            }
+        }
+    }
+    
+Java Q11 (Null Pointer Exception)**
+
+    public class ObjectProcessor {
+        public void processObject(MyObject obj) {
+            if (obj != null) {
+                obj.doSomething();
+            } else {
+                System.out.println("Object is null, cannot process.");
+            }
+        }
+        // Assume MyObject class exists with doSomething()
+        class MyObject { void doSomething() {} }
+    }
+    
+Java Q12 (Loop Off-by-one)**
+
+    public class SumCalculator {
+        public int sumUpTo(int n) {
+            int sum = 0;
+            for (int i = 1; i <= n; i++) { // Loop up to and including n
+                sum += i;
+            }
+            return sum;
+        }
+    }
+    
+Java Q13 (Division by Zero)**
+
+    public class PercentageCalculator {
+        public double calculatePercentage(int part, int total) {
+            if (total == 0) {
+                return 0.0; // Avoid division by zero
+            }
+            return (double) part / total * 100;
+        }
+    }
+    
+Java Q14 (String Comparison)**
+
+    public class StatusChecker {
+        public boolean isStatusActive(String status) {
+            return "ACTIVE".equalsIgnoreCase(status); // Case-insensitive comparison
+        }
+    }
+    
+Java Q15 (ArrayList Index Out of Bounds)**
+
+    import java.util.ArrayList;
+    import java.util.List;
+
+    public class ElementRemover {
+        public void removeElement(List<Integer> list, int index) {
+            if (list != null && index >= 0 && index < list.size()) {
+                list.remove(index);
+            } else {
+                System.out.println("Invalid index for removal or list is null.");
+            }
+        }
+    }
+    
+Java Q16 (Null Pointer Exception)**
+
+    public class ConfigurationLoader {
+        private String configValue;
+
+        public void setConfigValue(String value) {
+            this.configValue = value;
+        }
+
+        public String getConfigValue() {
+            return configValue != null ? configValue : "Default Value";
+        }
+    }
+    
+Java Q17 (Loop Off-by-one)**
+
+    public class DataProcessor {
+        public void processData(int[] data) {
+            if (data == null || data.length == 0) {
+                return;
+            }
+            for (int i = 0; i < data.length; i++) { // Corrected loop bound
+                System.out.println("Processing: " + data[i]);
+            }
+        }
+    }
+    
+Java Q18 (Division by Zero)**
+
+    public class AverageCalculator {
+        public double calculateAverage(int[] numbers) {
+            if (numbers == null || numbers.length == 0) {
+                return 0.0;
+            }
+            int sum = 0;
+            for (int num : numbers) {
+                sum += num;
+            }
+            return (double) sum / numbers.length;
+        }
+    }
+    
+Java Q19 (String Comparison)**
+
+    public class PasswordValidator {
+        public boolean isValidPassword(String inputPassword) {
+            String storedPassword = "securePassword123";
+            return storedPassword.equals(inputPassword); // Correct string comparison
+        }
+    }
+    
+Java Q20 (ArrayList Index Out of Bounds)**
+
+    import java.util.ArrayList;
+    import java.util.List;
+
+    public class SafeGetter {
+        public String getFirstElement(List<String> list) {
+            if (list != null && !list.isEmpty()) {
+                return list.get(0);
+            }
+            return null; // Or throw an exception
+        }
+    }
+    
+
+### Medium
+
+Java Q1 (Concurrency Issue)**
+
+    import java.util.concurrent.atomic.AtomicInteger;
+
+    public class AtomicCounter {
+        private AtomicInteger count = new AtomicInteger(0);
+
+        public void increment() {
+            count.incrementAndGet();
+        }
+
+        public int getCount() {
+            return count.get();
+        }
+    }
+    
+Java Q2 (Memory Leak)**
+
+    import java.util.ArrayList;
+    import java.util.List;
+
+    public class MemoryLeakExample {
+        private static final List<Object> leakyList = new ArrayList<>();
+
+        public void addToList(Object obj) {
+            leakyList.add(obj);
+        }
+
+        public void clearList() {
+            leakyList.clear(); // Explicitly clear when no longer needed
+        }
+    }
+    
+Java Q3 (Deadlock)**
+
+    public class DeadlockPrevention {
+        private final Object lock1 = new Object();
+        private final Object lock2 = new Object();
+
+        public void method1() {
+            synchronized (lock1) {
+                System.out.println("Method 1 holding lock1");
+                try { Thread.sleep(10); } catch (InterruptedException e) {}
+                synchronized (lock2) {
+                    System.out.println("Method 1 holding lock1 and lock2");
+                }
+            }
+        }
+
+        public void method2() {
+            synchronized (lock1) { // Consistent order: always lock1 then lock2
+                System.out.println("Method 2 holding lock1");
+                try { Thread.sleep(10); } catch (InterruptedException e) {}
+                synchronized (lock2) {
+                    System.out.println("Method 2 holding lock1 and lock2");
+                }
+            }
+        }
+    }
+    
+Java Q4 (Resource Leak)**
+
+    import java.io.BufferedReader;
+    import java.io.FileReader;
+    import java.io.IOException;
+
+    public class ReadFile {
+        public void readFileContent(String fileName) throws IOException {
+            // Use try-with-resources to ensure resource closure
+            try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                }
+            }
+        }
+    }
+    
+Java Q5 (Concurrency Issue)**
+
+    class Flag {
+        volatile boolean running = true; // Use volatile
+        public void stop() {
+            running = false;
+        }
+        public void runLoop() {
+            while(running) {
+                // do work
+            }
+            System.out.println("Loop stopped.");
+        }
+    }
+    
+Java Q6 (Memory Leak)**
+
+    import java.util.HashMap;
+    import java.util.Map;
+
+    public class ObjectCache {
+        private Map<String, Object> cache = new HashMap<>();
+
+        public void put(String key, Object value) {
+            cache.put(key, value);
+        }
+
+        public Object get(String key) {
+            return cache.get(key);
+        }
+
+        public void remove(String key) {
+            cache.remove(key); // Important: remove objects from cache when no longer needed
+        }
+    }
+    
+Java Q7 (Deadlock)**
+
+    public class OrderedResourceAccess {
+        private final Object resourceA = new Object();
+        private final Object resourceB = new Object();
+
+        public void acquireAandB() {
+            synchronized (resourceA) {
+                System.out.println("Thread acquired A");
+                synchronized (resourceB) {
+                    System.out.println("Thread acquired A and B");
+                }
+            }
+        }
+
+        public void acquireBandA() {
+            synchronized (resourceA) { // Consistent order: always acquire A then B
+                System.out.println("Thread acquired A");
+                synchronized (resourceB) {
+                    System.out.println("Thread acquired A and B");
+                }
+            }
+        }
+    }
+    
+Java Q8 (Resource Leak)**
+
+    import java.io.FileInputStream;
+    import java.io.IOException;
+
+    public class FileInputStreamExample {
+        public void readFile(String filePath) throws IOException {
+            try (FileInputStream fis = new FileInputStream(filePath)) {
+                int data;
+                while ((data = fis.read()) != -1) {
+                    System.out.print((char) data);
+                }
+            }
+        }
+    }
+    
+Java Q9 (Concurrency Issue)**
+
+    import java.util.concurrent.atomic.AtomicBoolean;
+
+    class AtomicFlag {
+        private AtomicBoolean isSet = new AtomicBoolean(false);
+
+        public void setFlag() {
+            isSet.set(true);
+        }
+
+        public boolean checkFlag() {
+            return isSet.get();
+        }
+    }
+    
+Java Q10 (Memory Leak)**
+
+    import java.util.Queue;
+    import java.util.concurrent.ConcurrentLinkedQueue;
+
+    public class EventQueueManager {
+        private static final Queue<Runnable> eventQueue = new ConcurrentLinkedQueue<>();
+
+        public static void addEvent(Runnable event) {
+            eventQueue.add(event);
+        }
+
+        public static Runnable getNextEvent() {
+            return eventQueue.poll(); // Polls and removes
+        }
+    }
+    
+Java Q11 (Deadlock)**
+
+    public class FixedOrderDeadlock {
+        private final Object lockOne = new Object();
+        private final Object lockTwo = new Object();
+
+        public void operationOne() {
+            synchronized (lockOne) {
+                System.out.println("Operation One holding Lock One");
+                synchronized (lockTwo) {
+                    System.out.println("Operation One holding Lock One and Two");
+                }
+            }
+        }
+
+        public void operationTwo() {
+            synchronized (lockOne) { // Consistent order for both operations
+                System.out.println("Operation Two holding Lock One");
+                synchronized (lockTwo) {
+                    System.out.println("Operation Two holding Lock One and Two");
+                }
+            }
+        }
+    }
+    
+Java Q12 (Resource Leak)**
+
+    import java.sql.Connection;
+    import java.sql.DriverManager;
+    import java.sql.SQLException;
+    import java.sql.Statement;
+
+    public class DatabaseConnector {
+        public void connectAndExecute(String url, String query) throws SQLException {
+            try (Connection conn = DriverManager.getConnection(url);
+                 Statement stmt = conn.createStatement()) {
+                stmt.execute(query);
+            }
+        }
+    }
+    
+Java Q13 (Concurrency Issue)**
+
+    import java.util.concurrent.CountDownLatch;
+
+    public class LatchExample {
+        private CountDownLatch latch = new CountDownLatch(1);
+        private String data = null;
+
+        public void setData(String data) {
+            this.data = data;
+            latch.countDown();
+        }
+
+        public String getData() throws InterruptedException {
+            latch.await();
+            return data;
+        }
+    }
+    
+Java Q14 (Memory Leak)**
+
+    import java.util.HashMap;
+    import java.util.Map;
+    import java.util.WeakHashMap;
+
+    public class CacheWithWeakReferences {
+        // Use WeakHashMap if keys should be garbage collected when no other strong references exist
+        private Map<MyKey, MyValue> cache = new WeakHashMap<>();
+
+        // Or if using a regular HashMap, ensure you remove entries
+        // private Map<MyKey, MyValue> cache = new HashMap<>();
+        // public void removeExpiredEntry(MyKey key) { cache.remove(key); }
+    }
+    class MyKey {}
+    class MyValue {}
+    
+Java Q15 (Deadlock)**
+
+    public class SimpleDeadlockFix {
+        private final Object lockA = new Object();
+        private final Object lockB = new Object();
+
+        public void firstMethod() {
+            synchronized (lockA) {
+                System.out.println("First method holding A");
+                synchronized (lockB) {
+                    System.out.println("First method holding A and B");
+                }
+            }
+        }
+
+        public void secondMethod() {
+            synchronized (lockA) { // Always acquire locks in the same order
+                System.out.println("Second method holding A");
+                synchronized (lockB) {
+                    System.out.println("Second method holding A and B");
+                }
+            }
+        }
+    }
+    
+Java Q16 (Resource Leak)**
+
+    import java.io.PrintWriter;
+    import java.io.IOException;
+
+    public class PrintWriterExample {
+        public void writeToFile(String filename, String content) {
+            try (PrintWriter writer = new PrintWriter(filename)) {
+                writer.println(content);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+Java Q17 (Concurrency Issue)**
+
+    public class ResourceUser {
+        private Object resA = new Object();
+        private Object resB = new Object();
+
+        public void useAthenB() {
+            synchronized (resA) {
+                System.out.println("Holding A");
+                synchronized (resB) {
+                    System.out.println("Holding A and B");
+                }
+            }
+        }
+
+        public void useBthenA() {
+            synchronized (resA) { // Consistent order: always A then B
+                System.out.println("Holding A");
+                synchronized (resB) {
+                    System.out.println("Holding A and B");
+                }
+            }
+        }
+    }
+    
+Java Q18 (Resource Leak)**
+
+    import java.sql.*;
+
+    public class ConnectionManager {
+        public void fetchData() throws SQLException {
+            try (Connection conn = DriverManager.getConnection("jdbc:example");
+                 Statement stmt = conn.createStatement();
+                 ResultSet rs = stmt.executeQuery("SELECT * FROM users")) {
+                // Use rs
+            }
+        }
+    }
+    
+Java Q19 (Concurrency Issue)**
+
+    class DataCache {
+        private volatile int cachedValue = 0;
+
+        public void setValue(int val) {
+            this.cachedValue = val;
+        }
+
+        public int getValue() {
+            return this.cachedValue;
+        }
+    }
+    
+Java Q20 (Memory Leak)**
+
+    import java.lang.ThreadLocal;
+
+    public class ThreadLocalUser {
+        private static final ThreadLocal<StringBuilder> threadLocalBuffer = new ThreadLocal<StringBuilder>();
+
+        public StringBuilder getBuffer() {
+            if (threadLocalBuffer.get() == null) {
+                threadLocalBuffer.set(new StringBuilder());
+            }
+            return threadLocalBuffer.get();
+        }
+
+        public void clearBuffer() {
+            threadLocalBuffer.remove(); // Essential to prevent leaks in thread pools
+        }
+    }
+    
+
+### Hard
+
+Java Q1 (Concurrency Issue)**
+
+    class BankAccount {
+        private double balance = 0;
+
+        public synchronized void deposit(double amount) {
+            balance += amount;
+        }
+
+        public synchronized void withdraw(double amount) {
+            balance -= amount;
+        }
+
+        public double getBalance() {
+            return balance;
+        }
+    }
+    
+Java Q2 (Memory Leak)**
+
+    import java.io.FileOutputStream;
+    import java.io.IOException;
+
+    public class FileWriterExample {
+        public void writeToFile(String filename, String data) {
+            try (FileOutputStream fos = new FileOutputStream(filename)) {
+                fos.write(data.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+Java Q3 (Concurrency Issue)**
+
+    class SharedResource {
+        private boolean produced = false;
+        public synchronized void consume() {
+            while (!produced) { // Use loop for wait condition
+                try { wait(); } catch (InterruptedException e) {}
+            }
+            System.out.println("Consumed");
+            produced = false;
+        }
+        public synchronized void produce() {
+            System.out.println("Produced");
+            produced = true;
+            notifyAll(); // Use notifyAll to wake up all waiting threads
+        }
+    }
+    
+Java Q4 (Memory Leak)**
+
+    import java.util.HashSet;
+    import java.util.Set;
+    import java.util.Objects; // Import Objects class
+
+    class CustomKey {
+        int id;
+        String name;
+        public CustomKey(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            CustomKey customKey = (CustomKey) o;
+            return id == customKey.id && Objects.equals(name, customKey.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, name);
+        }
+    }
+
+    public class MapLeak {
+        public static void main(String[] args) {
+            Set<CustomKey> set = new HashSet<>();
+            CustomKey k1 = new CustomKey(1, "test");
+            CustomKey k2 = new CustomKey(1, "test");
+            set.add(k1);
+            set.add(k2); // Now k2 will be treated as duplicate due to equals/hashCode
+            System.out.println(set.size()); // Should be 1
+        }
+    }
+    
+Java Q5 (Concurrency Issue)**
+
+    import java.util.concurrent.atomic.AtomicLong;
+
+    class Metrics {
+        private AtomicLong counter = new AtomicLong(0);
+
+        public void increment() {
+            counter.incrementAndGet();
+        }
+
+        public long getCounter() {
+            return counter.get();
+        }
+    }
+    
+Java Q6 (Memory Leak)**
+
+    import java.util.ArrayList;
+    import java.util.List;
+
+    public class ListenerManager {
+        private final List<MyListener> listeners = new ArrayList<>();
+
+        public void addListener(MyListener listener) {
+            listeners.add(listener);
+        }
+
+        public void removeListener(MyListener listener) {
+            listeners.remove(listener); // Ensure listeners are removed
+        }
+
+        interface MyListener {
+            void onEvent();
+        }
+    }
+    
+Java Q7 (Concurrency Issue)**
+
+    import java.util.concurrent.locks.ReentrantLock;
+
+    public class ProtectedResource {
+        private final ReentrantLock lock = new ReentrantLock();
+        private int value = 0;
+
+        public void increment() {
+            lock.lock();
+            try {
+                value++;
+            } finally {
+                lock.unlock();
+            }
+        }
+
+        public int getValue() {
+            lock.lock();
+            try {
+                return value;
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+    
+Java Q8 (Memory Leak)**
+
+    import java.util.HashSet;
+    import java.util.Set;
+    import java.util.Objects;
+
+    class DataEntry {
+        private int id;
+        private String description;
+
+        public DataEntry(int id, String description) {
+            this.id = id;
+            this.description = description;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            DataEntry dataEntry = (DataEntry) o;
+            return id == dataEntry.id && Objects.equals(description, dataEntry.description);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, description);
+        }
+    }
+
+    public class Deduplicator {
+        public static void main(String[] args) {
+            Set<DataEntry> uniqueEntries = new HashSet<>();
+            uniqueEntries.add(new DataEntry(1, "Alpha"));
+            uniqueEntries.add(new DataEntry(1, "Alpha")); // This will be correctly handled as a duplicate
+            System.out.println(uniqueEntries.size()); // Should be 1
+        }
+    }
+    
+Java Q9 (Concurrency Issue)**
+
+    import java.util.concurrent.BlockingQueue;
+    import java.util.concurrent.ArrayBlockingQueue;
+
+    public class ProducerConsumer {
+        private final BlockingQueue<String> queue = new ArrayBlockingQueue<>(10);
+
+        public void produce(String item) throws InterruptedException {
+            queue.put(item);
+            System.out.println("Produced: " + item);
+        }
+
+        public String consume() throws InterruptedException {
+            String item = queue.take();
+            System.out.println("Consumed: " + item);
+            return item;
+        }
+    }
+    
+Java Q10 (Memory Leak)**
+
+    import java.util.HashMap;
+    import java.util.Map;
+    import java.lang.ref.SoftReference; // Or WeakReference if object should be collected more aggressively
+
+    public class ImageCache {
+        private Map<String, SoftReference<byte[]>> cache = new HashMap<>();
+
+        public void putImage(String id, byte[] imageData) {
+            cache.put(id, new SoftReference<>(imageData));
+        }
+
+        public byte[] getImage(String id) {
+            SoftReference<byte[]> ref = cache.get(id);
+            return (ref != null) ? ref.get() : null;
+        }
+
+        public void clearStaleEntries() {
+            // Manually iterate and remove if needed, or rely on GC for SoftReferences
+        }
+    }
+    
+Java Q11 (Concurrency Issue)**
+
+    import java.util.concurrent.atomic.AtomicReference;
+
+    public class AtomicUpdate {
+        private AtomicReference<String> message = new AtomicReference<>("Hello");
+
+        public void updateMessage(String newMessage) {
+            message.set(newMessage);
+        }
+
+        public String getMessage() {
+            return message.get();
+        }
+    }
+    
+Java Q12 (Memory Leak)**
+
+    import java.util.ArrayList;
+    import java.util.List;
+
+    public class ObjectHolder {
+        private List<MyObject> objects = new ArrayList<>();
+
+        public void addObject(MyObject obj) {
+            objects.add(obj);
+        }
+
+        public void removeObject(MyObject obj) {
+            objects.remove(obj); // Explicitly remove objects when no longer needed
+        }
+        // Assume MyObject class exists
+        static class MyObject {}
+    }
+    
+Java Q13 (Concurrency Issue)**
+
+    import java.util.concurrent.locks.ReadWriteLock;
+    import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+    public class DataAccessManager {
+        private final ReadWriteLock rwLock = new ReentrantReadWriteLock();
+        private String data = "initial";
+
+        public String readData() {
+            rwLock.readLock().lock();
+            try {
+                return data;
+            } finally {
+                rwLock.readLock().unlock();
+            }
+        }
+
+        public void writeData(String newData) {
+            rwLock.writeLock().lock();
+            try {
+                this.data = newData;
+            } finally {
+                rwLock.writeLock().unlock();
+            }
+        }
+    }
+    
+Java Q14 (Memory Leak)**
+
+    import java.util.HashMap;
+    import java.util.Map;
+
+    public class MapManager {
+        private Map<String, Object> managedMap = new HashMap<>();
+
+        public void putValue(String key, Object value) {
+            managedMap.put(key, value);
+        }
+
+        public Object getValue(String key) {
+            return managedMap.get(key);
+        }
+
+        public void removeValue(String key) {
+            managedMap.remove(key); // Crucial for explicit removal
+        }
+    }
+    
+Java Q15 (Concurrency Issue)**
+
+    import java.util.concurrent.CyclicBarrier;
+
+    public class BarrierExample {
+        private CyclicBarrier barrier;
+
+        public BarrierExample(int parties) {
+            this.barrier = new CyclicBarrier(parties, () -> System.out.println("Barrier tripped!"));
+        }
+
+        public void performTask() throws Exception {
+            System.out.println(Thread.currentThread().getName() + " is ready.");
+            barrier.await();
+            System.out.println(Thread.currentThread().getName() + " passed the barrier.");
+        }
+    }
+    
+Java Q16 (Memory Leak)**
+
+    import java.lang.ref.PhantomReference;
+    import java.lang.ref.ReferenceQueue;
+
+    public class ResourceCleaner {
+        // For unmanaged resources, typically use PhantomReference with a ReferenceQueue
+        // to detect when an object is unreachable and then clean up.
+        // This is complex and usually handled by libraries (e.g., Netty's ByteBuf).
+        // Example structure for manual cleanup:
+        private static class MyResource {
+            private int[] bigArray = new int[1000000];
+            void cleanup() { System.out.println("Cleaning up MyResource"); bigArray = null; }
+        }
+
+        private static ReferenceQueue<MyResource> queue = new ReferenceQueue<>();
+        private static Set<PhantomReference<MyResource>> references = Collections.newSetFromMap(new ConcurrentHashMap<>());
+
+        public static void registerResource(MyResource res) {
+            PhantomReference<MyResource> ref = new PhantomReference<>(res, queue);
+            references.add(ref);
+        }
+
+        public static void processQueue() {
+            PhantomReference<MyResource> ref;
+            while ((ref = (PhantomReference<MyResource>) queue.poll()) != null) {
+                // Perform cleanup of native resources here
+                references.remove(ref);
+                // Example: ref.getNativeHandle().dispose();
+                System.out.println("Phantom reference collected, triggering cleanup.");
+            }
+        }
+        // ... then call registerResource() when creating MyResource and processQueue() periodically.
+    }
+    
+Java Q17 (Concurrency Issue)**
+
+    import java.util.concurrent.Semaphore;
+
+    public class LimitedAccessResource {
+        private final Semaphore semaphore;
+
+        public LimitedAccessResource(int maxPermits) {
+            this.semaphore = new Semaphore(maxPermits);
+        }
+
+        public void accessResource() throws InterruptedException {
+            semaphore.acquire();
+            try {
+                System.out.println(Thread.currentThread().getName() + " is accessing the resource.");
+                Thread.sleep(100); // Simulate work
+            } finally {
+                semaphore.release();
+                System.out.println(Thread.currentThread().getName() + " released the resource.");
+            }
+        }
+    }
+    
+Java Q18 (Memory Leak)**
+
+    import java.util.Date;
+    import java.util.HashMap;
+    import java.util.Map;
+    import java.util.Timer;
+    import java.util.TimerTask;
+
+    public class ScheduledTaskCleaner {
+        private final Timer timer = new Timer(true); // Daemon thread
+        private final Map<String, Object> dataMap = new HashMap<>();
+
+        public void putData(String key, Object data, long delay) {
+            dataMap.put(key, data);
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    dataMap.remove(key); // Remove data after delay
+                    System.out.println("Removed key: " + key);
+                }
+            }, delay);
+        }
+        // Call timer.cancel() when the application shuts down
+    }
+    
+Java Q19 (Concurrency Issue)**
+
+    import java.util.concurrent.Exchanger;
+
+    public class ExchangerExample {
+        public static void main(String[] args) {
+            Exchanger<String> exchanger = new Exchanger<>();
+
+            new Thread(() -> {
+                try {
+                    String message = "Hello from Thread A";
+                    System.out.println("Thread A sending: " + message);
+                    String received = exchanger.exchange(message);
+                    System.out.println("Thread A received: " + received);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }).start();
+
+            new Thread(() -> {
+                try {
+                    String message = "Hi from Thread B";
+                    System.out.println("Thread B sending: " + message);
+                    String received = exchanger.exchange(message);
+                    System.out.println("Thread B received: " + received);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }).start();
+        }
+    }
+    
+Java Q20 (Memory Leak)**
+
+    import java.util.Vector; // Vector is synchronized but ArrayList is generally preferred
+    import java.util.List;
+    import java.util.ArrayList;
+
+    public class LargeListHolder {
+        private List<byte[]> dataChunks = new ArrayList<>(); // Or manage explicitly
+
+        public void addChunk(byte[] chunk) {
+            dataChunks.add(chunk);
+        }
+
+        public void clearChunks() {
+            dataChunks.clear(); // Important to clear large lists
+            dataChunks = null; // Also nullify reference if the list itself is no longer needed
+        }
+    }
+    
+
+## DotNet
+
+### Easy
+
+DotNet Q1 (Null Reference Exception)**
+
+    public class UserProfile
+    {
+        public string GetUserName(User user)
+        {
+            return user?.Name ?? "Guest"; // Null-conditional operator and null-coalescing operator
+        }
+    }
+
+    public class User
+    {
+        public string Name { get; set; }
+    }
+    
+DotNet Q2 (Loop Off-by-one)**
+
+    public class ArrayProcessor
+    {
+        public void ProcessArray(int[] arr)
+        {
+            for (int i = 0; i < arr.Length; i++) // Correct loop condition
+            {
+                Console.WriteLine(arr[i]);
+            }
+        }
+    }
+    
+DotNet Q3 (Division by Zero)**
+
+    public class Calculator
+    {
+        public double Divide(int a, int b)
+        {
+            if (b == 0)
+            {
+                throw new ArgumentException("Cannot divide by zero.");
+            }
+            return (double)a / b;
+        }
+    }
+    
+DotNet Q4 (String Comparison)**
+
+    public class StringComparer
+    {
+        public bool AreStringsEqual(string s1, string s2)
+        {
+            return string.Equals(s1, s2, StringComparison.OrdinalIgnoreCase); // Case-insensitive
+        }
+    }
+    
+DotNet Q5 (List Index Out of Range)**
+
+    using System.Collections.Generic;
+
+    public class ListAccessor
+    {
+        public string GetItem(List<string> list, int index)
+        {
+            if (list != null && index >= 0 && index < list.Count)
+            {
+                return list[index];
+            }
+            return "Invalid index or list is null.";
+        }
+    }
+    
+DotNet Q6 (Null Reference Exception)**
+
+    public class SafePropertyAccess
+    {
+        public int? GetUserAge(User user)
+        {
+            return user?.Age; // Returns null if user is null
+        }
+    }
+    
+DotNet Q7 (Loop Off-by-one)**
+
+    public class CollectionIterator
+    {
+        public void IterateCollection(List<string> collection)
+        {
+            foreach (var item in collection) // Use foreach for simpler iteration
+            {
+                Console.WriteLine(item);
+            }
+        }
+    }
+    
+DotNet Q8 (Division by Zero)**
+
+    public class RatioCalculator
+    {
+        public double CalculateRatio(int part, int total)
+        {
+            if (total == 0)
+            {
+                return 0.0; // Return a default or throw exception
+            }
+            return (double)part / total;
+        }
+    }
+    
+DotNet Q9 (String Comparison)**
+
+    public class CredentialChecker
+    {
+        public bool CheckPassword(string enteredPassword)
+        {
+            string storedPassword = "password123";
+            return string.Equals(enteredPassword, storedPassword, StringComparison.Ordinal); // Exact match
+        }
+    }
+    
+DotNet Q10 (List Index Out of Range)**
+
+    using System.Collections.Generic;
+
+    public class ElementModifier
+    {
+        public void ModifyElement(List<int> list, int index, int newValue)
+        {
+            if (list != null && index >= 0 && index < list.Count)
+            {
+                list[index] = newValue;
+            }
+        }
+    }
+    
+DotNet Q11 (Null Reference Exception)**
+
+    public class ConfigurationReader
+    {
+        private string _configValue;
+
+        public ConfigurationReader(string value)
+        {
+            _configValue = value;
+        }
+
+        public string GetConfig()
+        {
+            return _configValue ?? "DefaultConfig"; // Null-coalescing
+        }
+    }
+    
+DotNet Q12 (Loop Off-by-one)**
+
+    public class SumRange
+    {
+        public int SumInclusive(int start, int end)
+        {
+            int sum = 0;
+            for (int i = start; i <= end; i++) // Inclusive end
+            {
+                sum += i;
+            }
+            return sum;
+        }
+    }
+    
+DotNet Q13 (Division by Zero)**
+
+    public class SafeMeanCalculator
+    {
+        public double CalculateMean(int sum, int count)
+        {
+            if (count == 0)
+            {
+                return 0.0;
+            }
+            return (double)sum / count;
+        }
+    }
+    
+DotNet Q14 (String Comparison)**
+
+    public class CaseInsensitiveSearch
+    {
+        public bool ContainsKeyword(string text, string keyword)
+        {
+            return text?.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+    }
+    
+DotNet Q15 (List Index Out of Range)**
+
+    using System.Collections.Generic;
+
+    public class SafeRemover
+    {
+        public bool RemoveAt(List<double> list, int index)
+        {
+            if (list != null && index >= 0 && index < list.Count)
+            {
+                list.RemoveAt(index);
+                return true;
+            }
+            return false;
+        }
+    }
+    
+DotNet Q16 (Null Reference Exception)**
+
+    public class MessageSender
+    {
+        public void SendMessage(string message)
+        {
+            if (!string.IsNullOrEmpty(message))
+            {
+                Console.WriteLine("Sending: " + message);
+            }
+        }
+    }
+    
+DotNet Q17 (Loop Off-by-one)**
+
+    public class DataAggregator
+    {
+        public double[] Aggregate(double[] data)
+        {
+            if (data == null || data.Length == 0) return new double[0];
+            double[] result = new double[data.Length];
+            for (int i = 0; i < data.Length; i++)
+            {
+                result[i] = data[i] * 2; // Example operation
+            }
+            return result;
+        }
+    }
+    
+DotNet Q18 (Division by Zero)**
+
+    public class SafeOperations
+    {
+        public int GetPercentage(int value, int total)
+        {
+            if (total == 0)
+            {
+                return 0;
+            }
+            return (int)((double)value / total * 100);
+        }
+    }
+    
+DotNet Q19 (String Comparison)**
+
+    public class AccessControl
+    {
+        public bool HasAdminAccess(string role)
+        {
+            return role.Equals("Administrator", StringComparison.OrdinalIgnoreCase);
+        }
+    }
+    
+DotNet Q20 (List Index Out of Range)**
+
+    using System.Collections.Generic;
+
+    public class ElementGetter
+    {
+        public T GetElementOrDefault<T>(List<T> list, int index, T defaultValue)
+        {
+            if (list != null && index >= 0 && index < list.Count)
+            {
+                return list[index];
+            }
+            return defaultValue;
+        }
+    }
+    
+
+### Medium
+
+DotNet Q1 (Concurrency Issue)**
+
+    using System.Threading;
+
+    public class ThreadSafeCounter
+    {
+        private int _count = 0;
+        private readonly object _lock = new object();
+
+        public void Increment()
+        {
+            lock (_lock) // Ensure atomic operation
+            {
+                _count++;
+            }
+        }
+
+        public int GetCount()
+        {
+            lock (_lock)
+            {
+                return _count;
+            }
+        }
+    }
+    
+DotNet Q2 (Memory Leak)**
+
+    using System;
+    using System.Collections.Generic;
+
+    public class EventManager
+    {
+        public event EventHandler MyEvent;
+
+        // Correct way to handle events to prevent leaks if subscribers are not managed
+        public void AddSubscriber(EventHandler handler)
+        {
+            MyEvent += handler;
+        }
+
+        public void RemoveSubscriber(EventHandler handler)
+        {
+            MyEvent -= handler; // Crucial to unsubscribe
+        }
+
+        public void RaiseEvent()
+        {
+            MyEvent?.Invoke(this, EventArgs.Empty);
+        }
+    }
+    
+DotNet Q3 (Deadlock)**
+
+    using System.Threading;
+
+    public class DataStore
+    {
+        private ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
+        private int _data = 0;
+
+        public int ReadData()
+        {
+            _lock.EnterReadLock();
+            try
+            {
+                return _data;
+            }
+            finally
+            {
+                _lock.ExitReadLock();
+            }
+        }
+
+        public void WriteData(int value)
+        {
+            _lock.EnterWriteLock();
+            try
+            {
+                _data = value;
+            }
+            finally
+            {
+                _lock.ExitWriteLock(); // Ensure release even on exception
+            }
+        }
+    }
+    
+DotNet Q4 (Memory Leak)**
+
+    using System;
+    using System.Threading.Tasks;
+
+    public class MyService
+    {
+        private object _data;
+
+        public MyService() {
+            _data = new object(); // Potentially large object
+        }
+
+        public async Task DoWorkAsync()
+        {
+            // This lambda captures 'this' (MyService instance)
+            await Task.Run(() => {
+                // Do some work
+            }).ConfigureAwait(false); // Add ConfigureAwait(false)
+            Console.WriteLine("Work done for " + _data.GetHashCode());
+        }
+    }
+    
+DotNet Q5 (Concurrency Issue)**
+
+    using System.Threading;
+
+    public class SharedResource
+    {
+        private int _value = 0;
+        private readonly object _lock = new object();
+
+        public void Increment()
+        {
+            lock (_lock)
+            {
+                _value++;
+            }
+        }
+
+        public int GetValue()
+        {
+            lock (_lock)
+            {
+                return _value;
+            }
+        }
+    }
+    
+DotNet Q6 (Memory Leak)**
+
+    using System;
+    using System.Runtime.InteropServices; // For IntPtr
+
+    public class UnmanagedResourceWrapper : IDisposable
+    {
+        private IntPtr _nativeHandle; // Represents an unmanaged resource
+        private bool _disposed = false;
+
+        public UnmanagedResourceWrapper(IntPtr handle)
+        {
+            _nativeHandle = handle;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this); // Prevent finalizer from running
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+
+            if (disposing)
+            {
+                // Dispose managed state (managed objects)
+            }
+
+            // Free unmanaged resources (e.g., close native handle)
+            if (_nativeHandle != IntPtr.Zero)
+            {
+                // Call native CloseHandle or similar
+                // Example: NativeMethods.CloseHandle(_nativeHandle);
+                _nativeHandle = IntPtr.Zero;
+            }
+            _disposed = true;
+        }
+
+        // Finalizer (destructor) only for unmanaged resources
+        ~UnmanagedResourceWrapper()
+        {
+            Dispose(false); // Do not dispose managed objects from finalizer
+        }
+    }
+    
+DotNet Q7 (Deadlock)**
+
+    using System.Threading;
+
+    public class OrderedLocking
+    {
+        private readonly object lockA = new object();
+        private readonly object lockB = new object();
+
+        public void Method1()
+        {
+            lock (lockA)
+            {
+                Console.WriteLine("Method 1 holding A");
+                Thread.Sleep(10);
+                lock (lockB)
+                {
+                    Console.WriteLine("Method 1 holding A and B");
+                }
+            }
+        }
+
+        public void Method2()
+        {
+            lock (lockA) // Always acquire in the same order
+            {
+                Console.WriteLine("Method 2 holding A");
+                Thread.Sleep(10);
+                lock (lockB)
+                {
+                    Console.WriteLine("Method 2 holding A and B");
+                }
+            }
+        }
+    }
+    
+DotNet Q8 (Resource Leak)**
+
+    using System.IO;
+    using System;
+
+    public class FileHandler
+    {
+        public void WriteToFile(string filePath, string content)
+        {
+            // Use 'using' statement for automatic disposal of IDisposable objects
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                writer.Write(content);
+            } // writer.Dispose() is called automatically here
+        }
+    }
+    
+DotNet Q9 (Concurrency Issue)**
+
+    using System.Threading;
+    using System.Collections.Concurrent; // For thread-safe collections
+
+    public class ConcurrentQueueExample
+    {
+        private ConcurrentQueue<int> _queue = new ConcurrentQueue<int>();
+
+        public void EnqueueItem(int item)
+        {
+            _queue.Enqueue(item);
+        }
+
+        public bool TryDequeueItem(out int item)
+        {
+            return _queue.TryDequeue(out item);
+        }
+    }
+    
+DotNet Q10 (Memory Leak)**
+
+    using System;
+    using System.Collections.Generic;
+
+    public class CacheManager
+    {
+        private Dictionary<string, object> _cache = new Dictionary<string, object>();
+
+        public void AddToCache(string key, object value)
+        {
+            _cache[key] = value;
+        }
+
+        public void RemoveFromCache(string key)
+        {
+            _cache.Remove(key); // Explicitly remove entries to prevent leaks
+        }
+
+        public object GetFromCache(string key)
+        {
+            _cache.TryGetValue(key, out object value);
+            return value;
+        }
+    }
+    
+DotNet Q11 (Deadlock)**
+
+    using System.Threading;
+
+    public class TransactionProcessor
+    {
+        private readonly object _lock1 = new object();
+        private readonly object _lock2 = new object();
+
+        public void ProcessTransactionA()
+        {
+            lock (_lock1)
+            {
+                Console.WriteLine("TxA acquired Lock1");
+                Thread.Sleep(50);
+                lock (_lock2)
+                {
+                    Console.WriteLine("TxA acquired Lock1 and Lock2");
+                }
+            }
+        }
+
+        public void ProcessTransactionB()
+        {
+            lock (_lock1) // Enforce consistent locking order
+            {
+                Console.WriteLine("TxB acquired Lock1");
+                Thread.Sleep(50);
+                lock (_lock2)
+                {
+                    Console.WriteLine("TxB acquired Lock1 and Lock2");
+                }
+            }
+        }
+    }
+    
+DotNet Q12 (Resource Leak)**
+
+    using System.Data.SqlClient;
+    using System;
+
+    public class DbReader
+    {
+        public void ReadData(string connectionString, string query)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Console.WriteLine(reader[0]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+DotNet Q13 (Concurrency Issue)**
+
+    using System.Threading;
+
+    public class ThreadSafeCache
+    {
+        private string _cachedData = "";
+        private readonly ReaderWriterLockSlim _cacheLock = new ReaderWriterLockSlim();
+
+        public string GetData()
+        {
+            _cacheLock.EnterReadLock();
+            try
+            {
+                return _cachedData;
+            }
+            finally
+            {
+                _cacheLock.ExitReadLock();
+            }
+        }
+
+        public void SetData(string newData)
+        {
+            _cacheLock.EnterWriteLock();
+            try
+            {
+                _cachedData = newData;
+            }
+            finally
+            {
+                _cacheLock.ExitWriteLock();
+            }
+        }
+    }
+    
+DotNet Q14 (Memory Leak)**
+
+    using System;
+    using System.Timers; // For Timer that raises events on a ThreadPool thread
+
+    public class Poller : IDisposable
+    {
+        private Timer _timer;
+        private Action _action;
+
+        public Poller(Action action, double interval)
+        {
+            _action = action;
+            _timer = new Timer(interval);
+            _timer.Elapsed += OnTimedEvent;
+            _timer.Start();
+        }
+
+        private void OnTimedEvent(object sender, ElapsedEventArgs e)
+        {
+            _action?.Invoke();
+        }
+
+        public void Dispose()
+        {
+            _timer?.Stop();
+            _timer?.Dispose(); // Dispose the timer to release resources
+            _timer = null;
+            _action = null;
+        }
+    }
+    
+DotNet Q15 (Deadlock)**
+
+    using System.Threading;
+
+    public class SafeResourceAccess
+    {
+        private static readonly object _resourceA = new object();
+        private static readonly object _resourceB = new object();
+
+        public void AccessResourcesInOrder()
+        {
+            lock (_resourceA)
+            {
+                Console.WriteLine("Accessed A in order");
+                lock (_resourceB)
+                {
+                    Console.WriteLine("Accessed A and B in order");
+                }
+            }
+        }
+
+        public void AccessResourcesReverseOrder()
+        {
+            lock (_resourceA) // Always lock A first
+            {
+                Console.WriteLine("Accessed A in reverse order (fixed)");
+                lock (_resourceB)
+                {
+                    Console.WriteLine("Accessed A and B in reverse order (fixed)");
+                }
+            }
+        }
+    }
+    
+DotNet Q16 (Resource Leak)**
+
+    using System.Net.Sockets;
+    using System.Text;
+    using System;
+
+    public class SocketClient : IDisposable
+    {
+        private Socket _socket;
+
+        public SocketClient()
+        {
+            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        }
+
+        public void ConnectAndSend(string host, int port, string message)
+        {
+            _socket.Connect(host, port);
+            byte[] data = Encoding.ASCII.GetBytes(message);
+            _socket.Send(data);
+        }
+
+        public void Dispose()
+        {
+            _socket?.Shutdown(SocketShutdown.Both);
+            _socket?.Close();
+            _socket?.Dispose(); // Ensure socket is properly disposed
+            _socket = null;
+        }
+    }
+    
+DotNet Q17 (Concurrency Issue)**
+
+    using System.Threading;
+    using System.Collections.Generic;
+
+    public class BoundedBuffer
+    {
+        private Queue<string> _buffer = new Queue<string>();
+        private readonly int _maxSize = 10;
+        private readonly object _lock = new object(); // General lock for buffer access
+
+        public void Produce(string item)
+        {
+            lock (_lock)
+            {
+                while (_buffer.Count == _maxSize)
+                {
+                    Monitor.Wait(_lock); // Wait if buffer is full
+                }
+                _buffer.Enqueue(item);
+                Monitor.PulseAll(_lock); // Notify consumers
+            }
+        }
+
+        public string Consume()
+        {
+            lock (_lock)
+            {
+                while (_buffer.Count == 0)
+                {
+                    Monitor.Wait(_lock); // Wait if buffer is empty
+                }
+                string item = _buffer.Dequeue();
+                Monitor.PulseAll(_lock); // Notify producers
+                return item;
+            }
+        }
+    }
+    
+DotNet Q18 (Memory Leak)**
+
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.CompilerServices; // For ConditionalWeakTable
+
+    public class AttachedDataManager
+    {
+        // ConditionalWeakTable allows attaching data to objects without preventing them from being GC'd
+        private static ConditionalWeakTable<object, object> _attachedData = new ConditionalWeakTable<object, object>();
+
+        public static void SetAttachedData(object target, object data)
+        {
+            _attachedData.Add(target, data);
+        }
+
+        public static object GetAttachedData(object target)
+        {
+            _attachedData.TryGetValue(target, out object data);
+            return data;
+        }
+    }
+    
+DotNet Q19 (Concurrency Issue)**
+
+    using System;
+    using System.Threading;
+
+    public class CacheUpdater
+    {
+        private volatile bool _dataReady = false; // Use volatile
+
+        public void MarkDataReady()
+        {
+            _dataReady = true;
+        }
+
+        public bool IsDataReady()
+        {
+            return _dataReady;
+        }
+    }
+    
+DotNet Q20 (Memory Leak)**
+
+    using System;
+    using System.Collections.Generic;
+
+    public class Logger
+    {
+        // Static events can cause leaks if not unsubscribed
+        public static event EventHandler<string> LogMessage;
+
+        public static void PublishLog(string message)
+        {
+            LogMessage?.Invoke(null, message);
+        }
+
+        // Add a method to allow explicit unsubscription
+        public static void RemoveLogSubscriber(EventHandler<string> handler)
+        {
+            LogMessage -= handler;
+        }
+    }
+    
