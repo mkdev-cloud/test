@@ -3,10 +3,6 @@ import { Clock, CheckCircle, XCircle, Trophy, RotateCcw, Play, AlertTriangle } f
 import gameData from './gameData.json';
 
 
-// IMPORTANT: In a real application, gameData would typically be loaded from an external JSON file
-// using a fetch request or by being imported if part of the module system.
-// For this environment, the JSON structure is directly included as a constant.
-
 const LCPuzzleRace = () => {
   // Initialize with a default domain, e.g., the first one from gameData or a specific one.
   // This ensures selectedDomain is not null when initializeGame is first called.
@@ -71,7 +67,7 @@ const LCPuzzleRace = () => {
       // This 'else' means getRandomPuzzle returned null, which implies all available puzzles are exhausted.
       setGameMessageTitle("No More Puzzles Available!");
       setGameMessageText("You've exhausted all unique puzzles in the game data for the selected domain."); // Clarify message
-      setGameMessageIcon(<AlertTriangle className="text-yellow-500" />);
+      setGameMessageIcon(<AlertTriangle className="text-yellow-500" />); // Keep yellow for warning
       setShowGameMessage(true);
       setTimeout(() => {
         setShowGameMessage(false);
@@ -96,6 +92,20 @@ const LCPuzzleRace = () => {
     initializeGame();
   };
 
+    // Reset Game function
+  const resetGame = () => {
+    setGameState('menu');
+    setSelectedDomain(gameData.domains[0]?.name || null);
+    setScore(0);
+    setTotalPuzzlesCompleted(0);
+    setCompletedPuzzlesInSession([]);
+    setTimeLeft(180);
+    setShuffledSteps([]);
+    setArrangedSteps([]);
+    setShowGameMessage(false);
+  };
+
+
   // Timer effect
   useEffect(() => {
     let interval;
@@ -107,11 +117,11 @@ const LCPuzzleRace = () => {
       // Time's up, game over
       setGameMessageTitle("Time's Up!");
       setGameMessageText("You ran out of time. Game Over!");
-      setGameMessageIcon(<XCircle className="text-red-500" />);
+      setGameMessageIcon(<XCircle className="text-red-500" />); // Keep red for error
       setShowGameMessage(true);
       setTimeout(() => {
         setShowGameMessage(false);
-        setGameState('menu'); // Return to menu after message
+        setGameState('menu');
       }, 3000);
     }
     return () => clearInterval(interval);
@@ -191,7 +201,7 @@ const LCPuzzleRace = () => {
       if (newTotalPuzzlesCompleted >= gameData.levelsToWin) {
         setGameMessageTitle("Congratulations, Winner!");
         setGameMessageText(`You've mastered ${gameData.levelsToWin} workflows in ${selectedDomain} with a final score of ${score + 1000 + timeBonus}!`); // Ensure score is updated in message
-        setGameMessageIcon(<Trophy className="text-yellow-500" />);
+        setGameMessageIcon(<Trophy className="text-yellow-500" />); // Keep yellow for trophy
         setShowGameMessage(true);
         setTimeout(() => { // Still use timeout to show message
           setShowGameMessage(false);
@@ -201,7 +211,7 @@ const LCPuzzleRace = () => {
         // Show success message and proceed to next puzzle
         setGameMessageTitle("Correct Order!");
         setGameMessageText("Excellent! Proceeding to the next challenge.");
-        setGameMessageIcon(<CheckCircle className="text-green-500" />);
+        setGameMessageIcon(<CheckCircle className="text-green-600" />); // Darker green for corporate theme
         setShowGameMessage(true);
 
         setTimeout(() => {
@@ -215,7 +225,7 @@ const LCPuzzleRace = () => {
       setScore(prev => Math.max(0, prev - 50));
       setGameMessageTitle("Incorrect Order!");
       setGameMessageText("Oops! The workflow is incorrect. Game Over.");
-      setGameMessageIcon(<XCircle className="text-red-500" />);
+      setGameMessageIcon(<XCircle className="text-red-600" />); // Darker red for corporate theme
       setShowGameMessage(true);
 
       setTimeout(() => {
@@ -233,10 +243,10 @@ const LCPuzzleRace = () => {
 
   const getPhaseColorClass = (phase) => {
     switch (phase) {
-      case 'initiation': return 'phase-initiation';
-      case 'execution': return 'phase-execution';
-      case 'settlement': return 'phase-settlement';
-      default: return 'phase-default';
+      case 'initiation': return 'phase-corporate-blue';
+      case 'execution': return 'phase-corporate-green';
+      case 'settlement': return 'phase-corporate-orange';
+      default: return 'phase-corporate-default';
     }
   };
 
@@ -244,436 +254,351 @@ const LCPuzzleRace = () => {
     <div className="lc-puzzle-container">
       <style>
         {`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden;
         }
 
         .lc-puzzle-container {
             min-height: 100vh;
-            background: linear-gradient(135deg, #1A202C 0%, #2B6CB0 50%, #4C51BF 100%); /* slate-900 via-blue-900 to-indigo-900 */
-            padding: 1rem;
+            background-color: #F8F9FA; /* Light gray/off-white background */
+            padding: 20px;
             box-sizing: border-box;
-            color: #fff;
+            color: #333333; /* Dark gray for general text */
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            /* Increased max-width for the overall container */
+            max-width: 1400px; /* Adjust as needed for desired page width */
+            margin: 0 auto; /* Center the container */
         }
 
         /* Menu State */
         .menu-container {
             min-height: 100vh;
             width: 100%;
-            background: linear-gradient(135deg, #1A202C 0%, #2B6CB0 50%, #4C51BF 100%);
+            background-color: #F8F9FA; /* Consistent with main background */
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1rem;
+            padding: 20px;
             box-sizing: border-box;
         }
 
         .menu-card {
-            background-color: #fff;
-            border-radius: 1rem;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* shadow-2xl */
+            background: #FFFFFF; /* Solid white background */
+            border-radius: 8px; /* Slightly less rounded */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
             padding: 2rem;
-            max-width: 28rem; /* max-w-md */
+            max-width: 48rem; /* Increased max-width for menu card */
             width: 100%;
             text-align: center;
+            border: 2px solid #DDDDDD; /* More prominent border */
         }
 
         .menu-icon {
             margin: 0 auto 1rem;
-            height: 4rem; /* h-16 */
-            width: 4rem; /* w-16 */
-            color: #F6E05E; /* text-yellow-500 */
+            height: 4rem;
+            width: 4rem;
+            color: #004481; /* Corporate blue icon color */
         }
 
         .menu-title {
-            font-size: 1.875rem; /* text-3xl */
-            font-weight: 700; /* font-bold */
-            color: #2D3748; /* text-gray-800 */
-            margin-bottom: 0.5rem;
+            font-size: 2.2rem; /* Larger title */
+            font-weight: 700;
+            color: #333333;
+            margin-bottom: 0.75rem;
         }
 
         .menu-subtitle {
-            color: #4A5568; /* text-gray-600 */
+            color: #666666; /* Medium gray for subtitle */
+            margin-bottom: 2rem; /* Increased margin */
+            font-size: 1.1rem; /* Slightly larger subtitle */
         }
 
         .how-to-play-box {
-            background-color: #EBF8FF; /* bg-blue-50 */
-            border-radius: 0.5rem; /* rounded-lg */
-            padding: 1rem;
-            margin-bottom: 1.5rem;
+            background-color: #F0F4F8; /* Lighter background for the box */
+            border-radius: 6px; /* Slightly less rounded */
+            padding: 1.5rem; /* Increased padding */
+            margin-bottom: 2rem; /* Increased margin */
             text-align: left;
+            color: #333333;
+            border: 1px solid #CCCCCC; /* More visible border */
         }
 
         .how-to-play-title {
-            font-weight: 600; /* font-semibold */
-            color: #2C5282; /* text-blue-800 */
-            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333333;
+            margin-bottom: 0.75rem; /* Adjusted margin */
+            font-size: 1.1rem; /* Slightly larger title */
         }
-
-        .how-to-play-list {
-            font-size: 0.875rem; /* text-sm */
-            color: #2B6CB0; /* text-blue-700 */
-            list-style: none; /* Remove default list bullets */
-            padding: 0;
-            margin: 0;
-        }
-
         .how-to-play-list li {
-            margin-bottom: 0.25rem; /* space-y-1 */
-            position: relative;
-            padding-left: 1.25rem; /* Add padding for custom bullet */
+            margin-bottom: 0.6rem; /* Adjusted margin */
+            line-height: 1.6; /* Slightly more line height */
+            color: #666666;
+            font-size: 0.95rem;
         }
 
-        .how-to-play-list li::before {
-            content: '•'; /* Custom bullet point */
-            position: absolute;
-            left: 0;
-            color: #2B6CB0; /* Match text color */
-        }
-
-
-        .start-game-button {
-            background: linear-gradient(to right, #3182CE 0%, #4C51BF 100%); /* bg-gradient-to-r from-blue-600 to-indigo-600 */
-            color: #fff;
-            padding: 0.75rem 2rem; /* px-8 py-3 */
-            border-radius: 0.5rem; /* rounded-lg */
-            font-weight: 600; /* font-semibold */
-            transition: all 0.2s ease-in-out; /* transition-all duration-200 */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-            border: none;
-            cursor: pointer;
-        }
-
-        .start-game-button:hover {
-            background: linear-gradient(to right, #2B6CB0 0%, #3F51B5 100%); /* hover:from-blue-700 hover:to-indigo-700 */
-        }
-
-        .start-game-button svg {
-            margin-right: 0.5rem;
-            height: 1.25rem; /* h-5 */
-            width: 1.25rem; /* w-5 */
-        }
-
-        /* Completed State */
-        .completed-container {
-            min-height: 100vh;
-            width: 100%;
-            background: linear-gradient(135deg, #1A202C 0%, #2F855A 50%, #38A169 100%); /* from-green-900 via-green-800 to-emerald-900 */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            box-sizing: border-box;
-        }
-
-        .completed-card {
-            background-color: #fff;
-            border-radius: 1rem;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            padding: 2rem;
-            max-width: 28rem;
-            width: 100%;
+        .domain-selection-container {
+            margin-bottom: 2rem; /* Increased margin */
             text-align: center;
+            border: 1px solid #CCCCCC; /* Border for the domain section */
+            padding: 1.5rem;
+            border-radius: 6px;
+            background-color: #FDFDFD;
         }
 
-        .completed-icon {
-            margin: 0 auto 1rem;
-            height: 4rem;
-            width: 4rem;
-            color: #F6E05E;
-        }
-
-        .completed-title {
-            font-size: 1.875rem;
-            font-weight: 700;
-            color: #2D3748;
-            margin-bottom: 0.5rem;
-        }
-
-        .completed-score {
-            font-size: 1.5rem; /* text-2xl */
-            font-weight: 700;
-            color: #38A169; /* text-green-600 */
-            margin-bottom: 1rem;
-        }
-
-        .workflow-mastered-box {
-            background-color: #F0FFF4; /* bg-green-50 */
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .workflow-mastered-title {
+        .domain-selection-container label {
+            display: block;
+            margin-bottom: 1rem; /* Increased margin */
+            color: #333333;
             font-weight: 600;
-            color: #2F855A; /* text-green-800 */
-            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
         }
 
-        .workflow-mastered-text {
-            font-size: 0.875rem;
-            color: #2B6CB0; /* text-green-700 */
+        .domain-buttons-wrapper {
+            display: flex;
+            gap: 0.75rem; /* Increased gap */
+            flex-wrap: wrap;
+            justify-content: center; /* Center items in case of odd number */
         }
 
-        .play-again-button {
-            background: linear-gradient(to right, #38A169 0%, #2F855A 100%); /* bg-gradient-to-r from-green-600 to-emerald-600 */
-            color: #fff;
-            padding: 0.75rem 2rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: all 0.2s ease-in-out;
-            border: none;
+        .domain-button {
+            padding: 10px 20px; /* Increased padding */
+            border: 1px solid #004481; /* Blue border */
+            background: #FFFFFF;
+            color: #004481;
+            border-radius: 6px; /* More rounded */
             cursor: pointer;
+            transition: all 0.2s ease; /* Faster transition */
+            font-weight: 600;
+            /* Calculate width for two buttons per row, considering gap */
+            flex: 1 1 calc(50% - 0.75rem); /* Two buttons per row with a gap */
+            max-width: calc(50% - 0.75rem); /* Ensures it doesn't grow beyond 50% */
+            min-width: 150px; /* Minimum width to prevent shrinking too much on small screens */
+            font-size: 1rem; /* Slightly larger font */
+            box-shadow: 0 2px 5px rgba(0, 68, 129, 0.1); /* Subtle shadow */
         }
 
-        .play-again-button:hover {
-            background: linear-gradient(to right, #2F855A 0%, #28774e 100%); /* hover:from-green-700 hover:to-emerald-700 */
+        @media (max-width: 600px) {
+            .domain-button {
+                flex: 1 1 100%; /* Full width on very small screens */
+                max-width: 100%;
+            }
         }
 
-        /* Header (Playing State) */
+
+        .domain-button.selected,
+        .domain-button:hover {
+            background: #004481; /* Solid blue background */
+            color: #FFFFFF;
+            transform: translateY(-3px); /* More pronounced lift */
+            box-shadow: 0 5px 12px rgba(0, 68, 129, 0.4); /* More prominent blue shadow */
+        }
+
+        .start-game-button, .play-again-button {
+            background: #004481; /* Solid corporate blue */
+            color: #FFFFFF;
+            border: none;
+            padding: 15px 35px; /* Adjusted padding */
+            border-radius: 8px; /* More rounded */
+            font-size: 1.2rem; /* Larger font */
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 5px 15px rgba(0, 68, 129, 0.3); /* More prominent shadow */
+            font-weight: 600;
+            letter-spacing: 0.5px; /* More letter spacing */
+            width: 100%;
+            margin-top: 2rem; /* Increased margin */
+        }
+
+        .start-game-button:hover, .play-again-button:hover {
+            transform: translateY(-4px); /* More pronounced lift */
+            box-shadow: 0 8px 20px rgba(0, 68, 129, 0.4);
+            background-color: #0056A0; /* Slightly darker blue on hover */
+        }
+
+        /* Game Playing State */
         .game-header {
-            background-color: rgba(255, 255, 255, 0.1); /* bg-white/10 */
-            backdrop-filter: blur(8px); /* backdrop-blur-md */
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            max-width: 1200px; /* Limit width for larger screens */
+            max-width: 1200px; /* Increased max-width */
+            background: #FFFFFF; /* Solid white background */
+            padding: 0.8rem 1.5rem; /* Adjusted padding */
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Lighter shadow */
+            color: #333333;
+            border: 1px solid #DDDDDD; /* Subtle border */
         }
 
-        .game-header-left {
+        .game-header-item {
             display: flex;
             align-items: center;
-            gap: 1rem; /* space-x-4 */
+            gap: 0.4rem; /* Smaller gap */
+            font-size: 1rem; /* Slightly smaller font */
+            font-weight: 600;
+            color: #666666; /* Medium gray text */
         }
 
-        .game-header-left svg {
-            height: 1.5rem; /* h-6 */
-            width: 1.5rem; /* w-6 */
-            color: #fff;
+        .game-header-item svg {
+            color: #004481; /* Corporate blue icon color */
+            height: 1.1rem; /* Smaller icons */
+            width: 1.1rem;
         }
 
-        .game-header-score {
-            font-size: 1.25rem; /* text-xl */
+        .score-value, .timer-display, .puzzles-completed-display, .domain-display {
+            font-size: 1.3rem; /* Slightly smaller font */
             font-weight: 700;
-            color: #fff;
-        }
-        
-        .game-header-stage {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #fff;
-            margin-left: 1rem;
-            text-align: center;
-            flex-grow: 1; /* Allow stage name to take available space */
-        }
-        .game-header-puzzle-progress {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #fff;
-            margin-left: 1rem;
-            text-align: center;
+            color: #004481; /* Corporate blue for values */
         }
 
-        .game-header-reset-button {
-            color: #fff;
-            border: none;
-            background: none;
+        .reset-button {
+            background: #DC3545; /* Red background */
+            color: #FFFFFF; /* White text */
+            border: 1px solid #DC3545;
+            padding: 8px 15px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: color 0.2s ease-in-out;
-            margin-left: 1rem; /* Space from stage name */
-        }
-
-        .game-header-reset-button:hover {
-            color: #A0AEC0; /* hover:text-gray-300 */
-        }
-
-        .game-header-reset-button svg {
-            height: 1.5rem;
-            width: 1.5rem;
-        }
-
-        /* Custom Game Message Modal */
-        .game-message-modal-overlay {
-            position: fixed;
-            inset: 0; /* inset-0 */
-            background-color: rgba(0, 0, 0, 0.5); /* bg-black/50 */
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            z-index: 50; /* z-50 */
+            gap: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
         }
 
-        .game-message-modal-content {
-            background-color: #fff;
-            border-radius: 0.75rem; /* rounded-xl */
-            padding: 1.5rem;
-            max-width: 28rem; /* max-w-md */
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        .reset-button:hover {
+            background: #C82333; /* Darker red on hover */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .game-message-modal-icon {
-            margin: 0 auto 1rem;
-            height: 4rem;
-            width: 4rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .game-message-modal-icon svg {
-          height: 100%;
-          width: 100%;
-        }
-
-        .game-message-modal-title {
-            font-size: 1.875rem;
-            font-weight: 700;
-            color: #2D3748;
-            margin-bottom: 0.5rem;
-        }
-
-        .game-message-modal-text {
-            font-size: 1rem;
-            color: #4A5568;
-            margin-bottom: 1rem;
-        }
-
-        /* Puzzle Grids */
         .puzzle-grids {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 1.5rem; /* gap-6 */
+            gap: 1.5rem;
             width: 100%;
-            max-width: 1200px; /* Limit width for larger screens */
+            max-width: 1200px; /* Increased max-width */
         }
 
-        @media (min-width: 1024px) { /* lg breakpoint */
+        @media (min-width: 768px) {
             .puzzle-grids {
-                grid-template-columns: repeat(2, 1fr); /* lg:grid-cols-2 */
+                grid-template-columns: 1fr 1fr;
             }
         }
 
         .puzzle-section {
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
-            border-radius: 0.5rem;
+            background: #FFFFFF; /* Solid white background */
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            min-height: 400px;
+            border: 1px solid #DDDDDD; /* Subtle border */
         }
 
         .puzzle-section-title {
-            font-size: 1.25rem; /* text-xl */
+            font-size: 1.4rem; /* Slightly smaller */
             font-weight: 700;
-            color: #fff;
+            color: #333333;
             margin-bottom: 1rem;
+            text-align: center;
         }
 
         .puzzle-drop-area {
-            min-height: 24rem; /* min-h-96 */
-            background-color: rgba(255, 255, 255, 0.05); /* bg-white/5 */
-            border-radius: 0.5rem;
+            flex-grow: 1;
+            border: 1px dashed rgba(0, 0, 0, 0.2); /* Lighter, more transparent dashed border */
+            border-radius: 6px;
             padding: 1rem;
-            border: 2px dashed rgba(255, 255, 255, 0.2); /* border-2 border-dashed border-white/20 */
-            display: flex; /* Enable flex for vertical stacking */
+            display: flex;
             flex-direction: column;
-            gap: 0.75rem; /* spacing between cards */
+            gap: 0.75rem;
+            overflow-y: auto;
+            min-height: 150px;
+            background: rgba(255, 255, 255, 0.7); /* Light and transparent background */
         }
 
         .puzzle-step-card {
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            cursor: grab; /* Indicates draggable */
-            transition: all 0.2s ease-in-out;
-            border: 2px solid;
+            background-color: #FFFFFF;
+            border-radius: 6px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); /* Softer shadow */
+            cursor: grab;
             position: relative;
-            background-color: #fff; /* White background for card content */
-            color: #2D3748; /* Dark text for readability on white background */
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Center content vertically */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
-        }
-
-        .puzzle-step-card:active {
-            cursor: grabbing;
+            border-left: 4px solid; /* Slightly thinner for phase color */
+            transition: transform 0.15s ease, box-shadow 0.15s ease; /* Faster transition */
+            color: #333333;
+            border: 1px solid #EEEEEE; /* Light border for card */
         }
 
         .puzzle-step-card:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* hover:shadow-lg */
-            transform: translateY(-2px);
+            transform: translateY(-1px); /* More subtle lift */
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
         }
 
         .puzzle-step-card .title {
-            font-weight: 600; /* font-semibold */
-            color: #2D3748; /* text-gray-800 */
+            font-weight: 600; /* Less bold */
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+            color: #333333;
         }
 
         .puzzle-step-card .description {
-            font-size: 0.875rem; /* text-sm */
-            color: #4A5568; /* text-gray-600 */
+            font-size: 0.85rem;
+            color: #666666;
+            margin-bottom: 0.4rem;
         }
 
         .puzzle-step-card .phase {
-            font-size: 0.75rem; /* text-xs */
-            color: #718096; /* text-gray-500 */
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #888888; /* Muted phase text color */
             margin-top: 0.25rem;
             text-transform: capitalize;
         }
 
         .arranged-step-number {
             position: absolute;
-            left: -0.5rem; /* -left-2 */
-            top: -0.5rem; /* -top-2 */
-            background-color: #3182CE; /* bg-blue-600 */
+            left: -0.4rem;
+            top: -0.4rem;
+            background-color: #004481; /* Corporate blue */
             color: #fff;
-            border-radius: 9999px; /* rounded-full */
-            width: 1.5rem; /* w-6 */
-            height: 1.5rem; /* h-6 */
+            border-radius: 9999px;
+            width: 1.4rem;
+            height: 1.4rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.75rem; /* text-xs */
+            font-size: 0.7rem;
             font-weight: 700;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
 
         .feedback-icon {
             position: absolute;
-            top: 0.5rem; /* top-2 */
-            right: 0.5rem; /* right-2 */
-            height: 1.25rem; /* h-5 */
-            width: 1.25rem; /* w-5 */
+            top: 0.4rem;
+            right: 0.4rem;
+            height: 1.1rem;
+            width: 1.1rem;
         }
-
         .feedback-icon.correct {
-            color: #38A169; /* text-green-600 */
+            color: #28A745; /* Standard green */
         }
-
         .feedback-icon.incorrect {
-            color: #E53E3E; /* text-red-600 */
+            color: #DC3545; /* Standard red */
         }
 
         .empty-drop-area-text {
-            color: rgba(255, 255, 255, 0.6); /* text-white/60 */
+            color: #888888; /* Lighter gray for placeholder */
             text-align: center;
-            padding: 2rem 0; /* py-8 */
-            flex-grow: 1; /* Allow it to take up space */
+            padding: 2rem 0;
+            flex-grow: 1;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -682,60 +607,168 @@ const LCPuzzleRace = () => {
         /* Phase Legend */
         .phase-legend-box {
             margin-top: 1.5rem;
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
-            border-radius: 0.5rem;
-            padding: 1rem;
+            background: #FFFFFF;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 1200px; /* Match puzzle grids width */
+            max-width: 1200px; /* Increased max-width */
+            color: #333333;
+            border: 1px solid #DDDDDD; /* Subtle border */
         }
 
         .phase-legend-title {
-            color: #fff;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+            font-size: 1.1rem; /* Slightly smaller */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: #333333;
         }
 
         .phase-legend-items {
             display: flex;
+            justify-content: center;
+            gap: 1.2rem; /* Smaller gap */
             flex-wrap: wrap;
-            gap: 1rem; /* gap-4 */
         }
 
         .phase-legend-item {
             display: flex;
             align-items: center;
+            gap: 0.4rem;
+            font-size: 0.95rem;
         }
 
         .phase-color-box {
-            width: 1rem; /* w-4 */
-            height: 1rem; /* h-4 */
-            border-width: 2px; /* border-2 */
-            border-radius: 0.25rem;
-            margin-right: 0.5rem;
+            width: 1rem; /* Smaller color box */
+            height: 1rem;
+            border-radius: 3px; /* Slightly less rounded */
         }
+
+        /* New Corporate Phase Colors */
+        .phase-corporate-blue { border-color: #93C5FD; background-color: #DBEAFE; } /* Dark Blue for Initiation */
+        .phase-corporate-green { border-color:  #FDBA74; background-color: #FFEDD5; } /* Standard Green for Execution */
+        .phase-corporate-orange { border-color: #A7F3D0; background-color: #D1FAE5; } /* Standard Orange for Settlement */
+        .phase-corporate-default { border-color: #D1D5DB; background-color: #F3F4F6; } /* Muted Gray for default */
+
 
         .phase-legend-text {
-            color: #fff;
-            font-size: 0.875rem; /* text-sm */
+            color: #666666;
         }
 
-        /* Phase specific colors */
-        .phase-initiation {
-            background-color: #DBEAFE; /* bg-blue-100 */
-            border-color: #93C5FD; /* border-blue-300 */
+        /* Completed State */
+        .completed-container {
+            min-height: 100vh;
+            width: 100%;
+            background-color: #F8F9FA;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
         }
-        .phase-execution {
-            background-color: #FFEDD5; /* bg-orange-100 */
-            border-color: #FDBA74; /* border-orange-300 */
+
+        .completed-card {
+            background: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 28rem;
+            width: 100%;
+            text-align: center;
+            border: 1px solid #DDDDDD; /* Subtle border */
         }
-        .phase-settlement {
-            background-color: #D1FAE5; /* bg-green-100 */
-            border-color: #A7F3D0; /* border-green-300 */
+
+        .completed-icon {
+            margin: 0 auto 1rem;
+            height: 4rem;
+            width: 4rem;
+            color: #004481;
         }
-        .phase-default {
-            background-color: #F3F4F6; /* bg-gray-100 */
-            border-color: #D1D5DB; /* border-gray-300 */
+
+        .completed-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333333;
+            margin-bottom: 0.5rem;
+        }
+
+        .completed-score {
+            font-size: 1.4rem; /* Slightly smaller */
+            font-weight: 700;
+            color: #004481;
+            margin-bottom: 1rem;
+        }
+
+        .workflow-mastered-box {
+            background-color: #FFFFFF;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            color: #333333;
+            border: 1px solid #EEEEEE;
+        }
+        .workflow-mastered-box h3 {
+            color: #333333;
+            margin-bottom: 0.5rem;
+        }
+        .workflow-mastered-box ul li {
+            color: #666666;
+        }
+
+
+        /* Game Message Modal */
+        .game-message-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5); /* Slightly less opaque */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 1000;
+        }
+
+        .game-message-modal-content {
+            background: #FFFFFF; /* Solid white */
+            border-radius: 8px;
+            padding: 2rem;
+            max-width: 28rem;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Softer shadow */
+            color: #333333;
+            border: 1px solid #DDDDDD; /* Subtle border */
+        }
+
+        .game-message-modal-icon {
+            margin: 0 auto 1rem;
+            height: 3.5rem; /* Slightly smaller icon */
+            width: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #004481; /* Corporate blue for icons */
+        }
+        .game-message-modal-icon svg {
+            height: 100%;
+            width: 100%;
+        }
+
+        .game-message-modal-title {
+            font-size: 1.8rem; /* Slightly smaller */
+            font-weight: 700;
+            color: #333333;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-message-modal-text {
+            font-size: 0.95rem;
+            color: #666666;
+            margin-bottom: 1rem;
         }
         `}
       </style>
@@ -744,52 +777,17 @@ const LCPuzzleRace = () => {
         <div className="menu-container">
           <div className="menu-card">
             <Trophy className="menu-icon" />
-            <h1 className="menu-title">Lending Puzzle Race</h1>
-            <p className="menu-subtitle"></p>
+            <h1 className="menu-title">LC Puzzle Race</h1>
+            <p className="menu-subtitle">Arrange the steps to complete the Letter of Credit workflow!</p>
 
-            {/* 🟡 NEW: Choose Domain - Moved inside card */}
-            {/* <div style={{ marginBottom: '1.5rem', textAlign: 'left' }}>
-              <label htmlFor="domain-select" style={{ display: 'block', marginBottom: '0.5rem', color: '#2D3748', fontWeight: '600' }}>
-                Choose a Domain:
-              </label>
-              <select
-                id="domain-select"
-                onChange={(e) => setSelectedDomain(e.target.value)}
-                value={selectedDomain || (gameData.domains[0]?.name || '')} // ✅ Default to the first domain if selectedDomain is null
-                style={{
-                  width: '100%',
-                  padding: '0.5rem',
-                  borderRadius: '0.5rem',
-                  border: '1px solid #CBD5E0',
-                  fontSize: '1rem'
-                }}
-              >
-                <option value="" disabled>Select Domain</option>
-                {gameData.domains.map(domain => (
-                  <option key={domain.name} value={domain.name}>{domain.name}</option>
-                ))}
-              </select>
-            </div> */}
-
-            <div style={{ marginBottom: '1.5rem', textAlign: 'center' }}>
-              <label style={{ display: 'block', marginBottom: '0.75rem', color: '#2D3748', fontWeight: '600' }}>
-                Choose a Domain:
-              </label>
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <div className="domain-selection-container">
+              <label>Choose a Domain:</label>
+              <div className="domain-buttons-wrapper">
                 {gameData.domains.map(domain => (
                   <button
                     key={domain.name}
                     onClick={() => setSelectedDomain(domain.name)}
-                    style={{
-                      padding: '0.5rem 1rem',
-                      borderRadius: '0.5rem',
-                      border: selectedDomain === domain.name ? '2px solid #2B6CB0' : '1px solid #CBD5E0',
-                      backgroundColor: selectedDomain === domain.name ? '#2B6CB0' : '#EDF2F7',
-                      color: selectedDomain === domain.name ? '#fff' : '#2D3748',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s'
-                    }}
+                    className={`domain-button ${selectedDomain === domain.name ? 'selected' : ''}`}
                   >
                     {domain.name}
                   </button>
@@ -797,180 +795,182 @@ const LCPuzzleRace = () => {
               </div>
             </div>
 
-
             <div className="how-to-play-box">
               <h3 className="how-to-play-title">How to Play:</h3>
               <ul className="how-to-play-list">
-                <li>Drag steps to arrange the lifecycle in correct order for each puzzle.</li>
-                <li>Clear all puzzles in a stage to win the domain.</li>
-                <li>Complete within the time limit for maximum points.</li>
-                <li>Wrong order ends the game. Think before you drag!</li>
+                <li>Drag and drop the shuffled LC workflow steps into the "Arranged Steps" box.</li>
+                <li>Arrange them in the correct sequence.</li>
+                <li>You have 3 minutes per puzzle.</li>
+                <li>Complete {gameData.levelsToWin} puzzles to win the game!</li>
               </ul>
             </div>
 
             <button
               onClick={startGame}
               className="start-game-button"
-              disabled={!selectedDomain}
-              style={{ opacity: selectedDomain ? 1 : 0.5 }}
+              disabled={!selectedDomain} // Disable if no domain is selected
             >
-              <Play style={{ marginRight: '0.5rem', height: '1.25rem', width: '1.25rem' }} />
-              Start Game
+              {selectedDomain ? 'Start Game' : 'Select a Domain to Start'}
             </button>
           </div>
         </div>
       )}
 
+      {gameState === 'playing' && (
+        <>
+          {showGameMessage && (
+            <div className="game-message-modal-overlay">
+              <div className="game-message-modal-content">
+                <div className="game-message-modal-icon">
+                  {gameMessageIcon}
+                </div>
+                <h2 className="game-message-modal-title">{gameMessageTitle}</h2>
+                <p className="game-message-modal-text">{gameMessageText}</p>
+              </div>
+            </div>
+          )}
+
+          <div className="game-header">
+            <div className="game-header-item">
+                Domain: <span className="domain-display">{selectedDomain}</span>
+            </div>
+            <div className="game-header-item">
+              <Clock />
+              Time Left: <span className={`timer-display ${timeLeft <= 30 ? 'text-red-500' : ''}`}>{formatTime(timeLeft)}</span>
+            </div>
+            <div className="game-header-item">
+              <Trophy />
+              Score: <span className="score-value">{score}</span>
+            </div>
+            <div className="game-header-item">
+              <CheckCircle />
+              Puzzles Completed: <span className="puzzles-completed-display">{totalPuzzlesCompleted} / {gameData.levelsToWin}</span>
+            </div>
+            <button onClick={resetGame} className="reset-button">
+              <RotateCcw size={18} /> Reset Game
+            </button>
+          </div>
+
+          <div className="puzzle-grids">
+            <div className="puzzle-section">
+              <h2 className="puzzle-section-title">Available Steps</h2>
+              <div
+                className="puzzle-drop-area"
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, 'shuffled')}
+              >
+                {shuffledSteps.length > 0 ? (
+                  shuffledSteps.map((step) => (
+                    <div
+                      key={step.id}
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, step, 'shuffled')}
+                      className={`puzzle-step-card ${getPhaseColorClass(step.phase)}`}
+                    >
+                      <div className="title">{step.title}</div>
+                      <div className="description">{step.description}</div>
+                      <div className="phase">{step.phase} Phase</div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="empty-drop-area-text">
+                    All steps have been moved to the arranged area.
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="puzzle-section">
+              <h2 className="puzzle-section-title">Arranged Steps</h2>
+              <div
+                className="puzzle-drop-area"
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, 'arranged')}
+              >
+                {arrangedSteps.length > 0 ? (
+                  arrangedSteps.map((step, index) => (
+                    <div
+                      key={step.id}
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, step, 'arranged')}
+                      className={`puzzle-step-card ${getPhaseColorClass(step.phase)}`}
+                    >
+                      <span className="arranged-step-number">{index + 1}</span>
+                      <div className="title">{step.title}</div>
+                      <div className="description">{step.description}</div>
+                      <div className="phase">{step.phase} Phase</div>
+                      {arrangedSteps.length === correctSteps.length && step.id === correctSteps[index]?.id && (
+                        <CheckCircle className="feedback-icon correct" />
+                      )}
+                      {arrangedSteps.length === correctSteps.length && step.id !== correctSteps[index]?.id && (
+                        <XCircle className="feedback-icon incorrect" />
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  <div className="empty-drop-area-text">
+                    Drag steps here to arrange the LC workflow in correct order
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Phase Legend */}
+          <div className="phase-legend-box">
+            <h3 className="phase-legend-title">LC Phases:</h3>
+            <div className="phase-legend-items">
+              <div className="phase-legend-item">
+                <div className="phase-color-box phase-corporate-blue"></div>
+                <span className="phase-legend-text">Initiation</span>
+              </div>
+              <div className="phase-legend-item">
+                <div className="phase-color-box phase-corporate-green"></div>
+                <span className="phase-legend-text">Execution</span>
+              </div>
+              <div className="phase-legend-item">
+                <div className="phase-color-box phase-corporate-orange"></div>
+                <span className="phase-legend-text">Settlement</span>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
 
       {gameState === 'completed' && (
         <div className="completed-container">
           <div className="completed-card">
             <Trophy className="completed-icon" />
-            <h2 className="completed-title">Game Complete!</h2>
-            <div className="completed-score">Final Score: {score}</div>
+            <h1 className="completed-title">Game Over!</h1>
+            <p className="completed-score">Final Score: {score}</p>
+            <p className="completed-score">Total Puzzles Mastered: {totalPuzzlesCompleted}</p>
+
             <div className="workflow-mastered-box">
-              <h3 className="workflow-mastered-title">Congratulations!</h3>
-              <p className="workflow-mastered-text">
-                You've successfully mastered all stages of the {selectedDomain} workflow.
-              </p>
+              <h3>Workflows you mastered:</h3>
+              <ul>
+                {completedPuzzlesInSession.map(puzzleId => {
+                  // Find the puzzle title based on its ID
+                  let puzzleTitle = 'Unknown Puzzle';
+                  for (const domain of gameData.domains) {
+                    for (const stage of domain.stages) {
+                      const found = stage.puzzles.find(p => p.id === puzzleId);
+                      if (found) {
+                        puzzleTitle = found.title;
+                        break;
+                      }
+                    }
+                    if (puzzleTitle !== 'Unknown Puzzle') break;
+                  }
+                  return <li key={puzzleId}>{puzzleTitle}</li>;
+                })}
+              </ul>
             </div>
 
-            <button
-              onClick={() => setGameState('menu')} // Go back to menu, preserving selected domain for next play
-              className="play-again-button"
-            >
+            <button onClick={() => setGameState('menu')} className="play-again-button">
               Play Again
             </button>
           </div>
         </div>
-      )}
-
-      {gameState === 'playing' && (<>
-        <span className="game-header-stage">
-          Domain: {selectedDomain}
-        </span>
-
-        {/* Header */}
-        <div className="game-header">
-          <div className="game-header-left">
-            <Clock style={{ height: '1.5rem', width: '1.5rem', color: '#fff' }} />
-            <span className="game-header-score">{formatTime(timeLeft)}</span>
-          </div>
-          <span className="game-header-score">Score: {score}</span>
-          <span className="game-header-puzzle-progress">
-            Levels Completed: {totalPuzzlesCompleted} / {gameData.levelsToWin}
-          </span>
-          <button
-            onClick={() => setGameState('menu')}
-            className="game-header-reset-button"
-          >
-            <RotateCcw style={{ height: '1.5rem', width: '1.5rem' }} />
-          </button>
-        </div>
-
-        {/* Custom Game Message Modal (for success/fail/winner) */}
-        {showGameMessage && (
-          <div className="game-message-modal-overlay">
-            <div className="game-message-modal-content">
-              <div className="game-message-modal-icon">
-                {gameMessageIcon}
-              </div>
-              <h3 className="game-message-modal-title">{gameMessageTitle}</h3>
-              <p className="game-message-modal-text">{gameMessageText}</p>
-              {/* No explicit close button, messages auto-close after timeout */}
-            </div>
-          </div>
-        )}
-
-        <div className="puzzle-grids">
-          {/* Shuffled Steps */}
-          <div className="puzzle-section">
-            <h2 className="puzzle-section-title">Available Steps</h2>
-            <div
-              className="puzzle-drop-area"
-              onDragOver={handleDragOver}
-              onDrop={(e) => handleDrop(e, 'shuffled')}
-            >
-              {shuffledSteps.length > 0 ? (
-                shuffledSteps.map((step) => (
-                  <div
-                    key={step.id}
-                    draggable
-                    onDragStart={(e) => handleDragStart(e, step, 'shuffled')}
-                    className={`puzzle-step-card ${getPhaseColorClass(step.phase)}`}
-                  >
-                    <div className="title">{step.title}</div>
-                    <div className="description">{step.description}</div>
-                    <div className="phase">{step.phase} Phase</div>
-                  </div>
-                ))
-              ) : (
-                <div className="empty-drop-area-text">
-                  All steps dragged out!
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Arranged Steps */}
-          <div className="puzzle-section">
-            <h2 className="puzzle-section-title">Workflow Order</h2>
-            <div
-              className="puzzle-drop-area"
-              onDragOver={handleDragOver}
-              onDrop={(e) => handleDrop(e, 'arranged')}
-            >
-              {arrangedSteps.length > 0 ? (
-                arrangedSteps.map((step, index) => (
-                  <div
-                    key={step.id}
-                    draggable
-                    onDragStart={(e) => handleDragStart(e, step, 'arranged')}
-                    className={`puzzle-step-card ${getPhaseColorClass(step.phase)}`}
-                  >
-                    <div className="arranged-step-number">
-                      {index + 1}
-                    </div>
-                    <div className="title">{step.title}</div>
-                    <div className="description">{step.description}</div>
-                    <div className="phase">{step.phase} Phase</div>
-                    {/* Feedback icons for correctness */}
-                    {arrangedSteps.length === correctSteps.length && step.id === correctSteps[index]?.id && (
-                      <CheckCircle className="feedback-icon correct" />
-                    )}
-                    {arrangedSteps.length === correctSteps.length && step.id !== correctSteps[index]?.id && (
-                      <XCircle className="feedback-icon incorrect" />
-                    )}
-                  </div>
-                ))
-              ) : (
-                <div className="empty-drop-area-text">
-                  Drag steps here to arrange the LC workflow in correct order
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Phase Legend */}
-        <div className="phase-legend-box">
-          <h3 className="phase-legend-title">LC Phases:</h3>
-          <div className="phase-legend-items">
-            <div className="phase-legend-item">
-              <div className="phase-color-box phase-initiation"></div>
-              <span className="phase-legend-text">Initiation</span>
-            </div>
-            <div className="phase-legend-item">
-              <div className="phase-color-box phase-execution"></div>
-              <span className="phase-legend-text">Execution</span>
-            </div>
-            <div className="phase-legend-item">
-              <div className="phase-color-box phase-settlement"></div>
-              <span className="phase-legend-text">Settlement</span>
-            </div>
-          </div>
-        </div>
-      </>
       )}
     </div>
   );
